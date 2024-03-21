@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id          Int           @id @default(autoincrement())
+  username    String
+  email       String?
+  pass        String
+  createdAt   DateTime      @default(now())
+  reclamation Reclamation[]
+  Article     Article[]
+  fiche       Fiche[]
+}
+
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  rapport   String?
+  statues   String
+  Client    Client?  @relation(fields: [clientId], references: [id])
+  clientId  Int?
+  createdAt DateTime @default(now())
+  fiche     Fiche[]
+}
+
+model Fiche {
+  id Int @id @default(autoincrement())
+
+  Client   Client? @relation(fields: [clientId], references: [id])
+  clientId Int?
+
+  Article   Article? @relation(fields: [articleId], references: [id])
+  articleId Int?
+  Technicien   Technicien? @relation(fields: [technicienId], references: [id])
+  technicienId Int?
+  date         DateTime?
+  createdAt    DateTime    @default(now())
+}
+
+model Technicien {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  role      String
+  date      DateTime?
+  createdAt DateTime @default(now())
+  fiche     Fiche[]
+}
+
+model Reclamation {
+  id Int @id @default(autoincrement())
+
+  date      DateTime?
+  createdAt DateTime @default(now())
+  Client    Client?  @relation(fields: [clientId], references: [id])
+  clientId  Int?
+}
