@@ -87,7 +87,7 @@ model Etape {
   description          String
   status               String
   type                 String
-  date                 DateTime?
+  date                 DateTime
   createdAt            DateTime            @default(now())
   Employee             Employee?           @relation(fields: [employeeId], references: [id])
   employeeId           Int?
