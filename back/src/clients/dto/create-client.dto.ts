@@ -1,10 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {IsDate,IsString  } from 'class-validator';
 
 export class CreateClientDto {
   @ApiProperty()
-  username: string;
+  @IsString()
+  name: string;
   @ApiProperty()
+  @IsString()
   email: string;
   @ApiProperty()
-  pass: string;
+  @IsString()
+  password : string;
+  @ApiProperty()
+  @IsDate()
+  createdAt :Date;
 }

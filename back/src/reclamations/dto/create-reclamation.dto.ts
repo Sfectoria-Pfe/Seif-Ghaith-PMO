@@ -1,8 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger"
+import {IsString,IsDate, IsNumber} from 'class-validator';
 
 export class CreateReclamationDto {
     @ApiProperty()
-    clientId:number 
+    @IsString()
+    title:string;
     @ApiProperty()
-    date:string
+    @IsString()
+    description:string;
+    @ApiProperty()
+    @IsDate()
+    createdAt :Date;
+    @ApiProperty()
+    @IsNumber()
+    clientId :number
+
 }
