@@ -7,58 +7,110 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String
+  password   String
+  email      String
+  Client     Client?   @relation(fields: [clientId], references: [id])
+  clientId   Int?
+  Employee   Employee? @relation(fields: [employeeId], references: [id])
+  employeeId Int?
+}
+
 model Client {
-  id          Int           @id @default(autoincrement())
-  username    String
-  email       String?
-  pass        String
-  createdAt   DateTime      @default(now())
-  reclamation Reclamation[]
-  Article     Article[]
-  fiche       Fiche[]
+  id           Int                  @id @default(autoincrement())
+  name         String
+  email        String
+  password     String
+  createdAt    DateTime             @default(now())
+  reclamation  Reclamation[]
+  fiche        Fiche_intervention[]
+  user         User[]
+  entreeDevice EntreeDevice[]
+  order        Order[]
 }
 
-model Article {
-  id        Int      @id @default(autoincrement())
-  title     String
-  rapport   String?
-  statues   String
-  Client    Client?  @relation(fields: [clientId], references: [id])
-  clientId  Int?
-  createdAt DateTime @default(now())
-  fiche     Fiche[]
-}
-
-model Fiche {
-  id Int @id @default(autoincrement())
-
-  Client   Client? @relation(fields: [clientId], references: [id])
-  clientId Int?
-
-  Article   Article? @relation(fields: [articleId], references: [id])
-  articleId Int?
-  Technicien   Technicien? @relation(fields: [technicienId], references: [id])
-  technicienId Int?
-  date         DateTime?
-  createdAt    DateTime    @default(now())
-}
-
-model Technicien {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  password  String
-  role      String
-  date      DateTime?
-  createdAt DateTime @default(now())
-  fiche     Fiche[]
+model Employee {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String
+  password String
+  role     String
+  user     User[]
+  etape    Etape[]
 }
 
 model Reclamation {
-  id Int @id @default(autoincrement())
+  id          Int                  @id @default(autoincrement())
+  titel       String
+  description String
+  createdAt   DateTime             @default(now())
+  Client      Client?              @relation(fields: [clientId], references: [id])
+  clientId    Int?
+  fiche       Fiche_intervention[]
+}
 
-  date      DateTime?
-  createdAt DateTime @default(now())
-  Client    Client?  @relation(fields: [clientId], references: [id])
-  clientId  Int?
+model EntreeDevice {
+  id          Int      @id @default(autoincrement())
+  title       String
+  rapport     String
+  statues     String
+  description String
+  createdAt   DateTime @default(now())
+  Client      Client?  @relation(fields: [clientId], references: [id])
+  clientId    Int?
+  Etape       Etape?   @relation(fields: [etapeId], references: [id])
+  etapeId     Int?
+}
+
+model Fiche_intervention {
+  id            Int          @id @default(autoincrement())
+  title         String
+  rapport       String
+  description   String
+  status        String
+  date          DateTime?
+  createdAt     DateTime     @default(now())
+  Client        Client?      @relation(fields: [clientId], references: [id])
+  clientId      Int?
+  Reclamation   Reclamation? @relation(fields: [reclamationId], references: [id])
+  reclamationId Int?
+  etape         Etape[]
+  order         Order[]
+}
+
+model Etape {
+  id                   Int                 @id @default(autoincrement())
+  title                String
+  rapport              String
+  description          String
+  status               String
+  type                 String
+  date                 DateTime?
+  createdAt            DateTime            @default(now())
+  Employee             Employee?           @relation(fields: [employeeId], references: [id])
+  employeeId           Int?
+  Fiche_intervention   Fiche_intervention? @relation(fields: [fiche_interventionId], references: [id])
+  fiche_interventionId Int?
+  entreeDevice         EntreeDevice[]
+}
+
+model Order {
+  id                   Int                 @id @default(autoincrement())
+  name          String
+  description String
+  createdAt     DateTime     @default(now())
+  confirm              String
+  orderline            Orderline[]
+  Client               Client?             @relation(fields: [clientId], references: [id])
+  clientId             Int?
+  Fiche_intervention   Fiche_intervention? @relation(fields: [fiche_interventionId], references: [id])
+  fiche_interventionId Int?
+}
+
+model Orderline {
+  id      Int    @id @default(autoincrement())
+  Order   Order? @relation(fields: [orderId], references: [id])
+  orderId Int?
 }
