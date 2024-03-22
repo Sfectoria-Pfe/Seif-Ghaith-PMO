@@ -2,45 +2,62 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 async function main() {
-  const client1 = await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       name: 'User1',
-      password:''
-      
+      password:'12345',
+      email:'test@email.fr',
+      clientId:1,
+      employeeId:1,      
     },
   });
-  const article1 = await prisma.article.create({
+  const client = await prisma.client.create({
     data: {
-      title: 'ArticleOne',
-      rapport: 'Rapport1',
-      statues: 'encour',
-      clientId: 1,
+      name:'Client 1',
+      email:'test@email.fr',
+      password:'12345'
     },
   });
 
-  const reclamation1 = await prisma.reclamation.create({
+  const employee = await prisma.employee.create({
     data: {
-      clientId: 1,
+name:'employee1',
+email:'test@email.fr',
+password:'12345',
+role:'technicien'
     },
   });
-  const technicien1 = await prisma.technicien.create({
+  const reclamation = await prisma.reclamation.create({
     data: {
-      name: 'technicien1-',
-      email: 'technecien@gmail.com',
-      password: '12345',
-      role: 'technicien',
-    },
-  });
-
-  const fiche1 = await prisma.fiche.create({
-    data: {
-      clientId: 1,
-      articleId: 2,
-      technicienId: 1,
+     titel:'reclamation1',
+     description:'desscccc',
+     clientId:1
     },
   });
 
-  console.log({ client1, article1 });
+  const entreeDevice = await prisma.entreeDevice.create({
+    data: {
+      title:'entreeDevice1',
+      rapport:'rapport',
+      statues:'encours',
+      description:'desscc',
+      clientId:1,
+      etapeId:1
+    },
+  });
+
+  const Fiche_intervention = await prisma.fiche_intervention.create({
+    data: {title,
+      rapport,
+      description,
+      status,
+      date,
+      clientId,
+      reclamationId
+    },
+  });
+
+  console.log({ user});
 }
 
 // execute the main function
