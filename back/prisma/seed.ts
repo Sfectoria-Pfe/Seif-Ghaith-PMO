@@ -2,13 +2,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 async function main() {
-    const client1 = await prisma.client.create({
-        data:{
-            username:"ClientOne",
-            email:"test@gmail.com",
-            pass:"123450"
-        }
-    })
+  const client1 = await prisma.user.create({
+    data: {
+      name: 'User1',
+      password:''
+      
+    },
+  });
   const article1 = await prisma.article.create({
     data: {
       title: 'ArticleOne',
@@ -20,27 +20,27 @@ async function main() {
 
   const reclamation1 = await prisma.reclamation.create({
     data: {
-      clientId:1
+      clientId: 1,
     },
   });
   const technicien1 = await prisma.technicien.create({
     data: {
-    name:"technicien1-",
-    email:"technecien@gmail.com",
-    password:"12345",
-    role:"technicien",
+      name: 'technicien1-',
+      email: 'technecien@gmail.com',
+      password: '12345',
+      role: 'technicien',
     },
   });
 
   const fiche1 = await prisma.fiche.create({
     data: {
-      clientId:1,
-      articleId:2,
-      technicienId:1,
+      clientId: 1,
+      articleId: 2,
+      technicienId: 1,
     },
   });
- 
-  console.log({ client1, article1});
+
+  console.log({ client1, article1 });
 }
 
 // execute the main function
