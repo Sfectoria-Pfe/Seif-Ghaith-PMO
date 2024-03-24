@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class EmployeesService {
   constructor(private prisma: PrismaService) {}
   create(createEmployeeDto: CreateEmployeeDto) {
-    return this.prisma.client.create({data:createEmployeeDto})
+    return this.prisma.employee.create({data:createEmployeeDto})
   }
 
   findAll() {
@@ -19,13 +19,13 @@ export class EmployeesService {
   }
 
   update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return this.prisma.client.update({
+    return this.prisma.employee.update({
       where: { id },
       data :updateEmployeeDto,
     });;
   }
 
   remove(id: number) {
-    return  this.prisma.client.delete({ where: { id } });
+    return  this.prisma.employee.delete({ where: { id } });
   }
 }

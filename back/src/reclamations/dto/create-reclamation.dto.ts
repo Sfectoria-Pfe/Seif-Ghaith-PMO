@@ -4,7 +4,7 @@ import {IsString,IsDate, IsNumber} from 'class-validator';
 export class CreateReclamationDto {
     @ApiProperty()
     @IsString()
-    title:string;
+    titel:string;
     @ApiProperty()
     @IsString()
     description:string;

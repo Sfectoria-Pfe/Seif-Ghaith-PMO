@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEntreeDeviceDto } from './dto/create-entree-device.dto';
 import { UpdateEntreeDeviceDto } from './dto/update-entree-device.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class EntreeDevicesService {
+  constructor(private prisma: PrismaService) {}
   create(createEntreeDeviceDto: CreateEntreeDeviceDto) {
-    return 'This action adds a new entreeDevice';
+    return this.prisma.entreeDevice.create({data:createEntreeDeviceDto})
   }
 
   findAll() {
-    return `This action returns all entreeDevices`;
+    return this.prisma.entreeDevice.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} entreeDevice`;
+    return this.prisma.entreeDevice.findUnique({ where: { id } });
   }
 
   update(id: number, updateEntreeDeviceDto: UpdateEntreeDeviceDto) {
-    return `This action updates a #${id} entreeDevice`;
+    return this.prisma.entreeDevice.update({
+      where: { id },
+      data :updateEntreeDeviceDto,
+    });;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} entreeDevice`;
+    return  this.prisma.entreeDevice.delete({ where: { id } });
   }
 }
