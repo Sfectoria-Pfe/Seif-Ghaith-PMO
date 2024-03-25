@@ -10,9 +10,10 @@ import { EntreeDevicesModule } from './entree-devices/entree-devices.module';
 import { EtapesModule } from './etapes/etapes.module';
 import { OrdersModule } from './orders/orders.module';
 import { OrderLinesModule } from './order-lines/order-lines.module';
+import { FicheInterventionsModule } from './fiche-interventions/fiche-interventions.module';
 
 @Module({
-  imports: [PrismaModule, ClientsModule,  ReclamationsModule, UsersModule, EmployeesModule, EntreeDevicesModule, EtapesModule, OrdersModule, OrderLinesModule],
+  imports: [PrismaModule, ClientsModule,  ReclamationsModule, UsersModule, EmployeesModule, EntreeDevicesModule, EtapesModule, OrdersModule, OrderLinesModule, FicheInterventionsModule],
   controllers: [AppController],
   providers: [AppService],
 })
