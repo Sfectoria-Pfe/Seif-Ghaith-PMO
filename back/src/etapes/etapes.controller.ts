@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EtapesService } from './etapes.service';
 import { CreateEtapeDto } from './dto/create-etape.dto';
 import { UpdateEtapeDto } from './dto/update-etape.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('etaps')
 
 @Controller('etapes')
 export class EtapesController {
