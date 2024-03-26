@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
 export const getetapes = createAsyncThunk("getetapes", async () => {
     try {
-      const res = await axios.get("http://localhost:3000/etapes");
+      const res = await getRequestWithHeader("etapes");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -12,7 +13,7 @@ export const getetapes = createAsyncThunk("getetapes", async () => {
 
   export const getetape = createAsyncThunk("getetape", async (id) => {
     try {
-      const res = await axios.get(`http://localhost:3000/etapes/${id}`);
+      const res = await getRequestWithHeader(`etapes/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -22,7 +23,7 @@ export const getetapes = createAsyncThunk("getetapes", async () => {
   export const updateetape = createAsyncThunk("updateetape", async (args) => {
     const {id,body} = args
     try {
-      const res = await axios.put(`http://localhost:3000/etapes/${id}`,body);
+      const res = await putRequestWithHeader(`etapes/${id}`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +32,7 @@ export const getetapes = createAsyncThunk("getetapes", async () => {
 
   export const addetape = createAsyncThunk("addetape", async (body) => {
     try {
-      const res = await axios.post(`http://localhost:3000/etapes`,body);
+      const res = await postRequestWithHeader(`etapes`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export const getetapes = createAsyncThunk("getetapes", async () => {
   });
   export const deleteetape = createAsyncThunk("deleteetape",  async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/etapes/${id}`);
+      const res = await deleteRequestWithHeader(`etapes/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);

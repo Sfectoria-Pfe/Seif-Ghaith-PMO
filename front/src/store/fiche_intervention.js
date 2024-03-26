@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
 export const getfiche_interventions = createAsyncThunk("getfiche_interventions", async () => {
     try {
-      const res = await axios.get("http://localhost:3000/fiche-interventions");
+      const res = await getRequestWithHeader("fiche-interventions");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -12,7 +13,7 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
 
   export const getfiche_intervention = createAsyncThunk("getfiche_intervention", async (id) => {
     try {
-      const res = await axios.get(`http://localhost:3000/fiche-interventions/${id}`);
+      const res = await getRequestWithHeader(`fiche-interventions/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -22,7 +23,7 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
   export const updatefiche_intervention = createAsyncThunk("updatefiche_intervention", async (args) => {
     const {id,body} = args
     try {
-      const res = await axios.put(`http://localhost:3000/fiche-interventions/${id}`,body);
+      const res = await putRequestWithHeader(`fiche-interventions/${id}`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +32,7 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
 
   export const addfiche_intervention = createAsyncThunk("addfiche_intervention", async (body) => {
     try {
-      const res = await axios.post(`http://localhost:3000/fiche-interventions`,body);
+      const res = await postRequestWithHeader(`fiche-interventions`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
   });
   export const deletefiche_intervention = createAsyncThunk("deletefiche_intervention",  async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/fiche-interventions/${id}`);
+      const res = await deleteRequestWithHeader(`fiche-interventions/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);

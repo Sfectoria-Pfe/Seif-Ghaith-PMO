@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
 export const getreclamations = createAsyncThunk("getreclamations", async () => {
     try {
-      const res = await axios.get("http://localhost:3000/reclamations");
+      const res = await getRequestWithHeader("reclamations");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -12,7 +13,7 @@ export const getreclamations = createAsyncThunk("getreclamations", async () => {
 
   export const getreclamation = createAsyncThunk("getreclamation", async (id) => {
     try {
-      const res = await axios.get(`http://localhost:3000/reclamation/${id}`);
+      const res = await getRequestWithHeader(`reclamation/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -22,7 +23,7 @@ export const getreclamations = createAsyncThunk("getreclamations", async () => {
   export const updatereclamation = createAsyncThunk("updatereclamation", async (args) => {
     const {id,body} = args
     try {
-      const res = await axios.put(`http://localhost:3000/reclamations/${id}`,body);
+      const res = await putRequestWithHeader(`reclamations/${id}`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +32,7 @@ export const getreclamations = createAsyncThunk("getreclamations", async () => {
 
   export const addreclamation = createAsyncThunk("addreclamation", async (body) => {
     try {
-      const res = await axios.post(`http://localhost:3000/reclamations`,body);
+      const res = await postRequestWithHeader(`reclamations`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export const getreclamations = createAsyncThunk("getreclamations", async () => {
   });
   export const deletereclamation = createAsyncThunk("deletereclamation",  async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/reclamations/${id}`);
+      const res = await deleteRequestWithHeader(`reclamations/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);

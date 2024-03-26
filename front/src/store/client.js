@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
 export const getclients = createAsyncThunk("getclients", async () => {
     try {
-      const res = await axios.get("http://localhost:3000/clients");
+      const res = await getRequestWithHeader("clients");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -12,7 +13,7 @@ export const getclients = createAsyncThunk("getclients", async () => {
 
   export const getclient = createAsyncThunk("getclient", async (id) => {
     try {
-      const res = await axios.get(`http://localhost:3000/client/${id}`);
+      const res = await getRequestWithHeader(`client/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -22,7 +23,7 @@ export const getclients = createAsyncThunk("getclients", async () => {
   export const updateclient = createAsyncThunk("updateclient", async (args) => {
     const {id,body} = args
     try {
-      const res = await axios.put(`http://localhost:3000/clients/${id}`,body);
+      const res = await putRequestWithHeader(`clients/${id}`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +32,7 @@ export const getclients = createAsyncThunk("getclients", async () => {
 
   export const addclient = createAsyncThunk("addclient", async (body) => {
     try {
-      const res = await axios.post(`http://localhost:3000/clients`,body);
+      const res = await postRequestWithHeader(`clients`,body);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export const getclients = createAsyncThunk("getclients", async () => {
   });
   export const deleteclient = createAsyncThunk("deleteclient",  async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/clients/${id}`);
+      const res = await deleteRequestWithHeader(`clients/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
