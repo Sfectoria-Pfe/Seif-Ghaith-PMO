@@ -2,6 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FicheInterventionsService } from './fiche-interventions.service';
 import { CreateFicheInterventionDto } from './dto/create-fiche-intervention.dto';
 import { UpdateFicheInterventionDto } from './dto/update-fiche-intervention.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('fiche--')
 
 @Controller('fiche-interventions')
 export class FicheInterventionsController {

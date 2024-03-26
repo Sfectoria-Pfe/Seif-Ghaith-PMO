@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EntreeDevicesService } from './entree-devices.service';
 import { CreateEntreeDeviceDto } from './dto/create-entree-device.dto';
 import { UpdateEntreeDeviceDto } from './dto/update-entree-device.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('entree--device')
 
 @Controller('entree-devices')
 export class EntreeDevicesController {
