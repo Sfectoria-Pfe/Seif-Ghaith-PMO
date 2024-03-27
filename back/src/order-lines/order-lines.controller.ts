@@ -2,6 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { OrderLinesService } from './order-lines.service';
 import { CreateOrderLineDto } from './dto/create-order-line.dto';
 import { UpdateOrderLineDto } from './dto/update-order-line.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('order-linee')
 
 @Controller('order-lines')
 export class OrderLinesController {
