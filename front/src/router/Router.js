@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login"
 import Singup from "../pages/Singup"
+import Navbar from "../Layouts/Navbar"
 
 function Router(){
     return(
@@ -9,6 +10,7 @@ function Router(){
         <Routes>
             <Route path='/' element={<Login/>}/>
             <Route path='/singup' element={<Singup/>}/>
+            <Route path='/navbar' element={<Navbar/>}/>
 
         </Routes>
         </BrowserRouter>
