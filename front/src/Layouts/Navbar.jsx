@@ -4,12 +4,20 @@ import { CiLogout } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import Dropdown from 'react-bootstrap/Dropdown';
 import './Navbar.css';
+import { useState } from "react";
+import Sidebar from "./Sidebar";
  function Navbar() {
  return (
-  <div className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded">
-    <div className="d-flex align-items-center "><p style={{fontSize:20,fontWeight:"bold"}}>DATASERV</p></div>
-
-
+  <div 
+  style={{ width:"100%",height:70}}
+  className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded">
+    <div className="d-flex align-items-center ">
+      
+      <Sidebar/>
+    
+    <p style={{fontSize : 20,fontWeight:"bold"}}>DATASERV</p>
+    
+    </div>
       <div className="d-flex align-items-center  gap-5">
         <div className='d-flex justify-content-center align-items-center  gap-2'>
       <p className="m-0" style={{fontSize:16,fontWeight:"bold"}}>Notification</p>
