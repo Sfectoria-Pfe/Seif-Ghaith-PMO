@@ -1,7 +1,7 @@
 import React from "react";
 import "./Singup.css";
-import GoogleIcon from "@mui/icons-material/Google";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub,faGoogle} from '@fortawesome/free-brands-svg-icons'
 // import logo from "../images/aabb.png"
 
 function Singup() {
@@ -50,10 +50,10 @@ function Singup() {
                 <p className="or">- OR -</p>
                 <div className="d-flex justify-content-between col-10">
                   <button className="btn2 p-2">
-                    <GoogleIcon /> Sing up with Google
+                  <FontAwesomeIcon icon={faGoogle} /> Sing up with Google
                   </button>
                   <button className="btn2">
-                    <GitHubIcon /> Sing up with GitHub
+                  <FontAwesomeIcon icon={faGithub} /> Sing up with GitHub
                   </button>
                 </div>
               </div>
