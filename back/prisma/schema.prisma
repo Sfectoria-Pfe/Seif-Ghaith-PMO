@@ -11,7 +11,7 @@ model User {
   id         Int       @id @default(autoincrement())
   name       String
   password   String
-  email      String
+  email      String   @unique
   Client     Client?   @relation(fields: [clientId], references: [id])
   clientId   Int?
   Employee   Employee? @relation(fields: [employeeId], references: [id])

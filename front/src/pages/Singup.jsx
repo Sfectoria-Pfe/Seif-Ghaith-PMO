@@ -17,14 +17,13 @@ function Singup() {
               alt="imakkge"
               src="https://img.freepik.com/free-vector/minimalistic-style-abstract-blurred-yellow-gradient-banner-vector_1017-49017.jpg?w=996&t=st=1710988633~exp=1710989233~hmac=a8a7ec70dbe3b58ceb78546375f513947945e2c04cc0df31f39822bc5f05e2c0"
               style={{
-                borderRadius: "1%",
                 width: "100%",
                 height: "100%",
                 objectfit: "contain",
               }}
             />
           </div>
-          <div className="col-md-8 d-flex justify-content-center col-12  ">
+          <div className="col-md-8 d-flex justify-content-center col-12 bk">
             <div className="mx-auto cont">
               <p className="titre">Create your Free Account</p>
               <div className="elem">
