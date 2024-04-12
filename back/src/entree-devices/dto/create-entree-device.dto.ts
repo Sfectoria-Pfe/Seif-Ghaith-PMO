@@ -6,6 +6,9 @@ export class CreateEntreeDeviceDto {
     title :string;
     @ApiProperty()
     @IsString()
+    image:string;
+    @ApiProperty()
+    @IsString()
     rapport :string;
     @ApiProperty()
     @IsString()

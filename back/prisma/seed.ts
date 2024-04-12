@@ -4,15 +4,20 @@ const prisma = new PrismaClient();
 async function main() {
   const client = await prisma.client.create({
     data: {
-      name: 'Client 1',
+      last_name : "client0",
+      first_name : "last 0",
+      photo : "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
       email: 'test@email.fr',
       password: '12345',
+      
     },
   });
 
   const employee = await prisma.employee.create({
     data: {
-      name: 'employee1',
+      first_name: 'employee1',
+      last_name :"last 00",
+      photo : "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
       email: 'test@email.fr',
       password: '12345',
       role: 'technicien',
@@ -20,7 +25,9 @@ async function main() {
   });
   const user = await prisma.user.create({
     data: {
-      name: 'User1',
+      first_name: 'User1',
+      last_name : "lastt000",
+      photo :"https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
       password: '12345',
       email: 'test@email.fr',
       clientId: 1,
@@ -33,7 +40,8 @@ async function main() {
       titel: 'reclamation1',
       description: 'desscccc',
       clientId: 1,
-    },
+      image:"https://www.omen.com/content/dam/sites/omen/worldwide/desktops/2022-desktop-home-2-0/21-c-2-articuno-45-l-blizzard-oc-liquid-cooled-gfx-3080-white-led-jack-black-non-odd-core-set-front-right@2x.png"
+       },
   });
   const Fiche_intervention = await prisma.fiche_intervention.create({
     data: {
@@ -49,6 +57,7 @@ async function main() {
   const Etape = await prisma.etape.create({
     data: {
       title: 'Etape',
+      ongoing:true,
       rapport:'Etape rapport',
       description:'desccc',
       status:'encours',
