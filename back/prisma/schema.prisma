@@ -79,7 +79,6 @@ model Fiche_intervention {
   description   String
   status        String
   date          DateTime?
-  createdAt     DateTime     @default(now())
   Client        Client?      @relation(fields: [clientId], references: [id])
   clientId      Int?
   Reclamation   Reclamation? @relation(fields: [reclamationId], references: [id])

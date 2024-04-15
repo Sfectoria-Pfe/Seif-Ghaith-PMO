@@ -31,6 +31,7 @@ import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined";
 import ContactEmergencyOutlinedIcon from "@mui/icons-material/ContactEmergencyOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import { Link } from "react-router-dom";
 function Sidebar() {
   const [open, setOpen] = React.useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -59,12 +60,12 @@ function Sidebar() {
         >
           <div className="mb-2 flex items-center gap-4 p-4">
             <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
+              src="https://dataserv.tn/wp-content/uploads/2022/02/cropped-2-1-e1644072106944-144x137.png"
               alt="brand"
-              className="h-8 w-8"
+              className="h-8 w-8 bg-blue-gray-50"
             />
             <Typography variant="h5" color="blue-gray">
-              DATASERV
+              DataServ
             </Typography>
           </div>
           <List>
@@ -79,7 +80,7 @@ function Sidebar() {
                 />
               }
             >
-              <ListItem>
+              <ListItem >
                 <ListItemPrefix>
                   <PresentationChartBarIcon className="h-5 w-5" />
                 </ListItemPrefix>
@@ -112,24 +113,25 @@ function Sidebar() {
               </ListItem>
               <AccordionBody className="py-1">
                 <List className="p-0">
-                  <ListItem>
+                  <Link to={"/employees"} onClick={closeDrawer}>
+                  <ListItem >
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
-                    Les Techniciens
+                    Les employés
+
                   </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Les Réceptionnistes
-                  </ListItem>
+                  </Link>
+
+                  <Link to={"/clients" } onClick={closeDrawer}>
                   <ListItem>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Les Clients
                   </ListItem>
+                  </Link>
+                 
                 </List>
               </AccordionBody>
             </Accordion>
@@ -173,24 +175,8 @@ function Sidebar() {
                 />
               </ListItemSuffix>
             </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Settings
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <PowerIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
+           
+  
           </List>
         </Card>
       </Drawer>

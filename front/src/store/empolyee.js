@@ -6,6 +6,21 @@ import {
   putRequestWithHeader,
 } from "../helpers/axiosRequests";
 
+export const filteremployees_lastname = createAsyncThunk("filteremployees_lastname", async (str) => {
+  try {
+    const res = await getRequestWithHeader("employees");
+    return res.data.filter((elem) => {
+      return (
+          elem.first_name.toUpperCase().includes(str.toUpperCase()) ||
+          elem.last_name.toUpperCase().includes(str.toUpperCase())
+      );
+  });  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
 export const getemployees = createAsyncThunk("getemployees", async () => {
   try {
     const res = await getRequestWithHeader("employees");
@@ -62,6 +77,11 @@ export const employeeSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+
+    builder.addCase(filteremployees_lastname.fulfilled, (state, action) => {
+      state.employees = action.payload;
+    });
+
     builder.addCase(getemployees.fulfilled, (state, action) => {
       state.employees = action.payload;
     });
@@ -73,7 +93,7 @@ export const employeeSlice = createSlice({
       state.employees = action.payload;
     });
     builder.addCase(addemployee.fulfilled, (state, action) => {
-      state.employees = action.payload;
+      state.employees = [...state.employees,action.payload];
     });
     builder.addCase(deleteemployee.fulfilled, (state, action) => {
       state.employees = action.payload;
