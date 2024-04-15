@@ -1,9 +1,12 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsDate, IsString} from 'class-validator';
+import {IsBoolean, IsDate, IsString} from 'class-validator';
 export class CreateEtapeDto {
     @ApiProperty()
     @IsString()
     title :string;
+    @ApiProperty()
+    @IsBoolean()
+    ongoing:boolean;
     @ApiProperty()
     @IsString()
     rapport :string;

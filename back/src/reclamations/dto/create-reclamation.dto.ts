@@ -2,6 +2,11 @@ import { ApiProperty } from "@nestjs/swagger"
 import {IsString,IsDate, IsNumber} from 'class-validator';
 
 export class CreateReclamationDto {
+
+    @ApiProperty()
+    @IsString()
+    image:string;
+
     @ApiProperty()
     @IsString()
     titel:string;

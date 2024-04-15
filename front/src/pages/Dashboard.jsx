@@ -4,11 +4,12 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import bondImg from '../images/bondImg.png';
 import valide from '../images/valide.png';
-import enCours from '../images/enCours.png'
-import rejete from '../images/rejete.png'
+import enCours from '../images/enCours.png';
+import rejete from '../images/rejete.png';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 function Dashboard() {
   return (
-    <div  style={{marginLeft:300,width:50}}>
+    <div className='px-4'>
       
       <p style={{fontSize:28 }}>Dashboard</p>
       <div className='d-flex gap-4' >
@@ -92,7 +93,13 @@ function Dashboard() {
   
 </Card>
 </div>
-</div>  
+</div> 
+
+<div>
+
+<DateCalendar  />
+</div>
+
 </div>
     
     

@@ -4,12 +4,22 @@ import { CiLogout } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import Dropdown from 'react-bootstrap/Dropdown';
 import './Navbar.css';
+import { useState } from "react";
+import Sidebar from "./Sidebar";
+import ProfilePage from "../pages/Profile";
+import { Link } from "react-router-dom";
  function Navbar() {
  return (
-  <div className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded">
-    <div className="d-flex align-items-center "><p style={{fontSize:20,fontWeight:"bold"}}>DATASERV</p></div>
-
-
+  <div 
+  style={{ width:"100%",height:70}}
+  className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded">
+    <div className="d-flex align-items-center ">
+      
+      <Sidebar/>
+    
+    <p style={{fontSize : 20,fontWeight:"bold"}}>DATASERV</p>
+    
+    </div>
       <div className="d-flex align-items-center  gap-5">
         <div className='d-flex justify-content-center align-items-center  gap-2'>
       <p className="m-0" style={{fontSize:16,fontWeight:"bold"}}>Notification</p>
@@ -33,8 +43,11 @@ import './Navbar.css';
       </Dropdown.Toggle>  
 
       <Dropdown.Menu>
-        <div className='d-flex' style={{paddingLeft:10}}>
-      <CgProfile  size={30}/><Dropdown.Item href="#/action-1" className='m-0'>Profile</Dropdown.Item>
+        <div className="">
+          <Link to="/profile">
+        
+      <CgProfile  size={30}/><Dropdown.Item>Profile</Dropdown.Item>
+      </Link>
       </div>
       <div className='d-flex' style={{paddingLeft:10}}>
       <CiLogout size={30} /><Dropdown.Item href="#/action-2" className='m-0'>Logout</Dropdown.Item> 
