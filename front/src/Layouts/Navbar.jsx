@@ -1,3 +1,6 @@
+import ProfilePage from "../pages/Profile";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   Typography,
   Button,
@@ -17,6 +20,10 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { IoNotificationsOutline } from "react-icons/io5";
+import { MdForwardToInbox } from "react-icons/md";
+import { CiLogout } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import Dropdown from "react-bootstrap/Dropdown";
 import "./Navbar.css";
 import Sidebar from "./Sidebar";
 import { createElement, useState } from "react";
@@ -40,10 +47,11 @@ const profileMenuItems = [
   },
 ];
 
+
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const closeMenu = () => setIsMenuOpen(false);
+  const myInfo=useSelector(state=>state.auth.me)
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -58,7 +66,8 @@ function ProfileMenu() {
             size="sm"
             alt="image"
             className="border border-Black-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            src={myInfo.Employee?.photo}
+            // src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -89,6 +98,13 @@ function ProfileMenu() {
                 as="span"
                 variant="small"
                 className="font-normal"
+                onClick={() => {
+                  if (isLastItem){
+
+                    localStorage.removeItem("token");
+                    window.location.pathname = "/";
+                  }
+                }}
                 color={isLastItem ? "red" : "inherit"}
               >
                 {label}
@@ -101,7 +117,7 @@ function ProfileMenu() {
   );
 }
 
-function Navbar_() {
+function Navbar_() {  
   return (
     <div
       style={{ width: "100%", height: 70 }}
@@ -145,5 +161,6 @@ function Navbar_() {
       </div>
     </div>
   );
+  
 }
 export default Navbar_;

@@ -9,11 +9,9 @@ datasource db {
 
 model User {
   id         Int       @id @default(autoincrement())
-  first_name       String
-  last_name String
-  photo String  @db.LongText
   password   String
-  email      String   @unique
+  email      String    @unique
+  isClient   Boolean   @default(true)
   Client     Client?   @relation(fields: [clientId], references: [id])
   clientId   Int?
   Employee   Employee? @relation(fields: [employeeId], references: [id])
@@ -22,11 +20,10 @@ model User {
 
 model Client {
   id           Int                  @id @default(autoincrement())
-  first_name       String
-  last_name String
-  photo String @db.LongText
-  email        String
-  password     String
+  first_name   String
+  last_name    String
+  email        String               @unique
+  photo        String               @db.LongText
   createdAt    DateTime             @default(now())
   reclamation  Reclamation[]
   fiche        Fiche_intervention[]
@@ -36,20 +33,19 @@ model Client {
 }
 
 model Employee {
-  id       Int     @id @default(autoincrement())
-    first_name       String
-  last_name String
-  photo String @db.LongText
-  email    String
-  password String
-  role     String
-  user     User[]
-  etape    Etape[]
+  id         Int     @id @default(autoincrement())
+  first_name String
+  last_name  String
+  photo      String  @db.LongText
+  email      String  @unique
+  role       Role    @default(technicien)
+  user       User[]
+  etape      Etape[]
 }
 
 model Reclamation {
   id          Int                  @id @default(autoincrement())
-  image String? @db.LongText
+  image       String?              @db.LongText
   titel       String
   description String
   createdAt   DateTime             @default(now())
@@ -61,7 +57,7 @@ model Reclamation {
 model EntreeDevice {
   id          Int      @id @default(autoincrement())
   title       String
-  image String? @db.LongText
+  image       String?  @db.LongText
   rapport     String
   statues     String
   description String
@@ -90,7 +86,7 @@ model Fiche_intervention {
 model Etape {
   id                   Int                 @id @default(autoincrement())
   title                String
-  ongoing Boolean
+  ongoing              Boolean
   rapport              String
   description          String
   status               String
@@ -106,9 +102,9 @@ model Etape {
 
 model Order {
   id                   Int                 @id @default(autoincrement())
-  name          String
-  description String
-  createdAt     DateTime     @default(now())
+  name                 String
+  description          String
+  createdAt            DateTime            @default(now())
   confirm              String
   orderline            Orderline[]
   Client               Client?             @relation(fields: [clientId], references: [id])
@@ -121,4 +117,11 @@ model Orderline {
   id      Int    @id @default(autoincrement())
   Order   Order? @relation(fields: [orderId], references: [id])
   orderId Int?
+}
+
+enum Role {
+  technicien
+  admin
+  manager
+  receptionist
 }

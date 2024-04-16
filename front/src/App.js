@@ -1,16 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './Layouts/Navbar';
-import { Outlet } from 'react-router-dom';
-
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import Router from "./router/Router";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function App() {
 
   return (
-    <div>
-    <Navbar/>
-        <Outlet/>
-    </div>
+    
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <Provider store={store}>
+      <React.StrictMode>
+        <Router />
+      </React.StrictMode>
+    </Provider>
+  </LocalizationProvider>
     
   );
 }

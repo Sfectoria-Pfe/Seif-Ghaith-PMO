@@ -81,7 +81,7 @@ export default function Employees() {
         <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             columns={columns}
-            rows={Rows}
+            rows={Rows} 
             slots={{ toolbar: GridToolbar }}
           />
         </div>
