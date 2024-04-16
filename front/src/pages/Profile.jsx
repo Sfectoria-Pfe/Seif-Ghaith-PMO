@@ -17,18 +17,18 @@ import { FaGithub } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import  {getUsers } from '../store/user';
+import  {getUser } from '../store/user';
 
 export default function ProfilePage() {
     const userStore = useSelector((state) => state.user);
     const dispatch = useDispatch();
     useEffect(() => {
-              dispatch(getUsers());
+              dispatch(getUser());
             }, []);
   return (
     <div>
-    {userStore.users.map(({ first_name,photo,last_name,email}, index) => (
-    <section style={{ backgroundColor: '#eee' }}>
+    {userStore.user.map(({ first_name,photo,last_name,email}, index) => (
+    <section  key={index} style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">
         
 

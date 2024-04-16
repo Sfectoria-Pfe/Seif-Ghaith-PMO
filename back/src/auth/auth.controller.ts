@@ -1,8 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -15,6 +28,14 @@ export class AuthController {
   singup(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.singup(createAuthDto);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  myInfo(@Request() req: any) {
+    console.log(req.user);
+    
+    return req.user;
+  }
+
   @Get()
   findAll() {
     return this.authService.findAll();
