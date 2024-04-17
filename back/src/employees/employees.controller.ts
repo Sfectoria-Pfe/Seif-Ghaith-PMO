@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('employees')
-
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
@@ -15,8 +14,10 @@ export class EmployeesController {
     return this.employeesService.create(createEmployeeDto);
   }
 
+
   @Get()
   findAll() {
+
     return this.employeesService.findAll();
   }
 

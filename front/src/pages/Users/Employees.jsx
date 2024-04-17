@@ -9,6 +9,8 @@ import {
   Typography,
   CardBody,
 } from "@material-tailwind/react";
+import EditIcon from "@mui/icons-material/Edit";
+
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
 import Modal_Adduser from "../../Layouts/Modal_Adduser";
@@ -30,6 +32,9 @@ export default function Employees() {
       last_name: row.last_name,
       role: row.role,
       email: row.email,
+      action :<button> <EditIcon/></button>
+      
+      
     };
   });
   // console.log(employeeStore.employees);
@@ -48,6 +53,10 @@ export default function Employees() {
     { field: "last_name", headerName: "last_name", width: 150 },
     { field: "role", headerName: "role", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
+    { field: "action", headerName: "Action", width: 200 
+    ,type:"action"
+    // , getAction({id}=>{console.log('ss'))
+   },
   ];
 
   return (

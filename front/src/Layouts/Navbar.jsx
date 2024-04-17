@@ -1,5 +1,3 @@
-import ProfilePage from "../pages/Profile";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   Typography,
@@ -20,10 +18,6 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { IoNotificationsOutline } from "react-icons/io5";
-import { MdForwardToInbox } from "react-icons/md";
-import { CiLogout } from "react-icons/ci";
-import { CgProfile } from "react-icons/cg";
-import Dropdown from "react-bootstrap/Dropdown";
 import "./Navbar.css";
 import Sidebar from "./Sidebar";
 import { createElement, useState } from "react";
@@ -100,7 +94,6 @@ function ProfileMenu() {
                 className="font-normal"
                 onClick={() => {
                   if (isLastItem){
-
                     localStorage.removeItem("token");
                     window.location.pathname = "/";
                   }
@@ -122,11 +115,9 @@ function Navbar_() {
     <div
       style={{ width: "100%", height: 70 }}
       className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded"  >
-      <div className="d-flex align-items-center gap-2">
+      <div className="d-flex align-items-center">
         <Sidebar />
-        
-        <p className="logo">DataServ</p>
-        
+        <p className="logo m-0">DataServ</p>
       </div>
       <div className="d-flex align-items-center  gap-5">
       <Typography

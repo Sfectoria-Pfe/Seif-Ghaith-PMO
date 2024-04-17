@@ -5,6 +5,7 @@ import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { Button, Input, Option, Select} from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addemployee } from "../store/empolyee";
+import axios from "axios";
 
 function Modal_Adduser({ show, setShow ,setupdate, update }) {
   const dispatch = useDispatch();
@@ -15,30 +16,40 @@ function Modal_Adduser({ show, setShow ,setupdate, update }) {
     email: "",
     photo: null,
     role: "",
-    password:"",
   });
-
   const handleChange = (e) => {
-    if (e=="Receptionniste" || e=="Technicient"){
+    if (e=="technicien" || e=="admin"|| e=="manager"|| e=="receptionist"){
       setFormData({
         ...formData,
         role: e,
       }); 
     }else{
       const { name, value, type } = e.target;
-      // console.log(e.target);
-      const newValue = type === "photo" ? e.target.files[0] : value;
+      const newValue = type === "file" ? e.target.files[0] : value;
+      // console.log(e.target.files,"message");
       setFormData({
         ...formData,
         [name]: newValue,
       });
       
     }
+    console.log(formData);
   };
-  const handleSubmit = (e) => {
+  const  handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
-    dispatch(addemployee(formData));
+    const im = new FormData();
+    im.append("file", formData.photo);
+    console.log(im,"ssss")
+
+    const response = await axios.post(
+      "http://localhost:3000/upload",
+      im
+    );
+    console.log(response)
+    const productWithCover = { ...formData, photo: response.data.path };
+
+    console.log("Form submitted with data:", productWithCover);
+    dispatch(addemployee(productWithCover));
     handleClose()
 };
 
@@ -89,7 +100,7 @@ function Modal_Adduser({ show, setShow ,setupdate, update }) {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>
                 Password</Form.Label>
               <Input
@@ -98,7 +109,7 @@ function Modal_Adduser({ show, setShow ,setupdate, update }) {
                 value={formData.password}
                 onChange={handleChange}
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Role</Form.Label>
               <Select
@@ -107,8 +118,10 @@ function Modal_Adduser({ show, setShow ,setupdate, update }) {
                 value={formData.category}
                 onChange={handleChange}
               >
-                <Option value="Receptionniste">Receptionniste</Option>
-                <Option value="Technicient">Technicient</Option>
+                <Option value="receptionist">Receptionniste</Option>
+                <Option value="technicien">Technicient</Option>
+                <Option value="admin">admin</Option>
+                <Option value="manager">manager</Option>
               </Select>
             </Form.Group>
             <Form.Group controlId="formFileSm" className="mb-3">
@@ -119,6 +132,7 @@ function Modal_Adduser({ show, setShow ,setupdate, update }) {
                 name="photo"
                 onChange={handleChange}
                 />
+              
             </Form.Group>
         <Modal.Footer>
           <Button variant="filled" color="blue" type="submit" onClick={handleUpdate}>
