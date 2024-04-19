@@ -114,7 +114,7 @@ function Navbar_() {
   return (
     <div
       style={{ width: "100%", height: 70 }}
-      className="d-flex justify-content-between  shadow-sm p-3 mb-5 bg-white rounded"  >
+      className="d-flex justify-content-between  shadow-sm p-3 mb-1 bg-white rounded"  >
       <div className="d-flex align-items-center">
         <Sidebar />
         <p className="logo m-0">DataServ</p>

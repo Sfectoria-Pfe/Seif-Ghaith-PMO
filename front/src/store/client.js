@@ -1,6 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
+export const filterclients_lastname = createAsyncThunk("filterclients_lastname", async (str) => {
+  try {
+    const res = await getRequestWithHeader("clients");
+    return res.data.filter((elem) => {
+      return (
+          elem.first_name.toUpperCase().includes(str.toUpperCase()) ||
+          elem.last_name.toUpperCase().includes(str.toUpperCase())
+      );
+  });  } catch (error) {
+    console.log(error);
+  }
+});
 export const getclients = createAsyncThunk("getclients", async () => {
     try {
       const res = await getRequestWithHeader("clients");
@@ -57,6 +69,9 @@ export const clientSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(filterclients_lastname.fulfilled, (state, action) => {
+      state.clients = action.payload;
+    });
     builder.addCase(getclients.fulfilled, (state, action) => {
       state.clients = action.payload;
     });
@@ -68,7 +83,7 @@ export const clientSlice = createSlice({
         state.clients = action.payload;
       });
       builder.addCase(addclient.fulfilled, (state, action) => {
-        state.clients = action.payload;
+        state.clients = [...state.clients,action.payload];
       });
       builder.addCase(deleteclient.fulfilled, (state, action) => {
         state.clients = action.payload;

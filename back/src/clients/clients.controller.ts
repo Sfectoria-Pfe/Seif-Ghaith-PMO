@@ -4,15 +4,17 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ApiTags } from '@nestjs/swagger';
 
+
 @ApiTags('Clients')
 @Controller('clients')
+
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
-
   @Post()
   create(@Body() createClientDto: CreateClientDto) {
     return this.clientsService.create(createClientDto);
   }
+  
 
   @Get()
   findAll() {

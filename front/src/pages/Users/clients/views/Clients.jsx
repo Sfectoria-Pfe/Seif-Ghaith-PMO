@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getclients } from "../../store/client";
+import { filterclients_lastname, getclients } from "../../../../store/client";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,10 +8,11 @@ import {
   Input,
   Typography,
   CardBody,
+  Button,
 } from "@material-tailwind/react";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
-import Modal_Adduser from "../../Layouts/Modal_Adduser";
+import { Link } from "react-router-dom";
 
 export default function Clients() {
   const [show, setShow] = useState(false);
@@ -61,12 +62,17 @@ export default function Clients() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Modal_Adduser setShow={setShow} show={show}  update={update} setupdate={setupdate}/>
+          <Link to={"addclient"}>
+            <Button> Ajouter un Client </Button>
+</Link>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
             <Input
+             onChange={(e) =>
+              dispatch(filterclients_lastname(e.target.value))
+            }
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
             />

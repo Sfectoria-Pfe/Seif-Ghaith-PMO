@@ -79,13 +79,15 @@ function Sidebar() {
                   }`}
                 />
               }
-            >
+              >
+              <Link className="text-reset text-decoration-none" to={"/"} onClick={closeDrawer} >
               <ListItem >
                 <ListItemPrefix>
                   <PresentationChartBarIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Dashboard
               </ListItem>
+              </Link>
             </Accordion>
             <Accordion
               open={open === 2}
@@ -106,14 +108,14 @@ function Sidebar() {
                   <ListItemPrefix>
                     <SupervisedUserCircleIcon className="h-5 w-5" />
                   </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
+                  <Typography color="blue-gray" className="mr-auto font-normal mb-0">
                     Users
                   </Typography>
                 </AccordionHeader>
               </ListItem>
               <AccordionBody className="py-1">
                 <List className="p-0">
-                  <Link to={"/employees"} onClick={closeDrawer}>
+                  <Link className="text-reset text-decoration-none" to={"/employees"} onClick={closeDrawer}>
                   <ListItem >
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -123,7 +125,7 @@ function Sidebar() {
                   </ListItem>
                   </Link>
 
-                  <Link to={"/clients" } onClick={closeDrawer}>
+                  <Link className="text-reset text-decoration-none" to={"/clients" } onClick={closeDrawer}>
                   <ListItem>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
