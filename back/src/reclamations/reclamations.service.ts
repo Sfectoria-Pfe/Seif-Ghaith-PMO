@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateReclamationDto } from './dto/create-reclamation.dto';
 import { UpdateReclamationDto } from './dto/update-reclamation.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Client } from 'src/clients/entities/client.entity';
 
 @Injectable()
 export class ReclamationsService {
@@ -11,7 +12,7 @@ export class ReclamationsService {
   }
 
   findAll() {
-    return this.prisma.reclamation.findMany()
+    return this.prisma.reclamation.findMany({include:{Client:true}})
   }
 
   findOne(id: number) {

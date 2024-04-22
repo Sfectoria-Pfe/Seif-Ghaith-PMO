@@ -13,6 +13,8 @@ import Auth from "../apps/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
+import FicheIentervention from "../pages/FicheIentervention";
+import Reclamation from "../pages/Reclamation";
 
 function Router() {
   const user = useSelector((state) => state.auth.me);
@@ -39,6 +41,9 @@ function Router() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/edit" element={<EditProfile />} />
             <Route path="/client" element={<Client />} />
+            <Route path="/fiche" element={<FicheIentervention />} />
+            <Route path="/reclamation" element={<Reclamation/>}/>
+            
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>

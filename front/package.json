@@ -19,6 +19,8 @@
     "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@mui/x-data-grid": "^7.3.0",
+    "@mui/x-data-grid-generator": "^7.3.0",
     "@mui/x-date-pickers": "^7.2.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@testing-library/jest-dom": "^5.17.0",

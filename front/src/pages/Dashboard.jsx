@@ -7,7 +7,32 @@ import valide from '../images/valide.png';
 import enCours from '../images/enCours.png';
 import rejete from '../images/rejete.png';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import axios from 'axios';
+import Form from 'react-bootstrap/Form';
 function Dashboard() {
+  const [cover,setCover]=React.useState(null)
+  const handelFileChange = (e) =>{
+    if(e.target.files && e.target.files.length >0){
+      setCover(e.target.files[0])
+      console.log(e.target.files);
+    }
+  }
+  const handelFile =async(e) =>{
+    try{
+      const formData = new FormData();
+      formData.append("file", cover);
+
+      const response = await axios.post(
+        "http://localhost:4000/upload",
+        formData
+    )
+  console.log(response);}
+    catch(erorr){
+      console.log(erorr);
+    }
+
+  }
+
   return (
     <div className='px-4'>
       
@@ -97,7 +122,11 @@ function Dashboard() {
 
 <div>
 
-<DateCalendar  />
+<Form.Group controlId="formFileLg" className="mb-3">
+        <Form.Label>Large file input example</Form.Label>
+        <Form.Control type="file" size="lg" onChange={handelFileChange}/>
+      </Form.Group>
+      <button onClick={handelFile}>post img</button>
 </div>
 
 </div>
