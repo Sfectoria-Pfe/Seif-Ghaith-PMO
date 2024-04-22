@@ -18,6 +18,7 @@ import AddEmplyee from "../pages/Users/employees/views/AddEmplyee";
 import EmployeePage from "../pages/Users/employees/EmployeePage";
 import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
+import Inbox from "../pages/Inbox";
 
 function Router() {
   const user = useSelector((state) => state.auth.me);
@@ -52,6 +53,7 @@ function Router() {
             <Route index element={<Clients/>}/>
             <Route path="addclient" element={<AddClient/>}/>
             </Route>
+            <Route path="/inbox" element={<Inbox/>}/>
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>
