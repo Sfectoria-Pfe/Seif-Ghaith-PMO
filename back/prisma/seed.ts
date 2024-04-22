@@ -43,6 +43,9 @@ async function main() {
     },
   });
 
+
+  
+
   const salt = await bcrypt.genSalt();
   const Hpass = await bcrypt.hashSync('12345', salt);
   const userClient = await prisma.user.create({
