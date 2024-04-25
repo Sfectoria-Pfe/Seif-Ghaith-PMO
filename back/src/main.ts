@@ -5,7 +5,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.useStaticAssets('upload',{prefix:'/upload'})
 
   const config = new DocumentBuilder()
     .setTitle('gestionnaire de reclamation (SAV)')
@@ -15,6 +14,11 @@ async function bootstrap() {
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, doc);
   app.enableCors();
+
+
+  app.useStaticAssets('upload',{prefix:'/upload'})
+
   await app.listen(4000);
 }
 bootstrap();
+

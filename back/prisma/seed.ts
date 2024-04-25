@@ -22,6 +22,7 @@ async function main() {
       role: 'admin',
     },
   });
+  
   const khalil = await prisma.employee.create({
     data: {
       first_name: 'khalil',
@@ -43,6 +44,8 @@ async function main() {
     },
   });
 
+
+  
   const salt = await bcrypt.genSalt();
   const Hpass = await bcrypt.hashSync('12345', salt);
   const userClient = await prisma.user.create({
@@ -140,6 +143,7 @@ async function main() {
 
   console.log('seeeeeeeeeeedeeeeeed');
 }
+
 
 // execute the main function
 main()

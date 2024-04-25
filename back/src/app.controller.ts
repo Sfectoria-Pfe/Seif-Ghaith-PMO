@@ -9,6 +9,61 @@ import { extname } from 'path';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+@Post('upload')
+@UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+        destination: (req: any, file: any, cb: any) => {
+            const uploadPath = "upload";
+            // Create folder if doesn't exist
+            if (!existsSync(uploadPath)) {
+                mkdirSync(uploadPath);
+                console.log('mkdir upload');
+            }
+            cb(null, uploadPath);
+        },
+        filename: (req: any, file: any, cb: any) => {
+            // Generating a 32 random chars long string
+            const randomName = Array(32)
+                .fill(null)
+                .map(() => Math.round(Math.random() * 16).toString(16))
+                .join('');
+            // Calling the callback passing the random name generated with
+            // the original extension name
+            cb(null, `${randomName}${extname(file.originalname)}`); // Fixed template string
+        },
+    }),
+}))
+
+
+
+@Post('upload')
+@UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+        destination: (req: any, file: any, cb: any) => {
+            const uploadPath = "upload";
+            // Create folder if doesn't exist
+            if (!existsSync(uploadPath)) {
+                mkdirSync(uploadPath);
+                console.log('mkdir upload');
+            }
+            cb(null, uploadPath);
+        },
+        filename: (req: any, file: any, cb: any) => {
+            // Generating a 32 random chars long string
+            const randomName = Array(32)
+                .fill(null)
+                .map(() => Math.round(Math.random() * 16).toString(16))
+                .join('');
+            // Calling the callback passing the random name generated with
+            // the original extension name
+            cb(null, `${randomName}${extname(file.originalname)}`); // Fixed template string
+        },
+    }),
+}))
+
+
+ 
+
   @Get()
   getHello(): string {
     return this.appService.getHello();
@@ -55,4 +110,5 @@ export class AppController {
          }
          return data
   }
+
 }

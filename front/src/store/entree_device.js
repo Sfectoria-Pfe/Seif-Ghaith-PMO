@@ -6,6 +6,26 @@ import {
   putRequestWithHeader,
 } from "../helpers/axiosRequests";
 
+export const filterentree_lastname = createAsyncThunk(
+  "filterentree_lastname",
+  async (str) => {
+    try {
+      const res = await getRequestWithHeader("entree-devices");
+    return res.data.filter((elem) => {
+        return ( 
+          elem.Client.first_name?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.Client.last_name?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.title?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.description?.toUpperCase().includes(str.toUpperCase())
+        )
+      });
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getentree_devices = createAsyncThunk(
   "getentree_devices",
   async () => {
@@ -88,6 +108,9 @@ export const entree_deviceSlice = createSlice({
       state.entree_devices = action.payload;
     });
     builder.addCase(deleteentree_device.fulfilled, (state, action) => {
+      state.entree_devices = action.payload;
+    });
+    builder.addCase(filterentree_lastname.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });
   },

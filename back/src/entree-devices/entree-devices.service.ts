@@ -11,7 +11,7 @@ export class EntreeDevicesService {
   }
 
   findAll() {
-    return this.prisma.entreeDevice.findMany();
+    return this.prisma.entreeDevice.findMany({include:{Client:true}});
   }
 
   findOne(id: number) {

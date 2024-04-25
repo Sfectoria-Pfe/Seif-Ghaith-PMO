@@ -119,16 +119,6 @@ function Dashboard() {
 </Card>
 </div>
 </div> 
-
-<div>
-
-<Form.Group controlId="formFileLg" className="mb-3">
-        <Form.Label>Large file input example</Form.Label>
-        <Form.Control type="file" size="lg" onChange={handelFileChange}/>
-      </Form.Group>
-      <button onClick={handelFile}>post img</button>
-</div>
-
 </div>
     
     

@@ -1,5 +1,4 @@
 import React from "react";
-import "./Singup.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub,faGoogle} from '@fortawesome/free-brands-svg-icons'
 // import logo from "../images/aabb.png"
