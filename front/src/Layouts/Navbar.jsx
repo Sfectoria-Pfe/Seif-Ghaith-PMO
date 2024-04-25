@@ -21,19 +21,23 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import "./Navbar.css";
 import Sidebar from "./Sidebar";
 import { createElement, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
+    path : '/profile'
   },
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+    path : '/editprofile'
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
+    path : '/help'
   },
   {
     label: "Sign Out",
@@ -46,6 +50,7 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
   const myInfo=useSelector(state=>state.auth.me)
+  const navigate = useNavigate()
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -72,12 +77,15 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon,path }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
+           
               key={label}
-              onClick={closeMenu}
+              onClick={()=>{
+                navigate(path)
+                closeMenu()}}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"

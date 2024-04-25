@@ -27,16 +27,12 @@ import { Link } from "react-router-dom";
 export default function Employees() {
   const dispatch = useDispatch();
   const employeeStore = useSelector((state) => state.employee);
-
-  const [show, setShow] = useState(false);
-
-  const [update, setupdate] = useState(true);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
   useEffect(() => {
     dispatch(getemployees());
-  }, [update]);
+  }, [dispatch]);
   const Rows = employeeStore.employees?.map((row) => {
     return {
       id: row?.id,

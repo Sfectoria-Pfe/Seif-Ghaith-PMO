@@ -70,18 +70,18 @@ function AddEmplyee() {
         />
 
       <p className="mb-0 mt-3">Role</p>
-      <Select
-      label="choisir un role* "
+      <select
       name="role"
       onChange={formik.handleChange}
         value={formik.values.role}
         required
         >
+        <option value="" disabled selected>choisir un role * </option>
         <option value="receptionist">Receptionniste</option>
         <option value="technicien">Technicient</option>
         <option value="admin">admin</option>
         <option value="manager">manager</option>
-      </Select>
+      </select>
       <p className="mb-0 mt-3">Inserer une image</p>
       <input
         type="file"
@@ -100,7 +100,6 @@ function AddEmplyee() {
 
         </div>
         <div>
-
         <p> (<span className="text-danger">*</span>)  est obligatoire   </p>
         </div>
     </form>

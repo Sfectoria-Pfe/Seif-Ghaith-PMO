@@ -121,7 +121,6 @@ function Sidebar() {
                       <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Les employés
-
                   </ListItem>
                   </Link>
 
@@ -162,6 +161,7 @@ function Sidebar() {
               Les Orders
             </ListItem>
             <hr className="my-2 border-blue-gray-50" />
+           <Link className="text-reset text-decoration-none" to={"/inbox"} onClick={closeDrawer}>
             <ListItem>
               <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
@@ -177,6 +177,7 @@ function Sidebar() {
                 />
               </ListItemSuffix>
             </ListItem>
+                  </Link>
            
   
           </List>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./login.css";
 import LogoImg from "../images/LogoImg.png";
 import { useDispatch } from "react-redux";
 import { login } from "../store/auth";

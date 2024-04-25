@@ -9,7 +9,6 @@ module.exports = withMT({
     extend: {},
   },
   plugins: [
-    require('flowbite/plugin')
   ],
 })
 

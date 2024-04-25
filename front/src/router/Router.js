@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Dashboard from "../pages/Dashboard";
 import Clients from "../pages/Users/clients/views/Clients";
-import Profile from "../pages/Profile";
 import EditProfile from "../pages/EditProfile";
 import Main from "../apps/Main";
 import Auth from "../apps/Auth";
@@ -19,6 +18,7 @@ import EmployeePage from "../pages/Users/employees/EmployeePage";
 import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
+import Profile from "../pages/Profile/Profile";
 
 function Router() {
   const user = useSelector((state) => state.auth.me);
@@ -42,7 +42,7 @@ function Router() {
         {user ? (
           <Route path="/" element={<Main />}>
             <Route index element={<Dashboard />} />
-            <Route path="/Profile" element={<Profile />} />
+            <Route path="/Profile" element={<Profile/>} />
             <Route path="/edit" element={<EditProfile />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/employees" element={<EmployeePage/>}>
