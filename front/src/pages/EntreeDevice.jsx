@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { filterclients_lastname, getclients } from "../../../../store/client";
-import { useEffect, useState } from "react";
+import {getentree_device, getentree_devices,filterentree_lastname } from "../store/entree_device";
+import { useEffect, useState} from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
@@ -10,43 +10,40 @@ import {
   CardBody,
   Button,
 } from "@material-tailwind/react";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { Avatar } from "@mui/material";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
-export default function Clients() {
-  const [show, setShow] = useState(false);
+export default function Entree_device() {
   const [update,setupdate]=useState(true)
-  const Store = useSelector((state) => state.client);
-  // console.log(employeeStore)
+
+  
+  const Store = useSelector((state) => state.entree_device);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getclients());
+    dispatch(getentree_devices());
   }, [update]);
-  const Rows = Store.clients.map((row) => {
-    return {
-      id: row.id,
-      photo: row.photo,
-      first_name: row.first_name,
-      last_name: row.last_name,
-      email: row.email,
-    };
-  });
-  console.log(Store.clients);
+  console.log(Store.entree_devices,"this is store")
+  const Rows = Store.entree_devices?.map(entree_device => ({
+    
+      id: entree_device.id,   
+      client_name : entree_device.Client.first_name,
+      title: entree_device.title, 
+      description: entree_device.description,
+      createdAt: entree_device.createdAt,
+      statues: entree_device.statues,
+
+      
+    
+  }));
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
-    {
-      field: "photo",
-      headerName: "",
-      width: 30,
-      renderCell: (params) => {
-
-        return <Avatar alt="Remy Sharp" src={params.row.photo} />;
-      },
-    },
-    { field: "first_name", headerName: "First name", width: 150 },
-    { field: "last_name", headerName: "last_name", width: 150 },
-    { field: "email", headerName: "Email", width: 200 },
+    { field: "client_name", headerName: "Client Name", width: 150 },
+    { field: "title", headerName: "Title", width: 200 },
+    { field: "description", headerName: "Description", width: 200 },
+    { field: "createdAt", headerName: "createdAt", width: 200 },
+    { field: "statues", headerName: "statues", width: 200 },
+    
+    
   ];
 
   return (
@@ -55,15 +52,13 @@ export default function Clients() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Clients
+              Liste des Bandes Entrées
             </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              Voir des informations sur tous les Clients.
-            </Typography>
+            
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <Link to={"addclient"}>
-            <Button> Ajouter un Client </Button>
+          <Link to={"addBand"}>
+            <Button> Ajouter band entreé </Button>
 </Link>
           </div>
         </div>
@@ -71,7 +66,7 @@ export default function Clients() {
           <div className="w-full md:w-72">
             <Input
              onChange={(e) =>
-              dispatch(filterclients_lastname(e.target.value))
+                dispatch(filterentree_lastname(e.target.value))
             }
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -84,10 +79,10 @@ export default function Clients() {
           <DataGrid
             columns={columns}
             rows={Rows}
-            slots={{ toolbar: GridToolbar }}
           />
         </div>
       </CardBody>
     </Card>
   );
 }
+

@@ -3,23 +3,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Singup from "../pages/Singup";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import Dashboard from "../pages/Dashboard";
 import Clients from "../pages/Users/clients/views/Clients";
-import Profile from "../pages/Profile";
-import EditProfile from "../pages/EditProfile";
 import Main from "../apps/Main";
 import Auth from "../apps/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
-import Employees from "../pages/Users/employees/views/Employees";
-import AddEmplyee from "../pages/Users/employees/views/AddEmplyee";
-import EmployeePage from "../pages/Users/employees/EmployeePage";
-import ClientsPage from "../pages/Users/clients/ClientsPage";
+import FicheIentervention from "../pages/FicheIentervention";
+import EmployeePage from "../pages/Users/employees/EmployeePage"
+import AddEmplyee from "../pages/Users/employees/views/AddEmplyee"
+import ClientsPage from "../pages/Users/clients/ClientsPage"
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
-
+import Employees from "../pages/Users/employees/views/Employees";
+import EntreeDevice from "../pages/EntreeDevice";
+import Reclamations from "../pages/Reclamation/Reclamations";
+import AddReclamation from "../pages/Reclamation/AddReclamation";
+import ReclamationPage from "../pages/Reclamation/ReclamationPage";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -42,9 +43,13 @@ function Router() {
         {user ? (
           <Route path="/" element={<Main />}>
             <Route index element={<Dashboard />} />
-            <Route path="/Profile" element={<Profile />} />
-            <Route path="/edit" element={<EditProfile />} />
             <Route path="/clients" element={<Clients />} />
+            <Route path="/fiche" element={<FicheIentervention/>} />
+            <Route path="/reclamation" element={<ReclamationPage/>}>
+            <Route index element={<Reclamations/>}/>
+            <Route path="addreclamation" element={<AddReclamation/>}/>
+            </Route>
+
             <Route path="/employees" element={<EmployeePage/>}>
             <Route index element={<Employees/>}/>
             <Route path="addEmployee" element={<AddEmplyee/>}/>
@@ -54,6 +59,8 @@ function Router() {
             <Route path="addclient" element={<AddClient/>}/>
             </Route>
             <Route path="/inbox" element={<Inbox/>}/>
+            <Route path="/entreedevice" element={<EntreeDevice/>}/>
+
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>

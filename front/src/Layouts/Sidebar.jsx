@@ -137,18 +137,22 @@ function Sidebar() {
                 </List>
               </AccordionBody>
             </Accordion>
+            <Link className="text-reset text-decoration-none" to={"/entreedevice" } onClick={closeDrawer}>
             <ListItem>
               <ListItemPrefix>
                 <DescriptionOutlinedIcon className="h-5 w-5" />
               </ListItemPrefix>
               Les Bande d'entrée
             </ListItem>
+            </Link>
+            <Link className="text-reset text-decoration-none" to={"/reclamation" } onClick={closeDrawer}>
             <ListItem>
               <ListItemPrefix>
                 <ContactEmergencyOutlinedIcon className="h-5 w-5" />
               </ListItemPrefix>
               Les Reclamations
             </ListItem>
+            </Link>
             <ListItem>
               <ListItemPrefix>
                 <FileOpenOutlinedIcon className="h-5 w-5" />
