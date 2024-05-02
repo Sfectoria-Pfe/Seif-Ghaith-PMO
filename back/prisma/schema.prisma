@@ -37,6 +37,8 @@ model Employee {
   id         Int     @id @default(autoincrement())
   first_name String
   last_name  String
+  adresse    String
+  numero     String
   photo      String  @db.LongText
   email      String  @unique
   role       Role    @default(technicien)

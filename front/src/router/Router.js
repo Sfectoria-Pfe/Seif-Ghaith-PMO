@@ -17,10 +17,16 @@ import ClientsPage from "../pages/Users/clients/ClientsPage"
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
 import Employees from "../pages/Users/employees/views/Employees";
-import EntreeDevice from "../pages/EntreeDevice";
-import Reclamations from "../pages/Reclamation/Reclamations";
-import AddReclamation from "../pages/Reclamation/AddReclamation";
+import Reclamations from "../pages/Reclamation/views/Reclamations";
+import AddReclamation from "../pages/Reclamation/views/AddReclamation";
 import ReclamationPage from "../pages/Reclamation/ReclamationPage";
+import EntreePage from "../pages/EntreeDevice/EntreePage";
+import EntreeDevicee from "../pages/EntreeDevice/views/EntreeDevicee";
+import AddEntree from "../pages/EntreeDevice/views/AddEntree";
+import EditProfile from "../pages/profile/view/EditProfile";
+import ProfilePage from "../pages/profile/ProfilePage";
+import Profile from "../pages/profile/view/Profile";
+import InvoiceForm from "../pages/InvoiceForm";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -59,7 +65,16 @@ function Router() {
             <Route path="addclient" element={<AddClient/>}/>
             </Route>
             <Route path="/inbox" element={<Inbox/>}/>
-            <Route path="/entreedevice" element={<EntreeDevice/>}/>
+            <Route path="/entreedevice" element={<EntreePage/>}>
+            <Route index element={<EntreeDevicee/>}/>
+            <Route path="addband" element={<AddEntree/>}/>
+            </Route>
+            <Route path="/profile" element={<ProfilePage/>}>
+              <Route index element={<Profile/>}/>
+              <Route path="editprofile" element={<EditProfile/>}/>
+
+            </Route>
+            <Route path="/order" element={<InvoiceForm/>}/>
 
           </Route>
         ) : (

@@ -18,5 +18,11 @@ export class CreateEmployeeDto {
     @ApiProperty()
     @IsString()
     role: Role;
+    @ApiProperty()
+    @IsString()
+    numero: string;
+    @ApiProperty()
+    @IsString()
+    adresse: string;
     
 }

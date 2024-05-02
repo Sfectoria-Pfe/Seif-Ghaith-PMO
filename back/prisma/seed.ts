@@ -11,7 +11,6 @@ async function main() {
       email: 'client@sfectoria.com',
     },
   });
-
   const aymen = await prisma.employee.create({
     data: {
       first_name: 'Aymen',
@@ -20,9 +19,11 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'aymen.amri@sfectoria.com',
       role: 'admin',
+      adresse:'montplaisir,bachaCenter',
+      numero:'90311890'
+      
     },
   });
-  
   const khalil = await prisma.employee.create({
     data: {
       first_name: 'khalil',
@@ -31,6 +32,9 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'khalil.kraiem@sfectoria.com',
       role: 'manager',
+      adresse:'montplaisir,bachaCenter',
+      numero:'50111290',
+      
     },
   });
   const seif = await prisma.employee.create({
@@ -41,11 +45,13 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'seif.boughrara@sfectoria.com',
       role: 'technicien',
+      adresse:'montplaisir,bachaCenter',
+      numero:'20300200'
+      
+
     },
   });
 
-
-  
   const salt = await bcrypt.genSalt();
   const Hpass = await bcrypt.hashSync('12345', salt);
   const userClient = await prisma.user.create({
@@ -79,6 +85,7 @@ async function main() {
       employeeId: aymen.id,
     },
   });
+  
 
   const reclamation = await prisma.reclamation.create({
     data: {
@@ -124,7 +131,6 @@ async function main() {
       etapeId: 1,
     },
   });
-
   const Order = await prisma.order.create({
     data: {
       name: 'etape',
@@ -143,8 +149,6 @@ async function main() {
 
   console.log('seeeeeeeeeeedeeeeeed');
 }
-
-
 // execute the main function
 main()
   .catch((e) => {

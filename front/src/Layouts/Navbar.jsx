@@ -30,6 +30,7 @@ const profileMenuItems = [
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+    path:"/editprofile"
   },
   {
     label: "Help",
@@ -46,6 +47,7 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
   const myInfo=useSelector(state=>state.auth.me)
+  console.log(myInfo);
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -72,7 +74,7 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon,path }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
