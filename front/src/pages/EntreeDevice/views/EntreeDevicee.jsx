@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import {getreclamations,filterreclamation_lastname } from "../../store/reclamation";
-import { useEffect, useState } from "react";
+import {getentree_devices,filterentree_lastname } from "../../../store/entree_device";
+import { useEffect, useState} from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
@@ -13,32 +13,43 @@ import {
 import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
-export default function Reclamations() {
+export default function Entree_devicee() {
+  const [row, setRow] = useState([]);
+
   
-  const [update,setupdate]=useState(true)
-  const Store = useSelector((state) => state.reclamation);
-  console.log(Store,"this is store")
+  const Store = useSelector((state) => state.entree_device.entree_devices);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getreclamations());
-  }, [update,dispatch]);
-  const Rows = Store.reclamations?.map(reclamation => ({
-    
-      id: reclamation.id,
-      clientId: reclamation.clientId,   
-      client_name : reclamation.Client?.first_name,
-      title: reclamation.titel, 
-      description: reclamation.description,
-      createdAt: reclamation.createdAt
+    dispatch(getentree_devices());
+  }, []);
+  useEffect(() => {
+    setRow(Store);
 
+  }, [Store]);  
+  console.log(row ,"this is store")
+  // const Rows = {
     
-  }));
+  //     id: Store.entree_device.id,   
+  //     client_name : entree_device.Client.first_name,
+  //     title: entree_device.title, 
+  //     description: entree_device.description,
+  //     createdAt: entree_device.createdAt,
+  //     statues: entree_device.statues,
+
+      
+    
+  // };
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
-    { field: "client_name", headerName: "Client Name", width: 150 },
+    { field: "client_name", headerName: "Client Name", width: 150,valueGetter: (value, row) => {
+      return value.row.Client?.first_name;
+    },},
     { field: "title", headerName: "Title", width: 200 },
     { field: "description", headerName: "Description", width: 200 },
     { field: "createdAt", headerName: "createdAt", width: 200 },
+    { field: "statues", headerName: "statues", width: 200 },
+    
+    
   ];
 
   return (
@@ -47,13 +58,13 @@ export default function Reclamations() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Reclamations
+              Liste des Bandes Entrées
             </Typography>
             
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <Link to={"addreclamation"}>
-            <Button> Ajouter une reclamation </Button>
+          <Link to={"addband"}>
+            <Button> Ajouter band entreé </Button>
 </Link>
           </div>
         </div>
@@ -61,7 +72,7 @@ export default function Reclamations() {
           <div className="w-full md:w-72">
             <Input
              onChange={(e) =>
-              dispatch(filterreclamation_lastname(e.target.value))
+                dispatch(filterentree_lastname(e.target.value))
             }
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -73,7 +84,7 @@ export default function Reclamations() {
         <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             columns={columns}
-            rows={Rows}
+            rows={row}
             slots={{ toolbar: GridToolbar }}
           />
         </div>
@@ -81,3 +92,4 @@ export default function Reclamations() {
     </Card>
   );
 }
+

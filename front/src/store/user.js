@@ -75,6 +75,7 @@ export const userSlice = createSlice({
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.users = action.payload;
     });
+    
   },
 });
 export default userSlice.reducer;

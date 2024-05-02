@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import {getentree_device, getentree_devices,filterentree_lastname } from "../store/entree_device";
-import { useEffect, useState} from "react";
+import {
+  getreclamations,
+  filterreclamation_lastname,
+} from "../../../store/reclamation";
+import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
@@ -10,39 +13,52 @@ import {
   CardBody,
   Button,
 } from "@material-tailwind/react";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
-export default function Entree_device() {
-  const [update,setupdate]=useState(true)
-  
-  const Store = useSelector((state) => state.entree_device);
+export default function Reclamations() {
+  const [row, setRow] = useState([]);
+  const Store = useSelector((state) => state.reclamation?.reclamations);
+  console.log(Store, "this is store");
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getentree_devices());
-  }, [update]);
-  console.log(Store.entree_devices,"this is store")
-  const Rows = Store.entree_devices?.map(entree_device => ({
-    
-      id: entree_device.id,   
-      client_name : entree_device.Client.first_name,
-      title: entree_device.title, 
-      description: entree_device.description,
-      createdAt: entree_device.createdAt,
-      statues: entree_device.statues,
 
-      
-    
-  }));
+  useEffect(() => {
+    dispatch(getreclamations());
+
+  }, [dispatch]);
+
+  useEffect(() => {
+    // setupdate(false)
+    setRow(Store);
+
+  }, [Store]);  
+
+  console.log(row, "row");
+  // const Rows = Store.reclamations?.map(row => ({
+
+  //     id: row.id,
+  //     clientId: row.clientId,
+  //     client_name : row.Client?.first_name,
+  //     title: row.titel,
+  //     description: row.description,
+  //     createdAt: row.createdAt
+
+  // }));
+
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
-    { field: "client_name", headerName: "Client Name", width: 150 },
-    { field: "title", headerName: "Title", width: 200 },
+
+    {
+      field: "client_name",
+      headerName: "Client Name",
+      width: 150,
+      valueGetter: (value, row) => {
+        return value.row.Client?.first_name;
+      },
+    },
+    { field: "titel", headerName: "Title", width: 200 },
     { field: "description", headerName: "Description", width: 200 },
     { field: "createdAt", headerName: "createdAt", width: 200 },
-    { field: "statues", headerName: "statues", width: 200 },
-    
-    
   ];
 
   return (
@@ -51,22 +67,21 @@ export default function Entree_device() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Bandes Entrées
+              Liste des Reclamations
             </Typography>
-            
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <Link to={"addBand"}>
-            <Button> Ajouter band entreé </Button>
-</Link>
+            <Link to={"addreclamation"}>
+              <Button> Ajouter une reclamation </Button>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
             <Input
-             onChange={(e) =>
-                dispatch(filterentree_lastname(e.target.value))
-            }
+              onChange={(e) =>
+                dispatch(filterreclamation_lastname(e.target.value))
+              }
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
             />
@@ -77,11 +92,11 @@ export default function Entree_device() {
         <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             columns={columns}
-            rows={Rows}
+            rows={row}
+            slots={{ toolbar: GridToolbar }}
           />
         </div>
       </CardBody>
     </Card>
   );
 }
-
