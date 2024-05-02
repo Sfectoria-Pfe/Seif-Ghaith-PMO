@@ -17,12 +17,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
 
-import {
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+// import {
+//   Dialog,
+//   DialogHeader,
+//   DialogBody,
+//   DialogFooter,
+// } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 export default function Employees() {
   const dispatch = useDispatch();
@@ -114,7 +114,7 @@ export default function Employees() {
           />
         </div>
       </CardBody>
-      <Dialog open={open} handler={handleOpen}>
+      {/* <Dialog open={open} handler={handleOpen}>
         <DialogHeader>Its a simple dialog.</DialogHeader>
         <DialogBody>
           The key to more success is to have a lot of pillows. Put it this way,
@@ -135,7 +135,7 @@ export default function Employees() {
             <span>Confirm</span>
           </Button>
         </DialogFooter>
-      </Dialog>
+      </Dialog> */}
     </Card>
   );
 }

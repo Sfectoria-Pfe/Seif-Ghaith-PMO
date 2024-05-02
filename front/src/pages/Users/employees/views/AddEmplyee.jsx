@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Form from 'react-bootstrap/Form';
 import { useFormik } from "formik";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import axios from "axios";
@@ -70,7 +71,8 @@ function AddEmplyee() {
         />
 
       <p className="mb-0 mt-3">Role</p>
-      <select
+      <Form.Select
+      className="custom-select"
       name="role"
       onChange={formik.handleChange}
         value={formik.values.role}
@@ -81,7 +83,7 @@ function AddEmplyee() {
         <option value="technicien">Technicient</option>
         <option value="admin">admin</option>
         <option value="manager">manager</option>
-      </select>
+      </Form.Select>
       <p className="mb-0 mt-3">Inserer une image</p>
       <input
         type="file"
