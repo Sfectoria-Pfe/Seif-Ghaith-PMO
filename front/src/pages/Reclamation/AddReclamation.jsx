@@ -8,8 +8,6 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { getclients } from '../../store/client';
 
-
-
 function AddReclamation() {
   const Store = useSelector((state) => state.client);
   const dispatch = useDispatch();

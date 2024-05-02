@@ -1,15 +1,6 @@
-.obj{
-    width: 238px !important;
-    height:43px !important;
-    border-radius:10px;
-    margin-bottom: 8px;
-    background-color: #cecfd0;
-}
-.inbox{
-width: 90px;
-height: 52px;
-}
-
+/* body{
+background-color: #F5F6FA;    
+} */
 .pinbox{
 font-family: Nunito Sans;
 font-size: 32px;
@@ -19,14 +10,16 @@ text-align: left;
 
 }
 .main{
-    width: 1020px;
-height: 840px;
-background-color: #F5F6FA;
+background-color:white;
 border-radius: 10px;
+height: 700px;
 }
 .botn{
-    background-color: #21D4FD;
-background-image: linear-gradient(270deg, #21D4FD 0%, #B721FF 100%);
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0;
+margin: 0;
 height:43px;
 width:238px;
 border-Radius:10px

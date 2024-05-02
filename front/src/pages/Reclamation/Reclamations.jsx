@@ -14,6 +14,7 @@ import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
 export default function Reclamations() {
+  
   const [update,setupdate]=useState(true)
   const Store = useSelector((state) => state.reclamation);
   console.log(Store,"this is store")

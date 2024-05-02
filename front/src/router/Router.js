@@ -11,16 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
 import FicheIentervention from "../pages/FicheIentervention";
-import EmployeePage from "../pages/Users/employees/EmployeePage"
-import AddEmplyee from "../pages/Users/employees/views/AddEmplyee"
-import ClientsPage from "../pages/Users/clients/ClientsPage"
+import EmployeePage from "../pages/Users/employees/EmployeePage";
+import AddEmplyee from "../pages/Users/employees/views/AddEmplyee";
+import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
-import Employees from "../pages/Users/employees/views/Employees";
-import EntreeDevice from "../pages/EntreeDevice";
+import Profile from "../pages/Profile/Profile";
+import ReclamationPage from "../pages/Reclamation/ReclamationPage";
 import Reclamations from "../pages/Reclamation/Reclamations";
 import AddReclamation from "../pages/Reclamation/AddReclamation";
-import ReclamationPage from "../pages/Reclamation/ReclamationPage";
+import Employees from "../pages/Users/employees/views/Employees";
+import Entree_device from "../pages/EntreeDevice";
+
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -43,29 +45,29 @@ function Router() {
         {user ? (
           <Route path="/" element={<Main />}>
             <Route index element={<Dashboard />} />
+            <Route path="/Profile" element={<Profile />} />
             <Route path="/clients" element={<Clients />} />
-            <Route path="/fiche" element={<FicheIentervention/>} />
-            <Route path="/reclamation" element={<ReclamationPage/>}>
-            <Route index element={<Reclamations/>}/>
-            <Route path="addreclamation" element={<AddReclamation/>}/>
+            <Route path="/fiche" element={<FicheIentervention />} />
+            <Route path="/reclamationS" element={<ReclamationPage />}>
+              <Route index element={<Reclamations />} />
+              <Route path="addreclamation" element={<AddReclamation />} />
             </Route>
 
-            <Route path="/employees" element={<EmployeePage/>}>
-            <Route index element={<Employees/>}/>
-            <Route path="addEmployee" element={<AddEmplyee/>}/>
+            <Route path="/employees" element={<EmployeePage />}>
+              <Route index element={<Employees />} />
+              <Route path="addEmployee" element={<AddEmplyee />} />
             </Route>
-            <Route path="/clients" element={<ClientsPage/>}>
-            <Route index element={<Clients/>}/>
-            <Route path="addclient" element={<AddClient/>}/>
+            <Route path="/clients" element={<ClientsPage />}>
+              <Route index element={<Clients />} />
+              <Route path="addclient" element={<AddClient />} />
             </Route>
-            <Route path="/inbox" element={<Inbox/>}/>
-            <Route path="/entreedevice" element={<EntreeDevice/>}/>
-
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/entreedevices" element={<Entree_device />} />
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>
             <Route index element={<Login />} />
-            <Route path="/register" element={<Singup/>} />
+            <Route path="/register" element={<Singup />} />
           </Route>
         )}
       </Routes>

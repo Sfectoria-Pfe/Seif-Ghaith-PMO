@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 
 export default function Entree_device() {
   const [update,setupdate]=useState(true)
-
   
   const Store = useSelector((state) => state.entree_device);
   const dispatch = useDispatch();
