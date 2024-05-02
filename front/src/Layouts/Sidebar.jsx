@@ -1,195 +1,375 @@
-import React from "react";
-import {
-  IconButton,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Drawer,
-  Card,
-} from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  Bars3Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import DvrIcon from "@mui/icons-material/Dvr";
-import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined";
-import ContactEmergencyOutlinedIcon from "@mui/icons-material/ContactEmergencyOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
-import { Link } from "react-router-dom";
-function Sidebar() {
-  const [open, setOpen] = React.useState(0);
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import { Link, Outlet } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import StarBorder from "@mui/icons-material/StarBorder";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Collapse } from "@mui/material";
+import "./Sidebar.css";
+import { IoNotificationsOutline } from "react-icons/io5";
+import GroupIcon from '@mui/icons-material/Group';
+import AccountMenu from "../components/AccountMenu";
+import ArticleIcon from '@mui/icons-material/Article';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+const drawerWidth = 280;
 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+export default function MiniDrawer() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const openDrawer = () => setIsDrawerOpen(true);
-  const closeDrawer = () => setIsDrawerOpen(false);
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const [openn, setOpenn] = React.useState(false);
+  const handleClickClose = () => {
+    setOpenn(false);
+  };
+  const handleClickopenn = () => {
+    setOpenn(!openn);
+  };
 
   return (
-    <div style={{ height: "50", width: "50" }}>
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
-        {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
-        )}
-      </IconButton>
-      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
-        <Card
-          color="transparent"
-          shadow={false}
-          className="h-[calc(100vh-2rem)] w-full p-4"
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar
+          className="d-flex justify-content-between"
+          sx={{ backgroundColor: "white" }}
         >
-          <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://dataserv.tn/wp-content/uploads/2022/02/cropped-2-1-e1644072106944-144x137.png"
-              alt="brand"
-              className="h-8 w-8 bg-blue-gray-50"
-            />
-            <Typography variant="h5" color="blue-gray">
-              DataServ
-            </Typography>
-          </div>
-          <List>
-            <Accordion
-              open={open === 1}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 1 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-              >
-              <Link className="text-reset text-decoration-none" to={"/"} onClick={closeDrawer} >
-              <ListItem >
-                <ListItemPrefix>
-                  <PresentationChartBarIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Dashboard
-              </ListItem>
-              </Link>
-            </Accordion>
-            <Accordion
-              open={open === 2}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 2 ? "rotate-180" : ""
-                  }`}
-                />
-              }
+          <div className="d-flex ">
+            <IconButton
+              color="black"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: "none" }),
+              }}
             >
-              <ListItem className="p-0" selected={open === 2}>
-                <AccordionHeader
-                  onClick={() => handleOpen(2)}
-                  className="border-b-0 p-3"
+              <MenuIcon />
+            </IconButton>
+            {!open && <p className="logodata">DataServ</p>}
+          </div>
+          <div className="d-flex align-items-center">
+            <Link className="text-reset">
+              <div className="menu-item d-flex align-items-center gap-2 rounded-full lg-rounded-full border p-2">
+                <IoNotificationsOutline size={20} className=" text-black" />
+                {/* <span className="text-gray-900">Notification</span> */}
+              </div>
+            </Link>
+            
+            <AccountMenu />
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader className="d-flex justify-content-between">
+          <p className="pl-2 logodata"> DataServ </p>
+          <IconButton
+            onClick={() => {
+              handleDrawerClose();
+              handleClickClose();
+            }}
+          >
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <Link to={"/"} className="text-decoration-none text-reset">
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Dashboard"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+            </Link>
+          </ListItem>
+
+          <ListItemButton
+            onClick={() => {
+              handleClickopenn();
+              handleDrawerOpen();
+            }}
+          >
+            <ListItemIcon>
+              <GroupIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Users" />
+            {openn ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+
+          <Collapse in={openn} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+            <Link to={"/clients"} className="text-decoration-none text-reset">
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Les Clients" />
+              </ListItemButton>
+</Link>
+              <Link to={"/employees"} className="text-decoration-none text-reset">
+
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Les employés" />
+              </ListItemButton>
+              </Link>
+            </List>
+          </Collapse>
+
+          <Link to={"/entreedevices"} className="text-decoration-none text-reset">
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                                <ContentPasteIcon />
+
+              </ListItemIcon>
+              <ListItemText
+                primary={"Les Bande d'entrée"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem> 
+</Link>
+
+<Link to={"/reclamations"} className="text-decoration-none text-reset">
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <InsertPageBreakIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Les Reclamations"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          </Link>
+          <Link to={"/fiches_intervention"} className="text-decoration-none text-reset">
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ArticleIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Les Fiche d'interventions"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+</Link>
+<Link to={"/orders"} className="text-decoration-none text-reset">
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AnalyticsIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Les Orders"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          </Link>
+
+        </List>
+        <Divider />
+        <List>
+            <ListItem  disablePadding sx={{ display: "block" }}>
+            <Link to={"/inbox"} className="text-decoration-none text-reset">
+
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
                 >
-                  <ListItemPrefix>
-                    <SupervisedUserCircleIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal mb-0">
-                    Users
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <Link className="text-reset text-decoration-none" to={"/employees"} onClick={closeDrawer}>
-                  <ListItem >
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Les employés
-
-                  </ListItem>
-                  </Link>
-
-                  <Link className="text-reset text-decoration-none" to={"/clients" } onClick={closeDrawer}>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Les Clients
-                  </ListItem>
-                  </Link>
-                 
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Link className="text-reset text-decoration-none" to={"/entreedevice" } onClick={closeDrawer}>
-            <ListItem>
-              <ListItemPrefix>
-                <DescriptionOutlinedIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Les Bande d'entrée
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary={"heyy"} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+              </Link>
             </ListItem>
-            </Link>
-            <Link className="text-reset text-decoration-none" to={"/reclamation" } onClick={closeDrawer}>
-            <ListItem>
-              <ListItemPrefix>
-                <ContactEmergencyOutlinedIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Les Reclamations
-            </ListItem>
-            </Link>
-            <ListItem>
-              <ListItemPrefix>
-                <FileOpenOutlinedIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Les Fiche d'interventions
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <DvrIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Les Orders
-            </ListItem>
-            <hr className="my-2 border-blue-gray-50" />
-            <ListItem>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
-                <Chip
-                  value="14"
-                  size="sm"
-                  variant="ghost"
-                  color="blue-gray"
-                  className="rounded-full"
-                />
-              </ListItemSuffix>
-            </ListItem>
-           
-  
-          </List>
-        </Card>
+        </List>
       </Drawer>
-    </div>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        <Outlet />
+      </Box>
+    </Box>
   );
 }
-
-
-
-export default Sidebar;

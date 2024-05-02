@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id         Int       @id @default(autoincrement())
   password   String
@@ -20,17 +19,17 @@ model User {
 }
 
 model Client {
-  id           Int                  @id @default(autoincrement())
-  first_name   String
-  last_name    String
-  email        String               @unique
-  photo        String               @db.LongText
-  createdAt    DateTime             @default(now())
-  reclamation  Reclamation[]
-  fiche        Fiche_intervention[]
-  user         User[]
-  entreeDevice EntreeDevice[]
-  order        Order[]
+  id              Int               @id @default(autoincrement())
+  first_name      String
+  last_name       String
+  email           String            @unique
+  photo           String            @db.LongText
+  createdAt       DateTime          @default(now())
+  reclamation     Reclamation[]
+  orderReparation OrderReparation[]
+  user            User[]
+  entreeDevice    EntreeDevice[]
+  order           Order[]
 }
 
 model Employee {
@@ -47,14 +46,14 @@ model Employee {
 }
 
 model Reclamation {
-  id          Int                  @id @default(autoincrement())
-  image       String?              @db.LongText
+  id          Int               @id @default(autoincrement())
+  image       String?           @db.LongText
   titel       String
   description String
-  createdAt   DateTime             @default(now())
-  Client      Client?              @relation(fields: [clientId], references: [id])
+  createdAt   DateTime          @default(now())
+  Client      Client?           @relation(fields: [clientId], references: [id])
   clientId    Int?
-  fiche       Fiche_intervention[]
+  fiche       OrderReparation[]
 }
 
 model EntreeDevice {
@@ -71,49 +70,65 @@ model EntreeDevice {
   etapeId     Int?
 }
 
-model Fiche_intervention {
-  id            Int          @id @default(autoincrement())
+model OrderReparation {
+  id            Int                 @id @default(autoincrement())
   title         String
   rapport       String
   description   String
   status        String
   date          DateTime?
-  Client        Client?      @relation(fields: [clientId], references: [id])
+  Client        Client?             @relation(fields: [clientId], references: [id])
   clientId      Int?
-  Reclamation   Reclamation? @relation(fields: [reclamationId], references: [id])
+  Reclamation   Reclamation?        @relation(fields: [reclamationId], references: [id])
   reclamationId Int?
   etape         Etape[]
   order         Order[]
+  fiches        FicheIntervention[]
+}
+
+model FicheIntervention {
+  id                Int                        @id @default(autoincrement())
+  OrderReparation   OrderReparation?           @relation(fields: [orderReparationId], references: [id])
+  orderReparationId Int?
+  details           FicheInterventionDetails[]
+  status            String
+}
+
+model FicheInterventionDetails {
+  id Int @id @default(autoincrement())
+
+  FicheIntervention   FicheIntervention? @relation(fields: [ficheInterventionId], references: [id])
+  ficheInterventionId Int?
 }
 
 model Etape {
-  id                   Int                 @id @default(autoincrement())
-  title                String
-  ongoing              Boolean
-  rapport              String
-  description          String
-  status               String
-  type                 String
-  date                 DateTime
-  createdAt            DateTime            @default(now())
-  Employee             Employee?           @relation(fields: [employeeId], references: [id])
-  employeeId           Int?
-  Fiche_intervention   Fiche_intervention? @relation(fields: [fiche_interventionId], references: [id])
-  fiche_interventionId Int?
-  entreeDevice         EntreeDevice[]
+  id                Int              @id @default(autoincrement())
+  title             String
+  ongoing           Boolean
+  rapport           String
+  description       String
+  status            String
+  type              String
+  date              DateTime
+  createdAt         DateTime         @default(now())
+  Employee          Employee?        @relation(fields: [employeeId], references: [id])
+  employeeId        Int?
+  OrderReparation   OrderReparation? @relation(fields: [orderReparationId], references: [id])
+  orderReparationId Int?
+  entreeDevice      EntreeDevice[]
 }
 
 model Order {
-  id                   Int                 @id @default(autoincrement())
-  name                 String
-  description          String
-  createdAt            DateTime            @default(now())
-  confirm              String
-  orderline            Orderline[]
-  Client               Client?             @relation(fields: [clientId], references: [id])
-  clientId             Int?
-  Fiche_intervention   Fiche_intervention? @relation(fields: [fiche_interventionId], references: [id])
-  fiche_interventionId Int?
+  id                Int              @id @default(autoincrement())
+  name              String
+  description       String
+  createdAt         DateTime         @default(now())
+  confirm           String
+  orderline         Orderline[]
+  Client            Client?          @relation(fields: [clientId], references: [id])
+  clientId          Int?
+  orderReparation   OrderReparation? @relation(fields: [orderReparationId], references: [id])
+  orderReparationId Int?
 }
 
 model Orderline {

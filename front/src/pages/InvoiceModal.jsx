@@ -24,7 +24,7 @@ function GenerateInvoice() {
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
     pdf.save('invoice-001.pdf');
   });
- }
+}
 
 class InvoiceModal extends React.Component {
   constructor(props) {
@@ -133,11 +133,16 @@ class InvoiceModal extends React.Component {
           </div>
           <div className="pb-4 px-4">
             <Row>
-              <Col md={6}>
+              <Col md={6} className="text-center">
+              <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" >
+              <BiPaperPlane style={{width: '16px', height: '16px', marginTop: '-3px'}}/>
+                  Envoyer
+                </Button>
+
               </Col>
-              <Col md={6}>
+              <Col md={6} className="text-center">
                 <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
-                  <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} className="me-2"/>
+                  <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} />
                   Download Copy
                 </Button>
               </Col>

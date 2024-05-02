@@ -7,14 +7,10 @@ import {
 } from "../helpers/axiosRequests";
 
 export const login = createAsyncThunk("login", async (body,{dispatch}) => {
-  // try {
     const res = await postRequestWithHeader("auth/login", body);
     console.log(res.data,'token');
     localStorage.setItem("token", res.data);
     dispatch(getMe())
-  // } catch (error) {
-  //   console.log(error);
-  // }
 });
 
 export const getMe = createAsyncThunk("getMe", async (id) => {

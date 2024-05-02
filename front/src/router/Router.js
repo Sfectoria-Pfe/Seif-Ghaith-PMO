@@ -26,7 +26,7 @@ import AddEntree from "../pages/EntreeDevice/views/AddEntree";
 import EditProfile from "../pages/profile/view/EditProfile";
 import ProfilePage from "../pages/profile/ProfilePage";
 import Profile from "../pages/profile/view/Profile";
-import InvoiceForm from "../pages/InvoiceForm";
+import Invoice from "../pages/Invoice";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ function Router() {
               <Route path="editprofile" element={<EditProfile/>}/>
 
             </Route>
-            <Route path="/order" element={<InvoiceForm/>}/>
+            <Route path="/orders" element={<Invoice/>}/>
 
           </Route>
         ) : (
