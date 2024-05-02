@@ -14,7 +14,8 @@ export const filteremployees_lastname = createAsyncThunk("filteremployees_lastna
           elem.first_name.toUpperCase().includes(str.toUpperCase()) ||
           elem.last_name.toUpperCase().includes(str.toUpperCase())
       );
-  });  } catch (error) {
+  })
+} catch (error) {
     console.log(error);
   }
 });

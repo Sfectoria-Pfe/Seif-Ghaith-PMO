@@ -32,7 +32,7 @@ export default function Clients() {
       email: row.email,
     };
   });
-  // console.log(employeeStore.employees);
+  console.log(Store.clients);
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
     {
