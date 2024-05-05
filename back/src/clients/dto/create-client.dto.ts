@@ -20,4 +20,10 @@ export class CreateClientDto {
   @ApiProperty()
   @IsDate()
   createdAt :Date;
+  @ApiProperty()
+  @IsString()
+  numero: string;
+  @ApiProperty()
+  @IsString()
+  adresse: string;
 }

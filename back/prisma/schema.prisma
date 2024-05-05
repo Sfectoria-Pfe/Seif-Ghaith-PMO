@@ -24,6 +24,8 @@ model Client {
   last_name       String
   email           String            @unique
   photo           String            @db.LongText
+   adresse    String
+  numero     String
   createdAt       DateTime          @default(now())
   reclamation     Reclamation[]
   orderReparation OrderReparation[]

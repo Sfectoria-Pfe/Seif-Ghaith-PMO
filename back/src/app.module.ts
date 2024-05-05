@@ -12,9 +12,11 @@ import { OrdersModule } from './orders/orders.module';
 import { OrderLinesModule } from './order-lines/order-lines.module';
 import { FicheInterventionsModule } from './fiche-interventions/fiche-interventions.module';
 import { AuthModule } from './auth/auth.module';
+import { OrderreparationsModule } from './orderreparations/orderreparations.module';
+import { FicheinterventionDetailsModule } from './ficheintervention-details/ficheintervention-details.module';
 
 @Module({
-  imports: [PrismaModule, ClientsModule,  ReclamationsModule, UsersModule, EmployeesModule, EntreeDevicesModule, EtapesModule, OrdersModule, OrderLinesModule, FicheInterventionsModule, AuthModule],
+  imports: [PrismaModule, ClientsModule,  ReclamationsModule, UsersModule, EmployeesModule, EntreeDevicesModule, EtapesModule, OrdersModule, OrderLinesModule, FicheInterventionsModule, AuthModule, OrderreparationsModule, FicheinterventionDetailsModule],
   controllers: [AppController],
   providers: [AppService],
 })

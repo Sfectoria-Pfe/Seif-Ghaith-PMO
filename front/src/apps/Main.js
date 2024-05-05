@@ -4,7 +4,7 @@ import MiniDrawer from "../Layouts/Sidebar";
 
 function Main() {
   return (
-      <div>
+      <div >
       <MiniDrawer/>
       </div>
   );

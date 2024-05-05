@@ -22,7 +22,7 @@ function AddClient() {
       console.log(values.photo)
       const im = new FormData();
       im.append("file",file);
-      const response = await axios.post("http://localhost:3000/upload", im);
+      const response = await axios.post("http://localhost:4000/upload", im);
       const productWithCover = { ...values, photo: response.data.path };
       console.log("Form submitted with data:", productWithCover);
       dispatch(addclient(productWithCover));

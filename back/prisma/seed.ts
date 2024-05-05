@@ -9,6 +9,8 @@ async function main() {
       photo:
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       email: 'client@sfectoria.com',
+      adresse:'montplaisir,bachaCenter',
+      numero:'50111290',
     },
   });
   const aymen = await prisma.employee.create({
@@ -96,7 +98,7 @@ async function main() {
         'https://www.omen.com/content/dam/sites/omen/worldwide/desktops/2022-desktop-home-2-0/21-c-2-articuno-45-l-blizzard-oc-liquid-cooled-gfx-3080-white-led-jack-black-non-odd-core-set-front-right@2x.png',
     },
   });
-  const Fiche_intervention = await prisma.fiche_intervention.create({
+  const orderReparation = await prisma.orderReparation.create({
     data: {
       title: 'fiche_intervention',
       rapport: 'fiche_intervention rapport',
@@ -107,6 +109,12 @@ async function main() {
       reclamationId: 1,
     },
   });
+  const fiche_intervention = await prisma.ficheIntervention.create({
+    data:{
+      status:"ce ci c est un statu",
+   
+    }
+  })
   const Etape = await prisma.etape.create({
     data: {
       title: 'Etape',
@@ -117,7 +125,7 @@ async function main() {
       type: 'type',
       date: '2022-12-31T23:59:55Z',
       employeeId: 1,
-      fiche_interventionId: 1,
+      orderReparationId:1
     },
   });
 
@@ -137,9 +145,15 @@ async function main() {
       description: 'descc',
       confirm: 'yes',
       clientId: 1,
-      fiche_interventionId: 1,
+      orderReparationId: 1,
     },
   });
+
+ const FicheInterventionDetails = await prisma.ficheInterventionDetails.create({
+  data:{
+    ficheInterventionId:1
+  }
+ })
 
   const Orderline = await prisma.orderline.create({
     data: {

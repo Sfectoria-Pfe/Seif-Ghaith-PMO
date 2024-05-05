@@ -79,8 +79,8 @@ const navigate=useNavigate()
             name="clientId"
             options={clientName}
             sx={{ width: 300 }}
-            required
             value={clientName?.clientId}
+            required
             renderInput={(params) => (
               <TextField {...params} label="Client name" />
             )}
