@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Status } from "@prisma/client";
 import { IsDate, IsString } from "class-validator";
 
 export class CreateOrderreparationDto {
@@ -14,7 +15,7 @@ export class CreateOrderreparationDto {
     description :string;
     @ApiProperty()
     @IsString()
-    status :string;
+    status :Status;
     @ApiProperty()
     @IsDate()
     date :Date;

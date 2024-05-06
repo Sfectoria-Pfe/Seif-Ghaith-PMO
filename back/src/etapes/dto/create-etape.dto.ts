@@ -1,12 +1,11 @@
 import {ApiProperty} from '@nestjs/swagger';
+import { Status } from '@prisma/client';
 import {IsBoolean, IsDate, IsString} from 'class-validator';
 export class CreateEtapeDto {
     @ApiProperty()
     @IsString()
     title :string;
-    @ApiProperty()
-    @IsBoolean()
-    ongoing:boolean;
+
     @ApiProperty()
     @IsString()
     rapport :string;
@@ -15,7 +14,7 @@ export class CreateEtapeDto {
     description :string;
     @ApiProperty()
     @IsString()
-    status :string;
+    status :Status;
     @ApiProperty()
     @IsString()
     type :string;

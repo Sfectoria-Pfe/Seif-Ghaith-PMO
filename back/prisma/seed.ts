@@ -100,40 +100,67 @@ async function main() {
   });
   const orderReparation = await prisma.orderReparation.create({
     data: {
-      title: 'fiche_intervention',
-      rapport: 'fiche_intervention rapport',
-      description: 'desccc',
-      status: 'encours',
+      title: 'Ecran Pc',
+     
+      description: 'description de probleme description de probleme description de probleme description de probleme description de probleme',
+      status: "inProgress",
       date: '2022-12-31T23:59:55Z',
-      clientId: 1,
-      reclamationId: 1,
+      clientId: client.id,
+      reclamationId: null,
+    },
+  });
+
+  const orderReparation2 = await prisma.orderReparation.create({
+    data: {
+      title: 'Pc',
+      description: 'description de probleme description de probleme description de probleme description de probleme description de probleme',
+      status: "inProgress",
+      date: '2022-12-31T23:59:55Z',
+      clientId: null,
+      reclamationId: reclamation.id,
     },
   });
   const fiche_intervention = await prisma.ficheIntervention.create({
     data:{
-      status:"ce ci c est un statu",
-   
+      status: "inProgress",
+      orderReparationId:orderReparation2.id,
     }
   })
-  const Etape = await prisma.etape.create({
+  const fiche_intervention2 = await prisma.ficheIntervention.create({
+    data:{
+      status: "inProgress",
+   orderReparationId:orderReparation.id,
+    }
+  })
+  const Etape1 = await prisma.etape.create({
     data: {
       title: 'Etape',
-      ongoing: true,
+   
       rapport: 'Etape rapport',
       description: 'desccc',
-      status: 'encours',
+      status: "inProgress",
       type: 'type',
       date: '2022-12-31T23:59:55Z',
       employeeId: 1,
       orderReparationId:1
     },
   });
-
+  const Etape2 = await prisma.etape.create({
+    data: {
+      title: 'Etape',
+      rapport: 'Etape rapport',
+      description: 'desccc',
+      status: "inProgress",
+      type: 'type',
+      date: '2022-12-31T23:59:55Z',
+      employeeId: 1,
+      orderReparationId:1
+    },
+  });
   const entreeDevice = await prisma.entreeDevice.create({
     data: {
       title: 'entreeDevice1',
       rapport: 'rapport',
-      statues: 'encours',
       description: 'desscc',
       clientId: 1,
       etapeId: 1,
@@ -141,9 +168,7 @@ async function main() {
   });
   const Order = await prisma.order.create({
     data: {
-      name: 'etape',
-      description: 'descc',
-      confirm: 'yes',
+      confirm: true,
       clientId: 1,
       orderReparationId: 1,
     },
@@ -151,13 +176,19 @@ async function main() {
 
  const FicheInterventionDetails = await prisma.ficheInterventionDetails.create({
   data:{
-    ficheInterventionId:1
+    ficheInterventionId:1,
+    title               :'String',
+  rapport             :'String',
+  description         :'String',
   }
  })
 
   const Orderline = await prisma.orderline.create({
     data: {
       orderId: 1,
+      item:"pc hp",
+      qunatity:1,
+      prix_unitaire:5500
     },
   });
 

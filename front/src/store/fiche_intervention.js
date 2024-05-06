@@ -4,6 +4,7 @@ import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, p
 export const getfiche_interventions = createAsyncThunk("getfiche_interventions", async () => {
     try {
       const res = await getRequestWithHeader("fiche-interventions");
+      console.log(res.data,"ssdsdnsdj")
       return res.data;
     } catch (error) {
       console.log(error);

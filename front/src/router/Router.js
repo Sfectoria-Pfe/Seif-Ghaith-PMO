@@ -10,7 +10,7 @@ import Auth from "../apps/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
-import FicheIentervention from "../pages/FicheIentervention";
+import FicheIentervention from "../pages/Les Fiche d'intervention/views/FicheIentervention";
 import EmployeePage from "../pages/Users/employees/EmployeePage"
 import AddEmployee from "../pages/Users/employees/views/AddEmployee"
 import ClientsPage from "../pages/Users/clients/ClientsPage"

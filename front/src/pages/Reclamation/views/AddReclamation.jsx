@@ -5,13 +5,15 @@ import { Button, Input, Textarea } from "@material-tailwind/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { getclients } from "../../../store/client";
 import axios from "axios";
 
 function AddReclamation() {
+  const filter = createFilterOptions();
+
   const [file, setFile] = useState(null);
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const Store = useSelector((state) => state.client);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -47,7 +49,7 @@ const navigate=useNavigate()
 
     console.log(data, "this is the data ");
     dispatch(addreclamation(productWithCover));
-    navigate(-1)
+    navigate(-1);
   }
 
   return (
@@ -66,24 +68,36 @@ const navigate=useNavigate()
           </div>
           <p className="mb-0">Client name</p>
           <Autocomplete
-            getOptionSelected={(option) => {
-              console.log(option, "op");
-            }}
+            name="clientId"
+            sx={{ width: 300 }}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            freeSolo
+            id="free-solo-2-demo"
+            options={clientName}
             onChange={(event, value) => {
               setData((prev) => {
                 return { ...prev, clientId: value.clientId };
               });
-              console.log(value?.clientId, "v");
             }}
-            disablePortal
-            name="clientId"
-            options={clientName}
-            sx={{ width: 300 }}
-            value={clientName?.clientId}
-            required
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+
+              // Suggest the creation of a new value
+              if (params.inputValue !== "") {
+                filtered.push({
+                  // inputValue : params.inputValue,
+                  title: `Asmmsdd "${params.inputValue}"`,
+                });
+              }
+
+              return filtered;
+            }}
             renderInput={(params) => (
               <TextField {...params} label="Client name" />
             )}
+            required
           />
           <p className="mb-0 mt-3">Title</p>
           <Input
