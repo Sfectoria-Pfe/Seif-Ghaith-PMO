@@ -11,7 +11,7 @@ export class OrdersService {
   }
 
   findAll() {
-    return this.prisma.order.findMany();
+    return this.prisma.order.findMany({include:{Client:true}});
   }
 
   findOne(id: number) {

@@ -53,7 +53,7 @@ const navigate=useNavigate()
 
     console.log(data, "this is the data ");
     dispatch(addentree_device(productWithCover));
-    navigate("/entreedevice")
+    navigate(-1)
   }
 
   return (

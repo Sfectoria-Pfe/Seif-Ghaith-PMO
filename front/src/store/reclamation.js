@@ -36,7 +36,7 @@ export const getreclamations = createAsyncThunk("getreclamations", async () => {
 
 export const getreclamation = createAsyncThunk("getreclamation", async (id) => {
   try {
-    const res = await getRequestWithHeader(`reclamation/${id}`);
+    const res = await getRequestWithHeader(`reclamations/${id}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -58,10 +58,10 @@ export const updatereclamation = createAsyncThunk(
 
 export const addreclamation = createAsyncThunk(
   "addreclamation",
-  async (body) => {
+  async (body,{dispatch}) => {
     try {
       const res = await postRequestWithHeader(`reclamations`, body);
-      return res.data;
+      dispatch(getreclamations())
     } catch (error) {
       console.log(error);
     }
@@ -69,10 +69,10 @@ export const addreclamation = createAsyncThunk(
 );
 export const deletereclamation = createAsyncThunk(
   "deletereclamation",
-  async (id) => {
+  async (id,{dispatch}) => {
     try {
       const res = await deleteRequestWithHeader(`reclamations/${id}`);
-      return res.data;
+     dispatch(getreclamations())
     } catch (error) {
       console.log(error);
     }
@@ -95,14 +95,14 @@ export const reclamationSlice = createSlice({
       state.reclamation = action.payload;
     });
     builder.addCase(updatereclamation.fulfilled, (state, action) => {
-      state.reclamations = action.payload;
+      state.reclamation = action.payload;
     });
-    builder.addCase(addreclamation.fulfilled, (state, action) => {
-      state.reclamations = action.payload;
-    });
-    builder.addCase(deletereclamation.fulfilled, (state, action) => {
-      state.reclamations = action.payload;
-    });
+    // builder.addCase(addreclamation.fulfilled, (state, action) => {
+    //   state.reclamations = action.payload;
+    // });
+    // builder.addCase(deletereclamation.fulfilled, (state, action) => {
+    //   state.reclamations = action.payload;
+    // });
     builder.addCase(filterreclamation_lastname.fulfilled, (state, action) => {
       state.reclamations = action.payload;
     });

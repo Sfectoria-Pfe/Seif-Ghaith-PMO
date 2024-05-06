@@ -8,6 +8,8 @@ import Card from 'react-bootstrap/Card';
 import InvoiceItem from './InvoiceItem';
 import InvoiceModal from './InvoiceModal';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { Link } from 'react-router-dom';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -132,7 +134,13 @@ class InvoiceForm extends React.Component {
   render() {
     return (<Form onSubmit={this.openModal}>
       <Row>
+      
         <Col md={8} lg={9}>
+        <Link to={"/orders"}>
+          <button type="button" className="btn btn-dark rounded-pill">
+            <ArrowBackIcon />
+          </button>
+        </Link>
           <Card className="p-4 p-xl-5 my-3 my-xl-4">
             <div className="d-flex flex-column flex-md-row align-items-start justify-content-between mb-3">
               <div class="d-flex flex-column">

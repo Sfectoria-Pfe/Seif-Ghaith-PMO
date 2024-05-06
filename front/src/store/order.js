@@ -1,6 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
+
+
+export const filterorder= createAsyncThunk(
+  "filterorders",
+  async (str) => {
+    try {
+      const res = await getRequestWithHeader("orders");
+    return res.data.filter((elem) => {
+        return (
+          // elem.Client.first_name?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.name?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.confirm?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.description?.toUpperCase().includes(str.toUpperCase())
+        );
+      });
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getorders = createAsyncThunk("getorders", async () => {
     try {
       const res = await getRequestWithHeader("orders");
@@ -71,6 +93,9 @@ export const orderSlice = createSlice({
         state.orders = action.payload;
       });
       builder.addCase(deleteorder.fulfilled, (state, action) => {
+        state.orders = action.payload;
+      });
+      builder.addCase(filterorder.fulfilled, (state, action) => {
         state.orders = action.payload;
       });
   },

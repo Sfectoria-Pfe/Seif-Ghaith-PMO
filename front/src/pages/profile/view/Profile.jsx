@@ -12,7 +12,7 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import { useSelector } from 'react-redux';
 import { MdEdit } from "react-icons/md";
 import { Link } from 'react-router-dom';
-export default function MyProfile() {
+export default function Profile() {
   const myInfo=useSelector(state=>state.auth.me)
 
   return (

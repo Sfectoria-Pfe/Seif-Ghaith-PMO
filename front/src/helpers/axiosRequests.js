@@ -38,7 +38,7 @@ export const putRequestWithHeader = async (url, body) => {
   if (localStorage.getItem("token")) {
     token = localStorage.getItem("token");
   }
-  return await axios.put(apiUrl + url, body, {
+  return await axios.patch(apiUrl + url, body, {
     headers: {
       Authorization: "Bearer " + token,
     },
