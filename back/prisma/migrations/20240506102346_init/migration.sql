@@ -29,6 +29,8 @@ CREATE TABLE `Employee` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(191) NOT NULL,
     `last_name` VARCHAR(191) NOT NULL,
+    `adresse` VARCHAR(191) NOT NULL,
+    `numero` VARCHAR(191) NOT NULL,
     `photo` LONGTEXT NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `role` ENUM('technicien', 'admin', 'manager', 'receptionist') NOT NULL DEFAULT 'technicien',
@@ -65,7 +67,7 @@ CREATE TABLE `EntreeDevice` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Fiche_intervention` (
+CREATE TABLE `OrderReparation` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `rapport` VARCHAR(191) NOT NULL,
@@ -74,6 +76,23 @@ CREATE TABLE `Fiche_intervention` (
     `date` DATETIME(3) NULL,
     `clientId` INTEGER NULL,
     `reclamationId` INTEGER NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `FicheIntervention` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `orderReparationId` INTEGER NULL,
+    `status` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `FicheInterventionDetails` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `ficheInterventionId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -90,7 +109,7 @@ CREATE TABLE `Etape` (
     `date` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `employeeId` INTEGER NULL,
-    `fiche_interventionId` INTEGER NULL,
+    `orderReparationId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -102,8 +121,16 @@ CREATE TABLE `Order` (
     `description` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `confirm` VARCHAR(191) NOT NULL,
+    `tax` DOUBLE NOT NULL,
+    `discount` DOUBLE NOT NULL,
+    `price` DOUBLE NOT NULL,
+    `quantite` INTEGER NOT NULL,
+    `total` DOUBLE NOT NULL,
+    `adress_from` VARCHAR(191) NOT NULL,
+    `email_from` VARCHAR(191) NOT NULL,
+    `name_from` VARCHAR(191) NOT NULL,
     `clientId` INTEGER NULL,
-    `fiche_interventionId` INTEGER NULL,
+    `orderReparationId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -132,22 +159,28 @@ ALTER TABLE `EntreeDevice` ADD CONSTRAINT `EntreeDevice_clientId_fkey` FOREIGN K
 ALTER TABLE `EntreeDevice` ADD CONSTRAINT `EntreeDevice_etapeId_fkey` FOREIGN KEY (`etapeId`) REFERENCES `Etape`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Fiche_intervention` ADD CONSTRAINT `Fiche_intervention_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `OrderReparation` ADD CONSTRAINT `OrderReparation_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Fiche_intervention` ADD CONSTRAINT `Fiche_intervention_reclamationId_fkey` FOREIGN KEY (`reclamationId`) REFERENCES `Reclamation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `OrderReparation` ADD CONSTRAINT `OrderReparation_reclamationId_fkey` FOREIGN KEY (`reclamationId`) REFERENCES `Reclamation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `FicheIntervention` ADD CONSTRAINT `FicheIntervention_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `FicheInterventionDetails` ADD CONSTRAINT `FicheInterventionDetails_ficheInterventionId_fkey` FOREIGN KEY (`ficheInterventionId`) REFERENCES `FicheIntervention`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Etape` ADD CONSTRAINT `Etape_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Etape` ADD CONSTRAINT `Etape_fiche_interventionId_fkey` FOREIGN KEY (`fiche_interventionId`) REFERENCES `Fiche_intervention`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Etape` ADD CONSTRAINT `Etape_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Order` ADD CONSTRAINT `Order_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order` ADD CONSTRAINT `Order_fiche_interventionId_fkey` FOREIGN KEY (`fiche_interventionId`) REFERENCES `Fiche_intervention`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Order` ADD CONSTRAINT `Order_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Orderline` ADD CONSTRAINT `Orderline_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
