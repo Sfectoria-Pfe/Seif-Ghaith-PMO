@@ -19,9 +19,12 @@ export class EmployeesService {
   }
 
   update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    console.log(id,"id")
+
     return this.prisma.employee.update({
       where: { id },
       data :updateEmployeeDto,
+      
     });;
   }
 

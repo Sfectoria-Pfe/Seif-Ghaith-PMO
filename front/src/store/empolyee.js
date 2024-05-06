@@ -6,21 +6,22 @@ import {
   putRequestWithHeader,
 } from "../helpers/axiosRequests";
 
-export const filteremployees_lastname = createAsyncThunk("filteremployees_lastname", async (str) => {
-  try {
-    const res = await getRequestWithHeader("employees");
-    return res.data.filter((elem) => {
-      return (
+export const filteremployees_lastname = createAsyncThunk(
+  "filteremployees_lastname",
+  async (str) => {
+    try {
+      const res = await getRequestWithHeader("employees");
+      return res.data.filter((elem) => {
+        return (
           elem.first_name.toUpperCase().includes(str.toUpperCase()) ||
           elem.last_name.toUpperCase().includes(str.toUpperCase())
-      );
-  })
-} catch (error) {
-    console.log(error);
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
-
-
+);
 
 export const getemployees = createAsyncThunk("getemployees", async () => {
   try {
@@ -42,14 +43,12 @@ export const getemployee = createAsyncThunk("getemployee", async (id) => {
 
 export const updateemployee = createAsyncThunk(
   "updateemployee",
-  async (args) => {
+  async (args, { dispatch }) => {
     const { id, body } = args;
-    try {
-      const res = await putRequestWithHeader(`employees/${id}`, body);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(args, "args");
+    const res = await putRequestWithHeader(`employees/${+id}`, body);
+    console.log(res, "res from store");
+    dispatch(getemployees());
   }
 );
 
@@ -61,14 +60,13 @@ export const addemployee = createAsyncThunk("addemployee", async (body) => {
     console.log(error);
   }
 });
-export const deleteemployee = createAsyncThunk("deleteemployee", async (id) => {
-  try {
+export const deleteemployee = createAsyncThunk(
+  "deleteemployee",
+  async (id, { dispatch }) => {
     const res = await deleteRequestWithHeader(`employees/${id}`);
-    return res.data;
-  } catch (error) {
-    console.log(error);
+    dispatch(getemployees());
   }
-});
+);
 
 export const employeeSlice = createSlice({
   name: "employee",
@@ -78,7 +76,6 @@ export const employeeSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-
     builder.addCase(filteremployees_lastname.fulfilled, (state, action) => {
       state.employees = action.payload;
     });
@@ -90,15 +87,15 @@ export const employeeSlice = createSlice({
     builder.addCase(getemployee.fulfilled, (state, action) => {
       state.employee = action.payload;
     });
-    builder.addCase(updateemployee.fulfilled, (state, action) => {
-      state.employees = action.payload;
-    });
+    // builder.addCase(updateemployee.fulfilled, (state, action) => {
+    //   state.employees = action.payload;
+    // });
     builder.addCase(addemployee.fulfilled, (state, action) => {
-      state.employees = [...state.employees,action.payload];
+      state.employees = [...state.employees, action.payload];
     });
-    builder.addCase(deleteemployee.fulfilled, (state, action) => {
-      state.employees = action.payload;
-    });
+    // builder.addCase(deleteemployee.fulfilled, (state, action) => {
+    //   state.employees = action.payload;
+    // });
   },
 });
 export default employeeSlice.reducer;

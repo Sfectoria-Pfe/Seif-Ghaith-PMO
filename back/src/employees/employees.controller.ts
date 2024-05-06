@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('employees')
 @Controller('employees')
@@ -14,10 +26,8 @@ export class EmployeesController {
     return this.employeesService.create(createEmployeeDto);
   }
 
-
   @Get()
   findAll() {
-
     return this.employeesService.findAll();
   }
 
@@ -25,9 +35,13 @@ export class EmployeesController {
   findOne(@Param('id') id: string) {
     return this.employeesService.findOne(+id);
   }
-
+  @ApiSecurity("apiKey")
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateEmployeeDto: UpdateEmployeeDto,
+  ) {
     return this.employeesService.update(+id, updateEmployeeDto);
   }
 

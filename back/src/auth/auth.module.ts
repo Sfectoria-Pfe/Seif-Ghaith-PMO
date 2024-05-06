@@ -12,7 +12,8 @@ JwtModule.register({
   signOptions:{
     expiresIn:"120days"
   }
-})
+})  
+
 ],
   controllers: [AuthController],
   providers: [AuthService,PrismaService,JwtStrategy],

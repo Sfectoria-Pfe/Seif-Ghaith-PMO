@@ -1,9 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import { filteremployees_lastname, getemployees } from "../../../../store/empolyee";
+import {
+  deleteemployee,
+  filteremployees_lastname,
+  getemployees,
+} from "../../../../store/empolyee";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Card,
   CardHeader,
@@ -12,25 +16,36 @@ import {
   CardBody,
   Button,
 } from "@material-tailwind/react";
-import EditIcon from "@mui/icons-material/Edit";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
-
-// import {
-//   Dialog,
-//   DialogHeader,
-//   DialogBody,
-//   DialogFooter,
-// } from "@material-tailwind/react";
-
-import { Link } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Link, useNavigate } from "react-router-dom";
+import EmployeeDetails from "./EmployeeDetails";
+import EditIcon from '@mui/icons-material/Edit';
+import EditEmployee from "./EditEmployee";
 export default function Employees() {
   const dispatch = useDispatch();
   const employeeStore = useSelector((state) => state.employee);
-  const [open, setOpen] = useState(false);
+  
+  const [show, setShow] = useState(false);
+  const [employeeData, setEmployeeData] = useState({});
+const navigate=useNavigate()
+  const handleShow = (data) => {
+    setShow(true);
+    setEmployeeData(data);
+  };
+  const handledelete = (data) => {
+dispatch(deleteemployee(data))
+  };
 
-  const handleOpen = () => setOpen(!open);
+  const handleEdit = (data) => {
+
+    setEmployeeData(data.id,);
+    console.log(data.id,"sfsfd");
+    navigate(`editEmployee/${+data.id}`)
+  };
+  
   useEffect(() => {
     dispatch(getemployees());
   }, [dispatch]);
@@ -41,7 +56,9 @@ export default function Employees() {
       first_name: row?.first_name,
       last_name: row?.last_name,
       role: row?.role,
+      adresse:row?.adresse,
       email: row?.email,
+      numero:row?.numero
     };
   });
 
@@ -58,22 +75,40 @@ export default function Employees() {
     { field: "first_name", headerName: "First name", width: 150 },
     { field: "last_name", headerName: "last_name", width: 150 },
     { field: "role", headerName: "role", width: 150 },
+    { field: "adresse", headerName: "adresse", width: 150 },
+
     { field: "email", headerName: "Email", width: 200 },
+    { field: "numero", headerName: "numero", width: 200 },
     {
       field: "action",
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
         return (
-          <div className="flex justify-center">
-            {/* <Button> */}
-              <EditIcon onClick={handleOpen} />
-            {/* </Button> */}
+          <div className="h-100 w-100 d-flex justify-content-around align-items-center">
+            <VisibilityIcon
+              onClick={() => {
+                handleShow(params);
+              }}
+            />
+              <DeleteIcon
+              onClick={() => {
+                // console.log(params.id)
+                handledelete(params.id);
+              }}
+            />
+           <EditIcon
+              onClick={() => {
+                // console.log(params.id)
+                handleEdit(params);
+              }}
+            />
           </div>
         );
       },
     },
   ];
+
 
   return (
     <Card className="h-full w-full">
@@ -86,12 +121,11 @@ export default function Employees() {
             <Typography color="gray" className="mt-1 font-normal">
               Voir des informations sur tous les employés.
             </Typography>
-          </div>  
+          </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-<Link to={"addEmployee"}>
-            <Button > Add Employee </Button>
-</Link>
-            
+            <Link to={"addEmployee"}>
+              <Button> Add Employee </Button>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -115,28 +149,12 @@ export default function Employees() {
           />
         </div>
       </CardBody>
-      {/* <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
-          The key to more success is to have a lot of pillows. Put it this way,
-          it took me twenty five years to get these plants, twenty five years of
-          blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-          getting started. I&apos;m up to something. Fan luv.
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog> */}
+      
+      <EmployeeDetails
+        show={show}
+        setShow={setShow}
+        employeeData={employeeData?.row}
+      />
     </Card>
   );
 }

@@ -8,9 +8,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('gestionnaire de reclamation (SAV)')
-    .setDescription('DESCRIPTION **//**')
+    .setDescription('DESCRIPTION **//**') 
+    .setVersion('1.0')
+    .addApiKey({type:'apiKey',name:'Authorization',in:'header'},'apiKey')
+    .addTag('SFECTORIA')
     .build();
-
+   
+    
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, doc);
   app.enableCors();
