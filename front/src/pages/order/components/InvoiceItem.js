@@ -30,7 +30,7 @@ class InvoiceItem extends React.Component {
             {itemTable}
           </tbody>
         </Table>
-        <Button className="fw-bold btn-secondary" onClick={this.props.onRowAdd}>Add Item</Button>
+        <Button className="fw-bold" onClick={this.props.onRowAdd}>Add Item</Button>
       </div>
     );
 
@@ -49,20 +49,20 @@ class ItemRow extends React.Component {
             onItemizedItemEdit={this.props.onItemizedItemEdit}
             cellData={{
             type: "text",
-            name: "name",
+            name: "item",
             placeholder: "Item name",
-            value: this.props.item.name,
+            value: this.props.item.item,
             id: this.props.item.id,
           }}/>
-          <EditableField
+          {/* <EditableField
             onItemizedItemEdit={this.props.onItemizedItemEdit}
             cellData={{
             type: "text",
             name: "description",
-            placeholder: "Item description",
+            placeholder: "description",
             value: this.props.item.description,
             id: this.props.item.id
-          }}/>
+          }}/> */}
         </td>
         <td style={{minWidth: '70px'}}>
           <EditableField
@@ -82,12 +82,12 @@ class ItemRow extends React.Component {
             cellData={{
             leading: this.props.currency,
             type: "number",
-            name: "price",
+            name: "prix_unitaire",
             min: 1,
             step: "0.01",
             presicion: 2,
             textAlign: "text-end",
-            value: this.props.item.price,
+            value: this.props.item.prix_unitaire,
             id: this.props.item.id,
           }}/>
         </td>

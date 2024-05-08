@@ -23,13 +23,17 @@ import ReclamationPage from "../pages/Reclamation/ReclamationPage";
 import EntreePage from "../pages/EntreeDevice/EntreePage";
 import EntreeDevicee from "../pages/EntreeDevice/views/EntreeDevicee";
 import AddEntree from "../pages/EntreeDevice/views/AddEntree";
-
-import Invoice from "../pages/Invoice";
-import ProfilePage from "../pages/Profile/ProfilePage";
-import EditProfile from "../pages/Profile/view/EditProfile";
-import Profile from "../pages/Profile/view/Profile";
+import EditProfile from "../pages/profile/view/EditProfile";
+import ProfilePage from "../pages/profile/ProfilePage";
+import Profile from "../pages/profile/view/Profile";
+import EditReclamation from "../pages/Reclamation/views/EditReclamation";
+import EditEntree from "../pages/EntreeDevice/views/EditEntree";
+import Order from "../pages/order/views/Order";
+import OrderPage from "../pages/order/OrderPage";
 import EditEmployee from "../pages/Users/employees/views/EditEmployee";
 import EditClient from "../pages/Users/clients/views/EditClient";
+import AddOrder from "../pages/order/views/AddOrder";
+import OrderDetails from "../pages/order/views/OrderDetails";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -57,6 +61,7 @@ function Router() {
             <Route path="/reclamations" element={<ReclamationPage/>}>
             <Route index element={<Reclamations/>}/>
             <Route path="addreclamation" element={<AddReclamation/>}/>
+            <Route path="editreclamation/:id" element={<EditReclamation/>}/>
             </Route>
 
             <Route path="/employees" element={<EmployeePage/>}>
@@ -73,13 +78,20 @@ function Router() {
             <Route path="/entreedevices" element={<EntreePage/>}>
             <Route index element={<EntreeDevicee/>}/>
             <Route path="addband" element={<AddEntree/>}/>
+            <Route path="editentree/:id" element={<EditEntree/>}/>
             </Route>
             <Route path="/profile" element={<ProfilePage/>}>
               <Route index element={<Profile/>}/>
               <Route path="editprofile" element={<EditProfile/>}/>
 
             </Route>
-            <Route path="/orders" element={<Invoice/>}/>
+            
+            <Route path="/orders"element={<OrderPage/>}>
+              <Route index element={<Order/>}/>
+              <Route path="addorder" element={<AddOrder/>}/>
+              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
+
+            </Route>
 
           </Route>
         ) : (

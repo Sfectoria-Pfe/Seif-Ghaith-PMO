@@ -30,6 +30,7 @@ class InvoiceModal extends React.Component {
   constructor(props) {
     super(props);
   }
+  
   render() {
     return(
       <div>
@@ -37,9 +38,9 @@ class InvoiceModal extends React.Component {
           <div id="invoiceCapture">
             <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
               <div className="w-100">
-                <h4 className="fw-bold my-2">{this.props.info.billFrom||'John Uberbacher'}</h4>
+                <h4 className="fw-bold my-2">{this.props.info.billFrom||''}</h4>
                 <h6 className="fw-bold text-secondary mb-1">
-                  Invoice #: {this.props.info.invoiceNumber||''}
+                  Facture #: {this.props.info.invoiceNumber||''}
                 </h6>
               </div>
               <div className="text-end ms-4">
@@ -50,16 +51,20 @@ class InvoiceModal extends React.Component {
             <div className="p-4">
               <Row className="mb-4">
                 <Col md={4}>
-                  <div className="fw-bold">Billed From:</div>
-                  <div>{this.props.info.billFrom||''}</div>
-                  <div>{this.props.info.billFromAddress||''}</div>
-                  <div>{this.props.info.billFromEmail||''}</div>
+                  <div className="fw-bold">information de client</div>
+                  <div>{this.props.info.client.first_name||''}</div>
+                  <div>{this.props.info.client.email||''}</div>
+                  <div>{this.props.info.client.adresse||''}</div>
+                 
+
                 </Col>
                 <Col md={4}>
-                  <div className="fw-bold">Billed to:</div>
-                  <div>{this.props.info.billTo||''}</div>
-                  <div>{this.props.info.billToAddress||''}</div>
-                  <div>{this.props.info.billToEmail||''}</div>
+                  <div className="fw-bold">information de entreprise</div>
+                  <div>{'DATASERV'}</div>
+                  <div>{this.props.info.email_entreprise||''}</div>
+                  <div>{this.props.info.adresse_entreprise||''}</div>
+                  <div>{this.props.info.telephone_entreprise||''}</div>
+
                 </Col>
                 <Col md={4}>
                   <div className="fw-bold mt-2">Date Of Issue:</div>
@@ -70,7 +75,7 @@ class InvoiceModal extends React.Component {
                 <thead>
                   <tr>
                     <th>QTY</th>
-                    <th>DESCRIPTION</th>
+                    <th>ITEM</th>
                     <th className="text-end">PRICE</th>
                     <th className="text-end">AMOUNT</th>
                   </tr>
@@ -83,10 +88,10 @@ class InvoiceModal extends React.Component {
                           {item.quantity}
                         </td>
                         <td>
-                          {item.name} - {item.description}
+                          {item.item} 
                         </td>
-                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.price}</td>
-                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.price * item.quantity}</td>
+                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.prix_unitaire}</td>
+                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.prix_unitaire * item.quantity}</td>
                       </tr>
                     );
                   })}
@@ -133,18 +138,21 @@ class InvoiceModal extends React.Component {
           </div>
           <div className="pb-4 px-4">
             <Row>
-              <Col md={6} className="text-center">
-              <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" >
-              <BiPaperPlane style={{width: '16px', height: '16px', marginTop: '-3px'}}/>
-                  Envoyer
+              {/* <Col md={6}>
+                <Button variant="primary" className="d-block w-100" onClick={GenerateInvoice}>
+                  <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Send Invoice
                 </Button>
-
-              </Col>
-              <Col md={6} className="text-center">
-                <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
-                  <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} />
-                  Download Copy
-                </Button>
+              </Col> */}
+              <Col className="d-flex justify-content-center">
+                {/* <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}> */}
+                <Button
+              variant="primary"
+              type="button"
+              className='w-50'
+              onClick={this.props.handleAddDevis}
+            >
+              Ajouter devis
+            </Button>
               </Col>
             </Row>
           </div>
