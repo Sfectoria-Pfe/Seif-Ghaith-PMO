@@ -33,18 +33,7 @@ export default function Entree_devicee() {
 
   }, [Store]);  
   console.log(row ,"this is store")
-  // const Rows = {
-    
-  //     id: Store.entree_device.id,   
-  //     client_name : entree_device.Client.first_name,
-  //     title: entree_device.title, 
-  //     description: entree_device.description,
-  //     createdAt: entree_device.createdAt,
-  //     statues: entree_device.statues,
 
-      
-    
-  // };
   const handleOpenModal = (entree_device) => {
     setSelectedBond(entree_device);
     setShowModal(true);};

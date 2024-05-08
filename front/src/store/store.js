@@ -10,6 +10,7 @@ import fiche_interventionsSlice from "./fiche_intervention";
 import reclamationslice from "./reclamation";
 import auth from "./auth";
 import  uploadSlice  from "./upload";
+import  orderreparationSlice  from "./order_reparation";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     order: orderSlice,
     reclamation: reclamationslice,
     user: userSlice,
+    orderreparation:orderreparationSlice,
     upload : uploadSlice,
     auth,
   },

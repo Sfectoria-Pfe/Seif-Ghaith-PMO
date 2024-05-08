@@ -10,11 +10,15 @@ export class UsersService {
     const { password, ...rest } = createUserDto;
     const salt = await bcrypt.genSalt();
     const Hpass = await bcrypt.hashSync(password, salt);
-    return await this.prisma.user.create({ data: {...rest,password:Hpass} });
+    return await this.prisma.user.create({
+      data: { ...rest, password: Hpass },
+    });
   }
 
   findAll() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: { Client: true, Employee: true },
+    });
   }
 
   findOne(id: number) {

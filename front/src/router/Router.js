@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
 import FicheIentervention from "../pages/Les Fiche d'intervention/views/FicheIentervention";
-import EmployeePage from "../pages/Users/employees/EmployeePage"
-import AddEmployee from "../pages/Users/employees/views/AddEmployee"
-import ClientsPage from "../pages/Users/clients/ClientsPage"
+import EmployeePage from "../pages/Users/employees/EmployeePage";
+import AddEmployee from "../pages/Users/employees/views/AddEmployee";
+import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
 import Employees from "../pages/Users/employees/views/Employees";
@@ -22,18 +22,24 @@ import AddReclamation from "../pages/Reclamation/views/AddReclamation";
 import ReclamationPage from "../pages/Reclamation/ReclamationPage";
 import EntreePage from "../pages/EntreeDevice/EntreePage";
 import EntreeDevicee from "../pages/EntreeDevice/views/EntreeDevicee";
-import AddEntree from "../pages/EntreeDevice/views/AddEntree";
-import EditProfile from "../pages/profile/view/EditProfile";
-import ProfilePage from "../pages/profile/ProfilePage";
-import Profile from "../pages/profile/view/Profile";
+import EditProfile from "../pages/Profile/view/EditProfile";
+import ProfilePage from "../pages/Profile/ProfilePage";
+import Profile from "../pages/Profile/view/Profile";
 import EditReclamation from "../pages/Reclamation/views/EditReclamation";
 import EditEntree from "../pages/EntreeDevice/views/EditEntree";
 import Order from "../pages/order/views/Order";
 import OrderPage from "../pages/order/OrderPage";
 import EditEmployee from "../pages/Users/employees/views/EditEmployee";
 import EditClient from "../pages/Users/clients/views/EditClient";
+import AddEntree from "../pages/EntreeDevice/views/AddEntree";
+import Users from "../pages/Users/users/Views/Users";
+import UsersPage from "../pages/Users/users/UsersPage";
+import AddUser from "../pages/Users/users/Views/AddUsers";
+import OrdreReparation from "../pages/Ordre_Reparation/Views/OrdreReparation";
+import OrdreReparationPage from "../pages/Ordre_Reparation/OrdreReparationPage";
 import AddOrder from "../pages/order/views/AddOrder";
 import OrderDetails from "../pages/order/views/OrderDetails";
+import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -56,23 +62,32 @@ function Router() {
         {user ? (
           <Route path="/" element={<Main />}>
             <Route index element={<Dashboard />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/fiches_intervention" element={<FicheIentervention/>} />
-            <Route path="/reclamations" element={<ReclamationPage/>}>
-            <Route index element={<Reclamations/>}/>
-            <Route path="addreclamation" element={<AddReclamation/>}/>
-            <Route path="editreclamation/:id" element={<EditReclamation/>}/>
+            <Route
+              path="/fiches_intervention"
+              element={<FicheIentervention />}
+            />
+            <Route path="/reclamations" element={<ReclamationPage />}>
+              <Route index element={<Reclamations />} />
+              <Route path="addreclamation" element={<AddReclamation />} />
+              <Route path="editreclamation" element={<EditReclamation/>}/>
             </Route>
-
-            <Route path="/employees" element={<EmployeePage/>}>
-            <Route index element={<Employees/>}/>
-            <Route path="addEmployee" element={<AddEmployee/>}/>
-            <Route path="editEmployee/:id" element={<EditEmployee/>}/>
+            <Route path="/users" element={<UsersPage />}>
+              <Route index element={<Users />} />
+              <Route path="addUser" element={<AddUser />} />
             </Route>
-            <Route path="/clients" element={<ClientsPage/>}>
-            <Route index element={<Clients/>}/>
-            <Route path="addclient" element={<AddClient/>}/>
-            <Route path="editClient/:id" element={<EditClient/>}/>
+            <Route path="/employees" element={<EmployeePage />}>
+              <Route index element={<Employees />} />
+              <Route path="addEmployee" element={<AddEmployee />} />
+              <Route path="editEmployee/:id" element={<EditEmployee />} />
+            </Route>
+            <Route path="/clients" element={<ClientsPage />}>
+              <Route index element={<Clients />} />
+              <Route path="addclient" element={<AddClient />} />
+              <Route path="editClient/:id" element={<EditClient />} />
+            </Route>
+            <Route path="/orderReparation" element={<OrdreReparationPage />}>
+              <Route index element={<OrdreReparation />} />
+              <Route path="addorderreparation" element={<AddOrderReparation/>}/>
             </Route>
             <Route path="/inbox" element={<Inbox/>}/>
             <Route path="/entreedevices" element={<EntreePage/>}>
@@ -80,10 +95,9 @@ function Router() {
             <Route path="addband" element={<AddEntree/>}/>
             <Route path="editentree/:id" element={<EditEntree/>}/>
             </Route>
-            <Route path="/profile" element={<ProfilePage/>}>
-              <Route index element={<Profile/>}/>
-              <Route path="editprofile" element={<EditProfile/>}/>
-
+            <Route path="/profile" element={<ProfilePage />}>
+              <Route index element={<Profile />} />
+              <Route path="editprofile" element={<EditProfile />} />
             </Route>
             
             <Route path="/orders"element={<OrderPage/>}>
@@ -97,7 +111,7 @@ function Router() {
         ) : (
           <Route path="/" element={<Auth />}>
             <Route index element={<Login />} />
-            <Route path="/register" element={<Singup/>} />
+            <Route path="/register" element={<Singup />} />
           </Route>
         )}
       </Routes>

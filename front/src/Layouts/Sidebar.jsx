@@ -212,6 +212,14 @@ export default function MiniDrawer() {
 
           <Collapse in={openn} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
+            <Link to={"/Users"} className="text-decoration-none text-reset">
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Les Utilisateurs" />
+              </ListItemButton>
+</Link>
             <Link to={"/clients"} className="text-decoration-none text-reset">
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
@@ -311,6 +319,35 @@ export default function MiniDrawer() {
             </ListItemButton>
           </ListItem>
 </Link>
+
+
+<Link to={"/orderReparation"} className="text-decoration-none text-reset">
+
+<ListItem disablePadding sx={{ display: "block" }}>
+  <ListItemButton
+    sx={{
+      minHeight: 48,
+      justifyContent: open ? "initial" : "center",
+      px: 2.5,
+    }}
+  >
+    <ListItemIcon
+      sx={{
+        minWidth: 0,
+        mr: open ? 3 : "auto",
+        justifyContent: "center",
+      }}
+    >
+      <ArticleIcon />
+    </ListItemIcon>
+    <ListItemText
+      primary={"Order de Reparation"}
+      sx={{ opacity: open ? 1 : 0 }}
+    />
+  </ListItemButton>
+</ListItem>
+</Link>
+
 <Link to={"/orders"} className="text-decoration-none text-reset">
 
           <ListItem disablePadding sx={{ display: "block" }}>
@@ -331,7 +368,7 @@ export default function MiniDrawer() {
                 <AnalyticsIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"Les Orders"}
+                primary={"Les Devis"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -339,6 +376,7 @@ export default function MiniDrawer() {
           </Link>
 
         </List>
+
         <Divider />
         <List>
             <ListItem  disablePadding sx={{ display: "block" }}>

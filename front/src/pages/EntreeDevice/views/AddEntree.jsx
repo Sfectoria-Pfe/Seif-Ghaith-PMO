@@ -5,7 +5,7 @@ import { Button, Input, Textarea } from "@material-tailwind/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { getclients } from "../../../store/client";
 import axios from "axios";
 import Box from '@mui/material/Box';
@@ -15,10 +15,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-function AddReclamation() {
+function AddEntree() {
   const [file, setFile] = useState(null);
 const navigate=useNavigate()
-  const Store = useSelector((state) => state.client);
+const filter = createFilterOptions();
+
+  const Store = useSelector((state) => state.client.clients);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getclients());
@@ -59,7 +61,7 @@ const navigate=useNavigate()
   return (
     <div>
       <div>
-        <Link to={"/entreedevice"}>
+        <Link to={"/entreedevices"}>
           <button type="button" className="btn btn-dark rounded-pill ml-2 mt-2">
             <ArrowBackIcon />
           </button>
@@ -68,29 +70,77 @@ const navigate=useNavigate()
       <div className="d-flex align-items-center  justify-content-center">
         <form onSubmit={handelSubmit}>
           <div className="d-flex align-items-center justify-content-center pb-4">
-            <h2>Ajouter une Reclamation</h2>
+            <h2>Ajouter une Bande d'entree</h2>
           </div>
           <p className="mb-0">Client name</p>
           <Autocomplete
-            getOptionSelected={(option) => {
-              console.log(option, "op");
-            }}
-            onChange={(event, value) => {
-              setData((prev) => {
-                return { ...prev, clientId: value.clientId };
-              });
-              console.log(value?.clientId, "v");
-            }}
-            disablePortal
-            name="clientId"
-            options={clientName}
-            sx={{ width: 300 }}
-            required
-            value={clientName?.clientId}
-            renderInput={(params) => (
-              <TextField {...params} label="Client name" />
-            )}
-          />
+        
+        onChange={(event, value,option) => {
+          console.log(value);
+          console.log(option,"asdsd")
+
+          if (!(value===null)) {
+            setData((prev) => {
+              return { ...prev, clientId: value.id };
+            });
+
+          } 
+        }}
+       
+        sx={{ width: 300 }}
+        options={Store}
+        autoHighlight
+        getOptionLabel={(option) => {
+          return option.first_name + " " + option.last_name;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some(
+            (option) => inputValue === option.first_name
+          );
+          if (inputValue !== "" && !isExisting) {
+            filtered.push({
+              inputValue,
+              first_name: `Add new client`,
+              last_name: " ",
+            });
+          }
+
+          return filtered;
+        }}
+        freeSolo
+        renderOption={(props, option) =>
+          option.first_name !== "Add new client" ? (
+            <Box
+              component="li"
+              sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+              {...props}
+            >
+              {option.first_name + " " + option.last_name}
+            </Box>
+          ) : (
+            <Link to="/clients/addclient">Add new client</Link>
+          )
+        }
+        renderInput={(params) => {
+          return (
+            <TextField
+              {...params}
+              label="Nom de Client "
+              inputProps={{
+                ...params.inputProps,
+                // autoComplete: "new-password", // disable autocomplete and autofill
+              }}
+            />
+          );
+        }}
+      />
+     
           <p className="mb-0 mt-3">Title</p>
           <Input
             label="Title"
@@ -166,4 +216,4 @@ const navigate=useNavigate()
   );
 }
 
-export default AddReclamation;
+export default AddEntree;

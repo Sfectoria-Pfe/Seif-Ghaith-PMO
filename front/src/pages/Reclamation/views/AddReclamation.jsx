@@ -8,13 +8,14 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { getclients } from "../../../store/client";
 import axios from "axios";
+import { Box } from "@mui/material";
 
 function AddReclamation() {
   const filter = createFilterOptions();
 
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
-  const Store = useSelector((state) => state.client);
+  const Store = useSelector((state) => state.client.clients);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getclients());
@@ -23,8 +24,6 @@ function AddReclamation() {
     label: client.first_name,
     clientId: client.id,
   }));
-
-  console.log(clientName, "this is the array of clients");
 
   const [data, setData] = useState({
     clientId: "",
@@ -46,8 +45,6 @@ function AddReclamation() {
     console.log(file);
     const response = await axios.post("http://localhost:4000/upload", im);
     const productWithCover = { ...data, image: response.data.path };
-
-    console.log(data, "this is the data ");
     dispatch(addreclamation(productWithCover));
     navigate(-1);
   }
@@ -55,7 +52,7 @@ function AddReclamation() {
   return (
     <div>
       <div>
-        <Link to={"/reclamation"}>
+        <Link to={"/reclamations"}>
           <button type="button" className="btn btn-dark rounded-pill ml-2 mt-2">
             <ArrowBackIcon />
           </button>
@@ -67,38 +64,75 @@ function AddReclamation() {
             <h2>Ajouter une Reclamation</h2>
           </div>
           <p className="mb-0">Client name</p>
+         
           <Autocomplete
-            name="clientId"
+        
+            onChange={(event, value,option) => {
+              console.log(value);
+              console.log(option,"asdsd")
+
+              if (!(value===null)) {
+                setData((prev) => {
+                  return { ...prev, clientId: value.id };
+                });
+
+              } 
+            }}
+           
             sx={{ width: 300 }}
+            options={Store}
+            // autoHighlight
+            getOptionLabel={(option) => {
+              return option.first_name + " " + option.last_name;
+            }}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
-            freeSolo
-            id="free-solo-2-demo"
-            options={clientName}
-            onChange={(event, value) => {
-              setData((prev) => {
-                return { ...prev, clientId: value.clientId };
-              });
-            }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params);
-
+              const { inputValue } = params;
               // Suggest the creation of a new value
-              if (params.inputValue !== "") {
+              const isExisting = options.some(
+                (option) => inputValue === option.first_name
+              );
+              if (inputValue !== "" && !isExisting) {
                 filtered.push({
-                  // inputValue : params.inputValue,
-                  title: `Asmmsdd "${params.inputValue}"`,
+                  inputValue,
+                  first_name: `Add new client`,
+                  last_name: " ",
                 });
               }
 
               return filtered;
             }}
-            renderInput={(params) => (
-              <TextField {...params} label="Client name" />
-            )}
-            required
+            freeSolo
+            renderOption={(props, option) =>
+              option.first_name !== "Add new client" ? (
+                <Box
+                  component="li"
+                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                  {...props}
+                >
+                  {option.first_name + " " + option.last_name}
+                </Box>
+              ) : (
+                <Link to="/clients/addclient">Add new client</Link>
+              )
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  label="Nom de Client "
+                  inputProps={{
+                    ...params.inputProps,
+                    // autoComplete: "new-password", // disable autocomplete and autofill
+                  }}
+                />
+              );
+            }}
           />
+         
           <p className="mb-0 mt-3">Title</p>
           <Input
             label="Title"
@@ -136,8 +170,8 @@ function AddReclamation() {
           </div>
           <div>
             <p>
-              {" "}
-              (<span className="text-danger">*</span>) est obligatoire{" "}
+              
+              (<span className="text-danger">*</span>) est obligatoire
             </p>
           </div>
         </form>
