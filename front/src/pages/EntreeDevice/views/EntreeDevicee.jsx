@@ -1,7 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import {getentree_devices,filterentree_lastname } from "../../../store/entree_device";
+import {getentree_devices,filterentree_lastname, deleteentree_device } from "../../../store/entree_device";
 import { useEffect, useState} from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EntreeDeviceDetails from "../views/EntreeDeviceDetails";
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Card,
   CardHeader,
@@ -15,6 +19,8 @@ import { Link } from "react-router-dom";
 
 export default function Entree_devicee() {
   const [row, setRow] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedBond, setSelectedBond] = useState(null);
 
   
   const Store = useSelector((state) => state.entree_device.entree_devices);
@@ -28,6 +34,17 @@ export default function Entree_devicee() {
   }, [Store]);  
   console.log(row ,"this is store")
 
+  const handleOpenModal = (entree_device) => {
+    setSelectedBond(entree_device);
+    setShowModal(true);};
+    const handleCloseModal = () => {
+      setShowModal(false);
+      setSelectedBond(null);
+    };
+    const handleDeleteField= (entree_deviceId) => {
+      dispatch(deleteentree_device(entree_deviceId));
+  
+    };
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
     { field: "client_name", headerName: "Client Name", width: 150,valueGetter: (value, row) => {
@@ -37,6 +54,19 @@ export default function Entree_devicee() {
     { field: "description", headerName: "Description", width: 200 },
     { field: "createdAt", headerName: "createdAt", width: 200 },
     { field: "statues", headerName: "statues", width: 200 },
+    { field: "action", headerName: "Action", width: 200,
+      renderCell:(params)=>{
+        return(
+          <div>
+            <VisibilityIcon onClick={() => handleOpenModal(params.row)}/>
+            <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
+            <Link to={`editentree/${params.row.id}`} className="text-decoration-none text-reset">
+            <EditIcon />
+            </Link>
+          </div>
+        )
+      }
+     },
     
     
   ];
@@ -78,6 +108,9 @@ export default function Entree_devicee() {
           />
         </div>
       </CardBody>
+      <div>
+      {showModal && <EntreeDeviceDetails entree_device={selectedBond}  onClose={handleCloseModal} />}
+      </div>
     </Card>
   );
 }

@@ -6,6 +6,7 @@ CREATE TABLE `User` (
     `isClient` BOOLEAN NOT NULL DEFAULT true,
     `clientId` INTEGER NULL,
     `employeeId` INTEGER NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -18,6 +19,8 @@ CREATE TABLE `Client` (
     `last_name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `photo` LONGTEXT NOT NULL,
+    `adresse` VARCHAR(191) NOT NULL,
+    `numero` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Client_email_key`(`email`),
@@ -34,6 +37,7 @@ CREATE TABLE `Employee` (
     `photo` LONGTEXT NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `role` ENUM('technicien', 'admin', 'manager', 'receptionist') NOT NULL DEFAULT 'technicien',
+    `isArchived` BOOLEAN NOT NULL DEFAULT false,
 
     UNIQUE INDEX `Employee_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -57,11 +61,11 @@ CREATE TABLE `EntreeDevice` (
     `title` VARCHAR(191) NOT NULL,
     `image` LONGTEXT NULL,
     `rapport` VARCHAR(191) NOT NULL,
-    `statues` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `clientId` INTEGER NULL,
     `etapeId` INTEGER NULL,
+    `reclamationId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -70,12 +74,12 @@ CREATE TABLE `EntreeDevice` (
 CREATE TABLE `OrderReparation` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `rapport` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `status` VARCHAR(191) NOT NULL,
+    `status` ENUM('inProgress', 'completed', 'pending', 'onhold') NOT NULL,
     `date` DATETIME(3) NULL,
     `clientId` INTEGER NULL,
     `reclamationId` INTEGER NULL,
+    `entreeDeviceId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -83,8 +87,8 @@ CREATE TABLE `OrderReparation` (
 -- CreateTable
 CREATE TABLE `FicheIntervention` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `orderReparationId` INTEGER NULL,
-    `status` VARCHAR(191) NOT NULL,
+    `orderReparationId` INTEGER NOT NULL,
+    `status` ENUM('inProgress', 'toFactured', 'closed') NOT NULL DEFAULT 'inProgress',
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -92,6 +96,9 @@ CREATE TABLE `FicheIntervention` (
 -- CreateTable
 CREATE TABLE `FicheInterventionDetails` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
+    `rapport` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
     `ficheInterventionId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
@@ -101,10 +108,9 @@ CREATE TABLE `FicheInterventionDetails` (
 CREATE TABLE `Etape` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `ongoing` BOOLEAN NOT NULL,
     `rapport` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `status` VARCHAR(191) NOT NULL,
+    `status` ENUM('inProgress', 'completed', 'pending', 'onhold') NOT NULL,
     `type` VARCHAR(191) NOT NULL,
     `date` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -117,10 +123,19 @@ CREATE TABLE `Etape` (
 -- CreateTable
 CREATE TABLE `Order` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
+    `currency` VARCHAR(191) NULL,
+    `currentDate` DATETIME(3) NULL,
+    `invoiceNumber` INTEGER NULL,
+    `dateOfIssue` DATETIME(3) NULL,
+    `notes` VARCHAR(191) NULL,
+    `total` DOUBLE NULL,
+    `subTotal` DOUBLE NULL,
+    `taxRate` DOUBLE NULL,
+    `taxAmount` DOUBLE NULL,
+    `discountRate` DOUBLE NULL,
+    `discountAmount` DOUBLE NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `confirm` VARCHAR(191) NOT NULL,
+    `confirm` BOOLEAN NOT NULL DEFAULT false,
     `clientId` INTEGER NULL,
     `orderReparationId` INTEGER NULL,
 
@@ -130,7 +145,10 @@ CREATE TABLE `Order` (
 -- CreateTable
 CREATE TABLE `Orderline` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `orderId` INTEGER NULL,
+    `item` VARCHAR(191) NOT NULL,
+    `prix_unitaire` DOUBLE NOT NULL,
+    `qunatity` INTEGER NOT NULL,
+    `orderId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -151,13 +169,19 @@ ALTER TABLE `EntreeDevice` ADD CONSTRAINT `EntreeDevice_clientId_fkey` FOREIGN K
 ALTER TABLE `EntreeDevice` ADD CONSTRAINT `EntreeDevice_etapeId_fkey` FOREIGN KEY (`etapeId`) REFERENCES `Etape`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `EntreeDevice` ADD CONSTRAINT `EntreeDevice_reclamationId_fkey` FOREIGN KEY (`reclamationId`) REFERENCES `Reclamation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `OrderReparation` ADD CONSTRAINT `OrderReparation_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `OrderReparation` ADD CONSTRAINT `OrderReparation_reclamationId_fkey` FOREIGN KEY (`reclamationId`) REFERENCES `Reclamation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `FicheIntervention` ADD CONSTRAINT `FicheIntervention_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `OrderReparation` ADD CONSTRAINT `OrderReparation_entreeDeviceId_fkey` FOREIGN KEY (`entreeDeviceId`) REFERENCES `EntreeDevice`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `FicheIntervention` ADD CONSTRAINT `FicheIntervention_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `FicheInterventionDetails` ADD CONSTRAINT `FicheInterventionDetails_ficheInterventionId_fkey` FOREIGN KEY (`ficheInterventionId`) REFERENCES `FicheIntervention`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -175,4 +199,4 @@ ALTER TABLE `Order` ADD CONSTRAINT `Order_clientId_fkey` FOREIGN KEY (`clientId`
 ALTER TABLE `Order` ADD CONSTRAINT `Order_orderReparationId_fkey` FOREIGN KEY (`orderReparationId`) REFERENCES `OrderReparation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Orderline` ADD CONSTRAINT `Orderline_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Orderline` ADD CONSTRAINT `Orderline_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

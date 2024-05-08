@@ -22,11 +22,13 @@ import AddReclamation from "../pages/Reclamation/views/AddReclamation";
 import ReclamationPage from "../pages/Reclamation/ReclamationPage";
 import EntreePage from "../pages/EntreeDevice/EntreePage";
 import EntreeDevicee from "../pages/EntreeDevice/views/EntreeDevicee";
-
-import Invoice from "../pages/Invoice";
-import ProfilePage from "../pages/Profile/ProfilePage";
 import EditProfile from "../pages/Profile/view/EditProfile";
+import ProfilePage from "../pages/Profile/ProfilePage";
 import Profile from "../pages/Profile/view/Profile";
+import EditReclamation from "../pages/Reclamation/views/EditReclamation";
+import EditEntree from "../pages/EntreeDevice/views/EditEntree";
+import Order from "../pages/order/views/Order";
+import OrderPage from "../pages/order/OrderPage";
 import EditEmployee from "../pages/Users/employees/views/EditEmployee";
 import EditClient from "../pages/Users/clients/views/EditClient";
 import AddEntree from "../pages/EntreeDevice/views/AddEntree";
@@ -35,6 +37,9 @@ import UsersPage from "../pages/Users/users/UsersPage";
 import AddUser from "../pages/Users/users/Views/AddUsers";
 import OrdreReparation from "../pages/Ordre_Reparation/Views/OrdreReparation";
 import OrdreReparationPage from "../pages/Ordre_Reparation/OrdreReparationPage";
+import AddOrder from "../pages/order/views/AddOrder";
+import OrderDetails from "../pages/order/views/OrderDetails";
+import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -64,6 +69,7 @@ function Router() {
             <Route path="/reclamations" element={<ReclamationPage />}>
               <Route index element={<Reclamations />} />
               <Route path="addreclamation" element={<AddReclamation />} />
+              <Route path="editreclamation" element={<EditReclamation/>}/>
             </Route>
             <Route path="/users" element={<UsersPage />}>
               <Route index element={<Users />} />
@@ -81,17 +87,26 @@ function Router() {
             </Route>
             <Route path="/orderReparation" element={<OrdreReparationPage />}>
               <Route index element={<OrdreReparation />} />
+              <Route path="addorderreparation" element={<AddOrderReparation/>}/>
             </Route>
-            <Route path="/inbox" element={<Inbox />} />
-            <Route path="/entreedevices" element={<EntreePage />}>
-              <Route index element={<EntreeDevicee />} />
-              <Route path="addband" element={<AddEntree />} />
+            <Route path="/inbox" element={<Inbox/>}/>
+            <Route path="/entreedevices" element={<EntreePage/>}>
+            <Route index element={<EntreeDevicee/>}/>
+            <Route path="addband" element={<AddEntree/>}/>
+            <Route path="editentree/:id" element={<EditEntree/>}/>
             </Route>
             <Route path="/profile" element={<ProfilePage />}>
               <Route index element={<Profile />} />
               <Route path="editprofile" element={<EditProfile />} />
             </Route>
-            <Route path="/orders" element={<Invoice />} />
+            
+            <Route path="/orders"element={<OrderPage/>}>
+              <Route index element={<Order/>}/>
+              <Route path="addorder" element={<AddOrder/>}/>
+              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
+
+            </Route>
+
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>

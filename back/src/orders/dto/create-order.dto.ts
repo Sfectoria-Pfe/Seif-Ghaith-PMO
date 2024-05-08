@@ -63,12 +63,11 @@ export class CreateOrderDto {
 class Item {
   @ApiProperty()
   @IsNotEmpty()
-  name: string;
+  item: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  price: number;
-
+  prix_unitaire: number;
 
 
   @ApiProperty()

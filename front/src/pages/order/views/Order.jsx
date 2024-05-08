@@ -1,15 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
-import reclamation, {
-  getreclamations,
-  filterreclamation_lastname,
-  deletereclamation,
-} from "../../../store/reclamation";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ReclamationDetails from "../views/ReclamationDetails";
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Card,
@@ -21,17 +15,19 @@ import {
 } from "@material-tailwind/react";
 import { DataGrid,GridToolbar} from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+import { deleteorder, filterorder, getorders } from "../../../store/order";
+import OrderDetails from "./OrderDetails";
 
-export default function Reclamations() {
+export default function Order() {
   const [showModal, setShowModal] = useState(false); 
-  const [selectedReclamation, setSelectedReclamation] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [row, setRow] = useState([]);
-  const Store = useSelector((state) => state.reclamation?.reclamations);
+  const Store = useSelector((state) => state.order?.orders);
   console.log(Store, "this is store");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getreclamations());
+    dispatch(getorders());
 
   }, [dispatch]);
 
@@ -41,39 +37,42 @@ export default function Reclamations() {
   }, [Store]);  
 
   console.log(row, "row");
-  const handleOpenModal = (reclamation) => {
-    setSelectedReclamation(reclamation);
+  const handleOpenModal = (order) => {
+    setSelectedOrder(order);
     setShowModal(true);
   };
   const handleCloseModal = () => {
-    setSelectedReclamation(null);
+    setSelectedOrder(null);
     setShowModal(false);
   };
-  const handleDeleteField= (reclamationId) => {
-    dispatch(deletereclamation(reclamationId));
+  const handleDeleteField= (orderId) => {
+    dispatch(deleteorder(orderId));
 
   };
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
 
     {
-      field: "client_name",
+      field: "first_name",
       headerName: "Client Name",
       width: 150,
       valueGetter: (value,row) => {
         return value.row.Client?.first_name;
       },
     },
-    { field: "titel", headerName: "Title", width: 200 },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "createdAt", headerName: "createdAt", width: 200 },
+    { field: "total", headerName: "Total", width: 200 },
+    { field: "subTotal", headerName: "SubTotal", width: 200 },
+    { field: "invoiceNumber", headerName: "NumDevis", width: 200 },
+    { field: "confirm", headerName: "Confirm", width: 200 },
     { field: "Action", headerName: "Action", width: 200 ,cellClassName: 'actions',
     renderCell: (params) => {
       console.log(params.row,"this is the params")
       return ( <div>
-        <VisibilityIcon onClick={() => handleOpenModal(params.row)}/>
+        <Link to={`orderdetails/${params.row.id}`}>
+        <VisibilityIcon />
+        </Link>
         <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
-        <Link to={`editreclamation/${params.row.id}`} className="text-decoration-none text-reset">
+        <Link to={`editorder/${params.row.id}`} className="text-decoration-none text-reset">
         <EditIcon />
         </Link>
       </div>)}}
@@ -85,12 +84,12 @@ export default function Reclamations() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Reclamations
+              Liste des Orders
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Link to={"addreclamation"}>
-              <Button> Ajouter une reclamation </Button>
+            <Link to={"addorder"}>
+              <Button> Ajouter une facture </Button>
             </Link>
           </div>
         </div>
@@ -98,8 +97,10 @@ export default function Reclamations() {
           <div className="w-full md:w-72">
             <Input
               onChange={(e) =>
-                dispatch(filterreclamation_lastname(e.target.value))
+                dispatch(filterorder(e.target.value))
+                
               }
+              
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
             />
@@ -116,7 +117,7 @@ export default function Reclamations() {
         </div>
       </CardBody>
       <div>
-      {showModal && <ReclamationDetails reclamation={selectedReclamation} onClose={handleCloseModal} />}
+      {<OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
       </div>
     </Card>
   );

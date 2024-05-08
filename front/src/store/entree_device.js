@@ -76,10 +76,10 @@ export const addentree_device = createAsyncThunk(
 );
 export const deleteentree_device = createAsyncThunk(
   "deleteentree-device",
-  async (id) => {
+  async (id,{dispatch}) => {
     try {
       const res = await deleteRequestWithHeader(`entree-devices/${id}`);
-      return res.data;
+      dispatch(getentree_devices())
     } catch (error) {
       console.log(error);
     }
@@ -107,9 +107,9 @@ export const entree_deviceSlice = createSlice({
     builder.addCase(addentree_device.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });
-    builder.addCase(deleteentree_device.fulfilled, (state, action) => {
-      state.entree_devices = action.payload;
-    });
+    // builder.addCase(deleteentree_device.fulfilled, (state, action) => {
+    //   state.entree_devices = action.payload;
+    // });
     builder.addCase(filterentree_lastname.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });

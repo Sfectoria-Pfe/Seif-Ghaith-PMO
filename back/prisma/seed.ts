@@ -168,6 +168,10 @@ async function main() {
       confirm: true,
       clientId: 1,
       orderReparationId: 1,
+      total:1000.3,
+      subTotal:1000,
+      invoiceNumber:1,
+      
     },
   });
 
