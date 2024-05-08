@@ -27,18 +27,7 @@ export default function Entree_devicee() {
 
   }, [Store]);  
   console.log(row ,"this is store")
-  // const Rows = {
-    
-  //     id: Store.entree_device.id,   
-  //     client_name : entree_device.Client.first_name,
-  //     title: entree_device.title, 
-  //     description: entree_device.description,
-  //     createdAt: entree_device.createdAt,
-  //     statues: entree_device.statues,
 
-      
-    
-  // };
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
     { field: "client_name", headerName: "Client Name", width: 150,valueGetter: (value, row) => {
