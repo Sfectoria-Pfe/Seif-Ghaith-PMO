@@ -11,9 +11,11 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
+import { FaRegWindowClose } from "react-icons/fa";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
-import  { getorder } from "../../../store/order";
+// import  { getorder } from "../../../store/order";
+import Modal from 'react-bootstrap/Modal';
 
 const styles = StyleSheet.create({
   page: {
@@ -29,17 +31,19 @@ const styles = StyleSheet.create({
   },
 });
 
-function OrderDetails() {
-  const dispatch = useDispatch();
-  const { orderId } = useParams();
-  const order = useSelector((state) => state.orders?.order);
-  const loading = useSelector((state) => state.orders?.order);
+function OrderDetails({order,onClose}) {
+  console.log(order,"this is order")
+  // const dispatch = useDispatch();
+  // const { id } = useParams(); 
+  // const order = useSelector((state) => state.order.order);
+  // const loading = useSelector((state) => state.order.order);
 
   const [pdfExported, setPdfExported] = useState(false);
 
-  useEffect(() => {
-    dispatch(getorder(orderId)); 
-  }, [dispatch, orderId]);
+  // useEffect(() => {
+  //   dispatch(getorder(+id)); 
+    
+  // }, [dispatch,+id]);
 
   const handleExportPDF = () => {
     setPdfExported(true);
@@ -61,64 +65,68 @@ function OrderDetails() {
     });
   }
   return (
-    <div>
-      <div id="invoiceCapture">
+      <div>
+        <Modal className="m-5" show={true} size="lg">
+        
+          <div id="invoiceCapture" >
             <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
               <div className="w-100">
-                <h4 className="fw-bold my-2">{order?.client?.nom||'John Uberbacher'}</h4>
+                <h4 className="fw-bold my-2">{order?.Client?.first_name}</h4>
                 <h6 className="fw-bold text-secondary mb-1">
-                  Invoice #: {order?.id||''}
+                  Facture #: {order?.id}
                 </h6>
               </div>
+             
               <div className="text-end ms-4">
                 <h6 className="fw-bold mt-1 mb-2">Amount&nbsp;Due:</h6>
                 <h5 className="fw-bold text-secondary"> {order?.currency} {order?.total}</h5>
               </div>
             </div>
-            <div className="p-4">
+            
+            <div className="p-4 gap-4">
               <Row className="mb-4">
                 <Col md={4}>
                   <div className="fw-bold">information de client</div>
-                  <div>{order?.client?.nom||''}</div>
-                  <div>{order?.client?.email||''}</div>
-                  <div>{order?.client?.adresse||''}</div>
+                  <div>{order?.Client?.first_name}</div>
+                  <div>{order?.Client?.email}</div>
+                  <div>{order?.Client?.adresse}</div>
                  
 
                 </Col>
                 <Col md={4}>
                   <div className="fw-bold">information de entreprise</div>
-                  <div>{'fatma & roua '||''}</div>
-                  <div>{"contact@sfectoria.com"||''}</div>
-                  <div>{'Montplaisir'||''}</div>
-                  <div>{'55180992'||''}</div>
+                  <div>{'DATASERV'}</div>
+                  <div>{'dataserv@gmail.coom'}</div>
+                  <div>{'montplaisire'}</div>
+                  <div>{'20111300'}</div>
 
                 </Col>
                 <Col md={4}>
                   <div className="fw-bold mt-2">Date Of Issue:</div>
-                  <div>{order?.dateOfIssue||''}</div>
+                  <div>{order?.dateOfIssue}</div>
                 </Col>
               </Row>
               <Table className="mb-0">
                 <thead>
                   <tr>
                     <th>QTY</th>
-                    <th>DESCRIPTION</th>
+                    <th>ITEM</th>
                     <th className="text-end">PRICE</th>
                     <th className="text-end">AMOUNT</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {order?.orderLine.map((item, i) => {
+                  {order?.orderline?.map((item, i) => {
                     return (
                       <tr id={i} key={i}>
                         <td style={{width: '70px'}}>
                           {item.quantity}
                         </td>
                         <td>
-                          {item.name} 
+                          {item.item} 
                         </td>
-                        <td className="text-end" style={{width: '100px'}}>{order?.currency} {item.prix_unitaire}</td>
-                        <td className="text-end" style={{width: '100px'}}>{order?.currency} {item.prix_unitaire * item.quantity}</td>
+                        <td className="text-end" style={{width: '100px'}}>{order?.currency}  {item.prix_unitaire}</td>
+                        <td className="text-end" style={{width: '100px'}}>{order?.currency}  {item.prix_unitaire * item.quantity}</td>
                       </tr>
                     );
                   })}
@@ -134,26 +142,26 @@ function OrderDetails() {
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{width: '100px'}}>SUBTOTAL</td>
-                    <td className="text-end" style={{width: '100px'}}>{order?.currency} {order?.subTotal}</td>
+                    <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.subTotal}</td>
                   </tr>
                   {order?.taxAmmount != 0.00 &&
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>TAX</td>
-                      <td className="text-end" style={{width: '100px'}}>{order?.currency} {order?.taxAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.taxAmmount}</td>
                     </tr>
                   }
                   {order?.discountAmmount != 0.00 &&
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>DISCOUNT</td>
-                      <td className="text-end" style={{width: '100px'}}>{order?.currency} {order?.discountAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.discountAmmount}</td>
                     </tr>
                   }
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{width: '100px'}}>TOTAL</td>
-                    <td className="text-end" style={{width: '100px'}}>{order?.currency} {order?.total}</td>
+                    <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.total}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -166,8 +174,8 @@ function OrderDetails() {
           <div className="pb-4 px-4">
             <Row>
               <Col md={6}>
-                <Button variant="primary" className="d-block w-100" onClick={GenerateInvoice}>
-                  <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Send Invoice
+                <Button variant="primary" className="d-block w-100" onClick={onClose}>
+                  <FaRegWindowClose style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>close
                 </Button>
               </Col>
               <Col md={6}>
@@ -184,7 +192,6 @@ function OrderDetails() {
         startIcon={<SaveAltIcon />}
         onClick={handleExportPDF}
       >
-        Export PDF
       </Button>
       {pdfExported && (
         <PDFViewer width="100%" height={600}>
@@ -222,7 +229,10 @@ function OrderDetails() {
           </Document>
         </PDFViewer>
       )}
-    </div>
+           
+        </Modal>
+        <hr className="mt-4 mb-3"/>
+      </div>
   );
 }
 

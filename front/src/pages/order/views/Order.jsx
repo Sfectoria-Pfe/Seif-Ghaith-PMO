@@ -68,9 +68,9 @@ export default function Order() {
     renderCell: (params) => {
       console.log(params.row,"this is the params")
       return ( <div>
-        <Link to={`orderdetails/${params.row.id}`}>
-        <VisibilityIcon />
-        </Link>
+        
+        <VisibilityIcon  onClick={() => handleOpenModal(params.row)} />
+        
         <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
         <Link to={`editorder/${params.row.id}`} className="text-decoration-none text-reset">
         <EditIcon />
@@ -117,7 +117,7 @@ export default function Order() {
         </div>
       </CardBody>
       <div>
-      {<OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
+      {showModal && <OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
       </div>
     </Card>
   );

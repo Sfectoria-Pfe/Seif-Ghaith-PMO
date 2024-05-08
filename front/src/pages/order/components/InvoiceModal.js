@@ -34,7 +34,7 @@ class InvoiceModal extends React.Component {
   render() {
     return(
       <div>
-        <Modal show={this.props.showModal} onHide={this.props.closeModal} size="lg" centered>
+        <Modal show={this.props.showModal} onHide={this.props.closeModal} size="lg"  centered>
           <div id="invoiceCapture">
             <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
               <div className="w-100">
@@ -90,7 +90,7 @@ class InvoiceModal extends React.Component {
                         <td>
                           {item.item} 
                         </td>
-                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.prix_unitaire}</td>
+                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.prix_unitaire}</td> 
                         <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.prix_unitaire * item.quantity}</td>
                       </tr>
                     );
@@ -113,14 +113,16 @@ class InvoiceModal extends React.Component {
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>TAX</td>
-                      <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.taxAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{this.props.currency} 
+                      {this.props.taxAmount}
+                      {console.log(this.props)}</td>
                     </tr>
                   }
                   {this.props.discountAmmount != 0.00 &&
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>DISCOUNT</td>
-                      <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.discountAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.discountAmount}</td>
                     </tr>
                   }
                   <tr className="text-end">

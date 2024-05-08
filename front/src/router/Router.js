@@ -89,7 +89,7 @@ function Router() {
             <Route path="/orders"element={<OrderPage/>}>
               <Route index element={<Order/>}/>
               <Route path="addorder" element={<AddOrder/>}/>
-              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
+              {/* <Route path="orderdetails/:id" element={<OrderDetails/>}/> */}
 
             </Route>
 

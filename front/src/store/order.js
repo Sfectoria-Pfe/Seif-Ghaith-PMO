@@ -8,12 +8,13 @@ export const filterorder= createAsyncThunk(
   async (str) => {
     try {
       const res = await getRequestWithHeader("orders");
+
     return res.data.filter((elem) => {
         return (
-          // elem.Client.first_name?.toUpperCase().includes(str.toUpperCase()) ||
-          elem.name?.toUpperCase().includes(str.toUpperCase()) ||
-          elem.confirm?.toUpperCase().includes(str.toUpperCase()) ||
-          elem.description?.toUpperCase().includes(str.toUpperCase())
+          elem.Client.first_name?.toUpperCase().includes(str.toUpperCase()) ||
+          elem.total.toString().toUpperCase().includes(str.toUpperCase()) ||
+          elem.invoiceNumber.toString().toUpperCase().includes(str.toUpperCase())  ||
+          elem.subTotal.toString().toUpperCase().includes(str.toUpperCase()) 
         );
       });
     
@@ -59,10 +60,10 @@ export const getorders = createAsyncThunk("getorders", async () => {
       console.log(error);
     }
   });
-  export const deleteorder = createAsyncThunk("deleteorder",  async (id) => {
+  export const deleteorder = createAsyncThunk("deleteorder",  async (id,{dispatch}) => {
     try {
       const res = await deleteRequestWithHeader(`orders/${id}`);
-      return res.data;
+      dispatch(getorders());
     } catch (error) {
       console.log(error);
     }
