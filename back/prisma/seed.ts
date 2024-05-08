@@ -9,8 +9,8 @@ async function main() {
       photo:
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       email: 'client@sfectoria.com',
-      adresse:'montplaisir,bachaCenter',
-      numero:'50111290',
+      adresse: 'montplaisir,bachaCenter',
+      numero: '50111290',
     },
   });
   const aymen = await prisma.employee.create({
@@ -21,9 +21,8 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'aymen.amri@sfectoria.com',
       role: 'admin',
-      adresse:'montplaisir,bachaCenter',
-      numero:'90311890'
-      
+      adresse: 'montplaisir,bachaCenter',
+      numero: '90311890',
     },
   });
   const khalil = await prisma.employee.create({
@@ -34,9 +33,8 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'khalil.kraiem@sfectoria.com',
       role: 'manager',
-      adresse:'montplaisir,bachaCenter',
-      numero:'50111290',
-      
+      adresse: 'montplaisir,bachaCenter',
+      numero: '50111290',
     },
   });
   const seif = await prisma.employee.create({
@@ -47,10 +45,8 @@ async function main() {
         'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
       email: 'seif.boughrara@sfectoria.com',
       role: 'technicien',
-      adresse:'montplaisir,bachaCenter',
-      numero:'20300200'
-      
-
+      adresse: 'montplaisir,bachaCenter',
+      numero: '20300200',
     },
   });
 
@@ -87,7 +83,6 @@ async function main() {
       employeeId: aymen.id,
     },
   });
-  
 
   const reclamation = await prisma.reclamation.create({
     data: {
@@ -101,9 +96,10 @@ async function main() {
   const orderReparation = await prisma.orderReparation.create({
     data: {
       title: 'Ecran Pc',
-     
-      description: 'description de probleme description de probleme description de probleme description de probleme description de probleme',
-      status: "inProgress",
+
+      description:
+        'description de probleme description de probleme description de probleme description de probleme description de probleme',
+      status: 'inProgress',
       date: '2022-12-31T23:59:55Z',
       clientId: client.id,
       reclamationId: null,
@@ -113,36 +109,37 @@ async function main() {
   const orderReparation2 = await prisma.orderReparation.create({
     data: {
       title: 'Pc',
-      description: 'description de probleme description de probleme description de probleme description de probleme description de probleme',
-      status: "inProgress",
+      description:
+        'description de probleme description de probleme description de probleme description de probleme description de probleme',
+      status: 'inProgress',
       date: '2022-12-31T23:59:55Z',
       clientId: null,
       reclamationId: reclamation.id,
     },
   });
   const fiche_intervention = await prisma.ficheIntervention.create({
-    data:{
-      status: "inProgress",
-      orderReparationId:orderReparation2.id,
-    }
-  })
+    data: {
+      status: 'inProgress',
+      orderReparationId: orderReparation2.id,
+    },
+  });
   const fiche_intervention2 = await prisma.ficheIntervention.create({
-    data:{
-      status: "inProgress",
-   orderReparationId:orderReparation.id,
-    }
-  })
+    data: {
+      status: 'inProgress',
+      orderReparationId: orderReparation.id,
+    },
+  });
   const Etape1 = await prisma.etape.create({
     data: {
       title: 'Etape',
-   
+
       rapport: 'Etape rapport',
       description: 'desccc',
-      status: "inProgress",
+      status: 'inProgress',
       type: 'type',
       date: '2022-12-31T23:59:55Z',
       employeeId: 1,
-      orderReparationId:1
+      orderReparationId: 1,
     },
   });
   const Etape2 = await prisma.etape.create({
@@ -150,11 +147,11 @@ async function main() {
       title: 'Etape',
       rapport: 'Etape rapport',
       description: 'desccc',
-      status: "inProgress",
+      status: 'inProgress',
       type: 'type',
       date: '2022-12-31T23:59:55Z',
       employeeId: 1,
-      orderReparationId:1
+      orderReparationId: 1,
     },
   });
   const entreeDevice = await prisma.entreeDevice.create({
@@ -178,21 +175,23 @@ async function main() {
     },
   });
 
- const FicheInterventionDetails = await prisma.ficheInterventionDetails.create({
-  data:{
-    ficheInterventionId:1,
-    title               :'String',
-  rapport             :'String',
-  description         :'String',
-  }
- })
+  const FicheInterventionDetails = await prisma.ficheInterventionDetails.create(
+    {
+      data: {
+        ficheInterventionId: 1,
+        title: 'String',
+        rapport: 'String',
+        description: 'String',
+      },
+    },
+  );
 
   const Orderline = await prisma.orderline.create({
     data: {
       orderId: 1,
-      item:"pc hp",
-      qunatity:1,
-      prix_unitaire:5500
+      item: 'pc hp',
+      qunatity: 1,
+      prix_unitaire: 5500,
     },
   });
 
