@@ -51,10 +51,10 @@ export const getorders = createAsyncThunk("getorders", async () => {
     }
   });
 
-  export const addorder = createAsyncThunk("addorder", async (body) => {
+  export const addorder = createAsyncThunk("addorder", async (body,{dispatch}) => {
     try {
       const res = await postRequestWithHeader(`orders`,body);
-      return res.data;
+      dispatch(getorders())
     } catch (error) {
       console.log(error);
     }

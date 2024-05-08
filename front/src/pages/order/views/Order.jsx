@@ -60,15 +60,17 @@ export default function Order() {
         return value.row.Client?.first_name;
       },
     },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "createdAt", headerName: "createdAt", width: 200 },
+    { field: "total", headerName: "Total", width: 200 },
+    { field: "subTotal", headerName: "SubTotal", width: 200 },
+    { field: "invoiceNumber", headerName: "NumDevis", width: 200 },
     { field: "confirm", headerName: "Confirm", width: 200 },
     { field: "Action", headerName: "Action", width: 200 ,cellClassName: 'actions',
     renderCell: (params) => {
       console.log(params.row,"this is the params")
       return ( <div>
-        <VisibilityIcon onClick={() => handleOpenModal(params.row)}/>
+        <Link to={`orderdetails/${params.row.id}`}>
+        <VisibilityIcon />
+        </Link>
         <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
         <Link to={`editorder/${params.row.id}`} className="text-decoration-none text-reset">
         <EditIcon />
@@ -115,7 +117,7 @@ export default function Order() {
         </div>
       </CardBody>
       <div>
-      {showModal && <OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
+      {<OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
       </div>
     </Card>
   );

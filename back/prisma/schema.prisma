@@ -16,6 +16,7 @@ model User {
   clientId   Int?
   Employee   Employee? @relation(fields: [employeeId], references: [id])
   employeeId Int?
+  isActive   Boolean   @default(true)
 }
 
 model Client {
@@ -24,6 +25,8 @@ model Client {
   last_name       String
   email           String            @unique
   photo           String            @db.LongText
+  adresse         String
+  numero          String
   createdAt       DateTime          @default(now())
   reclamation     Reclamation[]
   orderReparation OrderReparation[]
@@ -41,6 +44,7 @@ model Employee {
   photo      String  @db.LongText
   email      String  @unique
   role       Role    @default(technicien)
+  isArchived Boolean @default(false)
   user       User[]
   etape      Etape[]
 }
@@ -54,60 +58,67 @@ model Reclamation {
   Client      Client?           @relation(fields: [clientId], references: [id])
   clientId    Int?
   fiche       OrderReparation[]
+  Entrees     EntreeDevice[]
 }
 
 model EntreeDevice {
-  id          Int      @id @default(autoincrement())
-  title       String
-  image       String?  @db.LongText
-  rapport     String
-  statues     String
-  description String
-  createdAt   DateTime @default(now())
-  Client      Client?  @relation(fields: [clientId], references: [id])
-  clientId    Int?
-  Etape       Etape?   @relation(fields: [etapeId], references: [id])
-  etapeId     Int?
+  id            Int               @id @default(autoincrement())
+  title         String
+  image         String?           @db.LongText
+  rapport       String
+  description   String
+  createdAt     DateTime          @default(now())
+  Client        Client?           @relation(fields: [clientId], references: [id])
+  clientId      Int?
+  Etape         Etape?            @relation(fields: [etapeId], references: [id])
+  etapeId       Int?
+  Orders        OrderReparation[]
+  Reclamation   Reclamation?      @relation(fields: [reclamationId], references: [id])
+  reclamationId Int?
 }
 
 model OrderReparation {
-  id            Int                 @id @default(autoincrement())
-  title         String
-  rapport       String
-  description   String
-  status        String
-  date          DateTime?
-  Client        Client?             @relation(fields: [clientId], references: [id])
-  clientId      Int?
-  Reclamation   Reclamation?        @relation(fields: [reclamationId], references: [id])
-  reclamationId Int?
-  etape         Etape[]
-  order         Order[]
-  fiches        FicheIntervention[]
+  id    Int    @id @default(autoincrement())
+  title String
+
+  description    String
+  status         Status
+  date           DateTime?
+  Client         Client?             @relation(fields: [clientId], references: [id])
+  clientId       Int?
+  Reclamation    Reclamation?        @relation(fields: [reclamationId], references: [id])
+  reclamationId  Int?
+  etape          Etape[]
+  order          Order[]
+  fiches         FicheIntervention[]
+  EntreeDevice   EntreeDevice?       @relation(fields: [entreeDeviceId], references: [id])
+  entreeDeviceId Int?
 }
 
 model FicheIntervention {
   id                Int                        @id @default(autoincrement())
-  OrderReparation   OrderReparation?           @relation(fields: [orderReparationId], references: [id])
-  orderReparationId Int?
+  OrderReparation   OrderReparation         @relation(fields: [orderReparationId], references: [id])
+  orderReparationId Int
   details           FicheInterventionDetails[]
-  status            String
+  status            StatusFiche                @default(inProgress)
 }
 
 model FicheInterventionDetails {
-  id Int @id @default(autoincrement())
-
+  id                  Int                @id @default(autoincrement())
+  title               String
+  rapport             String
+  description         String
   FicheIntervention   FicheIntervention? @relation(fields: [ficheInterventionId], references: [id])
   ficheInterventionId Int?
 }
 
 model Etape {
-  id                Int              @id @default(autoincrement())
-  title             String
-  ongoing           Boolean
+  id    Int    @id @default(autoincrement())
+  title String
+
   rapport           String
   description       String
-  status            String
+  status            Status
   type              String
   date              DateTime
   createdAt         DateTime         @default(now())
@@ -119,11 +130,21 @@ model Etape {
 }
 
 model Order {
-  id                Int              @id @default(autoincrement())
-  name              String
-  description       String
+  id Int @id @default(autoincrement())
+
+  currency          String? // Devise utilisée ('$' dans votre exemple)
+  currentDate       DateTime? // Date actuelle
+  invoiceNumber     Int? // Numéro de facture
+  dateOfIssue       DateTime? // Date d'émission
+  notes             String? // Notes
+  total             Float? // Total
+  subTotal          Float? // Sous-total
+  taxRate           Float? // Taux de taxe
+  taxAmount         Float? // Montant de taxe
+  discountRate      Float? // Taux de réduction
+  discountAmount    Float? // Montant de réduction
   createdAt         DateTime         @default(now())
-  confirm           String
+  confirm           Boolean          @default(false)
   orderline         Orderline[]
   Client            Client?          @relation(fields: [clientId], references: [id])
   clientId          Int?
@@ -132,9 +153,12 @@ model Order {
 }
 
 model Orderline {
-  id      Int    @id @default(autoincrement())
-  Order   Order? @relation(fields: [orderId], references: [id])
-  orderId Int?
+  id            Int    @id @default(autoincrement())
+  item          String
+  prix_unitaire Float
+  qunatity      Int
+  Order         Order @relation(fields: [orderId], references: [id])
+  orderId       Int
 }
 
 enum Role {
@@ -142,4 +166,17 @@ enum Role {
   admin
   manager
   receptionist
+}
+
+enum Status {
+  inProgress
+  completed
+  pending
+  onhold
+}
+
+enum StatusFiche {
+  inProgress
+  toFactured
+  closed
 }

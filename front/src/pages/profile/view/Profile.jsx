@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 export default function Profile() {
   const myInfo=useSelector(state=>state.auth.me)
 
+  
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
       <Stack

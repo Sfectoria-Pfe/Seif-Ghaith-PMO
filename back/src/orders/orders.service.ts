@@ -6,8 +6,28 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class OrdersService {
   constructor(private prisma: PrismaService) {}
-  create(createOrderDto: CreateOrderDto) {
-    return this.prisma.order.create({data:createOrderDto})
+  async create(createorderDto: CreateOrderDto) {
+    const { items, ...rest } = createorderDto;
+    try {
+      const neworder = await this.prisma.order.create({
+        data: {
+          ...rest,
+          currentDate: new Date(rest.currentDate).toISOString(),
+          dateOfIssue: new Date(rest.dateOfIssue).toISOString(),
+          orderline: {
+            create: items.map((item) => ({
+              item:'khalil',
+              qunatity: +item.quantity,
+              prix_unitaire: +item.prix_unitaire,
+            })),
+          },
+        },
+      });
+      return neworder;
+    } catch (error) {
+      console.error('Erreur lors de la création de la devis :', error);
+      throw error;
+    }
   }
 
   findAll() {

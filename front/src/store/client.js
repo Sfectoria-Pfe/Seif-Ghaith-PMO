@@ -24,17 +24,18 @@ export const getclients = createAsyncThunk("getclients", async () => {
 
   export const getclient = createAsyncThunk("getclient", async (id) => {
     try {
-      const res = await getRequestWithHeader(`client/${id}`);
+      const res = await getRequestWithHeader(`clients/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
     }
   });
 
-  export const updateclient = createAsyncThunk("updateclient", async (args) => {
+  export const updateclient = createAsyncThunk("updateclient", async (args,dispatch) => {
     const {id,body} = args
     try {
       const res = await putRequestWithHeader(`clients/${id}`,body);
+      dispatch(getclients())
       return res.data;
     } catch (error) {
       console.log(error);
@@ -79,9 +80,9 @@ export const clientSlice = createSlice({
     builder.addCase(getclient.fulfilled, (state, action) => {
       state.client = action.payload;
     });
-    builder.addCase(updateclient.fulfilled, (state, action) => {
-        state.clients = action.payload;
-      });
+    // builder.addCase(updateclient.fulfilled, (state, action) => {
+    //     state.clients = action.payload;
+    //   });
       builder.addCase(addclient.fulfilled, (state, action) => {
         state.clients = [...state.clients,action.payload];
       });

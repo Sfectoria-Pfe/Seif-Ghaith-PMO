@@ -10,9 +10,9 @@ import Auth from "../apps/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth";
 import Spinner from "react-bootstrap/Spinner";
-import FicheIentervention from "../pages/FicheIentervention";
+import FicheIentervention from "../pages/Les Fiche d'intervention/views/FicheIentervention";
 import EmployeePage from "../pages/Users/employees/EmployeePage"
-import AddEmplyee from "../pages/Users/employees/views/AddEmplyee"
+import AddEmployee from "../pages/Users/employees/views/AddEmployee"
 import ClientsPage from "../pages/Users/clients/ClientsPage"
 import AddClient from "../pages/Users/clients/views/AddClient";
 import Inbox from "../pages/Inbox";
@@ -26,11 +26,14 @@ import AddEntree from "../pages/EntreeDevice/views/AddEntree";
 import EditProfile from "../pages/profile/view/EditProfile";
 import ProfilePage from "../pages/profile/ProfilePage";
 import Profile from "../pages/profile/view/Profile";
-import Invoice from "../pages/order/views/AddOrder/Invoice";
 import EditReclamation from "../pages/Reclamation/views/EditReclamation";
 import EditEntree from "../pages/EntreeDevice/views/EditEntree";
 import Order from "../pages/order/views/Order";
 import OrderPage from "../pages/order/OrderPage";
+import EditEmployee from "../pages/Users/employees/views/EditEmployee";
+import EditClient from "../pages/Users/clients/views/EditClient";
+import AddOrder from "../pages/order/views/AddOrder";
+import OrderDetails from "../pages/order/views/OrderDetails";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -54,7 +57,7 @@ function Router() {
           <Route path="/" element={<Main />}>
             <Route index element={<Dashboard />} />
             <Route path="/clients" element={<Clients />} />
-            <Route path="/fiche" element={<FicheIentervention/>} />
+            <Route path="/fiches_intervention" element={<FicheIentervention/>} />
             <Route path="/reclamations" element={<ReclamationPage/>}>
             <Route index element={<Reclamations/>}/>
             <Route path="addreclamation" element={<AddReclamation/>}/>
@@ -63,11 +66,13 @@ function Router() {
 
             <Route path="/employees" element={<EmployeePage/>}>
             <Route index element={<Employees/>}/>
-            <Route path="addEmployee" element={<AddEmplyee/>}/>
+            <Route path="addEmployee" element={<AddEmployee/>}/>
+            <Route path="editEmployee/:id" element={<EditEmployee/>}/>
             </Route>
             <Route path="/clients" element={<ClientsPage/>}>
             <Route index element={<Clients/>}/>
             <Route path="addclient" element={<AddClient/>}/>
+            <Route path="editClient/:id" element={<EditClient/>}/>
             </Route>
             <Route path="/inbox" element={<Inbox/>}/>
             <Route path="/entreedevices" element={<EntreePage/>}>
@@ -83,7 +88,8 @@ function Router() {
             
             <Route path="/orders"element={<OrderPage/>}>
               <Route index element={<Order/>}/>
-              <Route path="addorder" element={<Invoice/>}/>
+              <Route path="addorder" element={<AddOrder/>}/>
+              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
 
             </Route>
 

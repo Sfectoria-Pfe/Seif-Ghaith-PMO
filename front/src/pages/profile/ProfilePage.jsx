@@ -5,6 +5,7 @@ export default function ProfilePage() {
   return (
     <div>
       <Outlet/>
+      
     </div>
   )
 }
