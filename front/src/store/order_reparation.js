@@ -69,7 +69,7 @@ export const orderreparationSlice = createSlice({
         state.orderreparations = action.payload;
       });
       builder.addCase(addorderreparation.fulfilled, (state, action) => {
-        state.orderreparations = action.payload;
+        state.orderreparations = [...state.orderreparations,action.payload];
       });
       builder.addCase(deleteorderreparation.fulfilled, (state, action) => {
         state.orderreparations = action.payload;

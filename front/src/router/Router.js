@@ -69,7 +69,7 @@ function Router() {
             <Route path="/reclamations" element={<ReclamationPage />}>
               <Route index element={<Reclamations />} />
               <Route path="addreclamation" element={<AddReclamation />} />
-              <Route path="editreclamation" element={<EditReclamation/>}/>
+              <Route path="editreclamation/:id" element={<EditReclamation/>}/>
             </Route>
             <Route path="/users" element={<UsersPage />}>
               <Route index element={<Users />} />
