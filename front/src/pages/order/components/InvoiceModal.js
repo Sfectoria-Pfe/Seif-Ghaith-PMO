@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
+import { ToastContainer } from 'react-toastify';
 
 function GenerateInvoice() {
   html2canvas(document.querySelector("#invoiceCapture")).then((canvas) => {
@@ -158,6 +159,7 @@ class InvoiceModal extends React.Component {
               </Col>
             </Row>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </Modal>
         <hr className="mt-4 mb-3"/>
       </div>

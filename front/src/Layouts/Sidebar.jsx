@@ -139,7 +139,9 @@ export default function MiniDrawer() {
             >
               <MenuIcon />
             </IconButton>
+            <Link to={"/"} className="text-decoration-none text-reset">
             {!open && <p className="logodata">DataServ</p>}
+            </Link>
           </div>
           <div className="d-flex align-items-center">
             <Link className="text-reset">

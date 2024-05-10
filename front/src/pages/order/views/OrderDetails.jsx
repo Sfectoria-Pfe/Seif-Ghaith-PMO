@@ -148,14 +148,14 @@ function OrderDetails({order,onClose}) {
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>TAX</td>
-                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.taxAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.taxAmount}</td>
                     </tr>
                   }
                   {order?.discountAmmount != 0.00 &&
                     <tr className="text-end">
                       <td></td>
                       <td className="fw-bold" style={{width: '100px'}}>DISCOUNT</td>
-                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.discountAmmount}</td>
+                      <td className="text-end" style={{width: '100px'}}>{order?.currency}  {order?.discountAmount}</td>
                     </tr>
                   }
                   <tr className="text-end">
