@@ -40,6 +40,8 @@ import OrdreReparationPage from "../pages/Ordre_Reparation/OrdreReparationPage";
 import AddOrder from "../pages/order/views/AddOrder";
 import OrderDetails from "../pages/order/views/OrderDetails";
 import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
+import FicheInterventionPage from "../pages/Les Fiche d'intervention/FicheInterventionPage";
+import AddFicheIentervention from "../pages/Les Fiche d'intervention/views/AddFicheIntervention";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -64,49 +66,58 @@ function Router() {
             <Route index element={<Dashboard />} />
             <Route
               path="/fiches_intervention"
-              element={<FicheIentervention />}
-            />
+              element={<FicheInterventionPage />}>
+              <Route index element={<FicheIentervention />} />
+              <Route path="addfiche_intervention" element={<AddFicheIentervention/>}/>
+            </Route>
             <Route path="/reclamations" element={<ReclamationPage />}>
               <Route index element={<Reclamations />} />
               <Route path="addreclamation" element={<AddReclamation />} />
-              <Route path="editreclamation/:id" element={<EditReclamation/>}/>
+              <Route path="editreclamation/:id" element={<EditReclamation />} />
             </Route>
+
             <Route path="/users" element={<UsersPage />}>
               <Route index element={<Users />} />
               <Route path="addUser" element={<AddUser />} />
             </Route>
+
             <Route path="/employees" element={<EmployeePage />}>
               <Route index element={<Employees />} />
               <Route path="addEmployee" element={<AddEmployee />} />
               <Route path="editEmployee/:id" element={<EditEmployee />} />
             </Route>
+
             <Route path="/clients" element={<ClientsPage />}>
               <Route index element={<Clients />} />
               <Route path="addclient" element={<AddClient />} />
               <Route path="editClient/:id" element={<EditClient />} />
             </Route>
+
             <Route path="/orderReparation" element={<OrdreReparationPage />}>
               <Route index element={<OrdreReparation />} />
-              <Route path="addorderreparation" element={<AddOrderReparation/>}/>
+              <Route
+                path="addorderreparation"
+                element={<AddOrderReparation />}
+              />
             </Route>
-            <Route path="/inbox" element={<Inbox/>}/>
-            <Route path="/entreedevices" element={<EntreePage/>}>
-            <Route index element={<EntreeDevicee/>}/>
-            <Route path="addband" element={<AddEntree/>}/>
-            <Route path="editentree/:id" element={<EditEntree/>}/>
+
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/entreedevices" element={<EntreePage />}>
+              <Route index element={<EntreeDevicee />} />
+              <Route path="addband" element={<AddEntree />} />
+              <Route path="editentree/:id" element={<EditEntree />} />
             </Route>
+
             <Route path="/profile" element={<ProfilePage />}>
               <Route index element={<Profile />} />
               <Route path="editprofile" element={<EditProfile />} />
             </Route>
-            
-            <Route path="/orders"element={<OrderPage/>}>
-              <Route index element={<Order/>}/>
-              <Route path="addorder" element={<AddOrder/>}/>
-              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
 
+            <Route path="/orders" element={<OrderPage />}>
+              <Route index element={<Order />} />
+              <Route path="addorder" element={<AddOrder />} />
+              <Route path="orderdetails/:id" element={<OrderDetails />} />
             </Route>
-
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>
