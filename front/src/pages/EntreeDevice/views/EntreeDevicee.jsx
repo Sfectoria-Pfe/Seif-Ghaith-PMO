@@ -53,7 +53,6 @@ export default function Entree_devicee() {
     { field: "title", headerName: "Title", width: 200 },
     { field: "description", headerName: "Description", width: 200 },
     { field: "createdAt", headerName: "createdAt", width: 200 },
-    { field: "statues", headerName: "statues", width: 200 },
     { field: "action", headerName: "Action", width: 200,
       renderCell:(params)=>{
         return(

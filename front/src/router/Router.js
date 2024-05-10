@@ -15,7 +15,7 @@ import EmployeePage from "../pages/Users/employees/EmployeePage";
 import AddEmployee from "../pages/Users/employees/views/AddEmployee";
 import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
-import Inbox from "../pages/Inbox";
+import Inbox from "../pages/inbox/Inbox";
 import Employees from "../pages/Users/employees/views/Employees";
 import Reclamations from "../pages/Reclamation/views/Reclamations";
 import AddReclamation from "../pages/Reclamation/views/AddReclamation";
@@ -103,7 +103,7 @@ function Router() {
             <Route path="/orders"element={<OrderPage/>}>
               <Route index element={<Order/>}/>
               <Route path="addorder" element={<AddOrder/>}/>
-              <Route path="orderdetails/:id" element={<OrderDetails/>}/>
+              {/* <Route path="orderdetails/:id" element={<OrderDetails/>}/> */}
 
             </Route>
 

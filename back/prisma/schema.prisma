@@ -65,7 +65,6 @@ model EntreeDevice {
   id            Int               @id @default(autoincrement())
   title         String
   image         String?           @db.LongText
-  rapport       String
   description   String
   createdAt     DateTime          @default(now())
   Client        Client?           @relation(fields: [clientId], references: [id])
@@ -153,7 +152,7 @@ model Orderline {
   item          String
   prix_unitaire Float
   qunatity      Int
-  Order         Order  @relation(fields: [orderId], references: [id])
+  Order         Order @relation(fields: [orderId], references: [id],onDelete: Cascade)
   orderId       Int
 }
 

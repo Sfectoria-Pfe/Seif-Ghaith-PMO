@@ -9,6 +9,8 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { getclients } from "../../../store/client";
 import axios from "axios";
 import { Box } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddReclamation() {
   const filter = createFilterOptions();
@@ -45,8 +47,21 @@ function AddReclamation() {
     console.log(file);
     const response = await axios.post("http://localhost:4000/upload", im);
     const productWithCover = { ...data, image: response.data.path };
-    dispatch(addreclamation(productWithCover));
-    navigate(-1);
+    
+    dispatch(addreclamation(productWithCover))
+    .then((res) => {
+      if (!res.error) {
+        toast.success("Le devis a été ajouté avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
+      } else {
+        toast.error("Erreur lors de l'ajout du reclamation. Veuillez réessayer.");
+      }
+    })
+    .catch(() => {
+      toast.error("Erreur lors de l'ajout du reclamation. Veuillez réessayer.");
+    })
   }
 
   return (
@@ -174,6 +189,7 @@ function AddReclamation() {
               (<span className="text-danger">*</span>) est obligatoire
             </p>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>

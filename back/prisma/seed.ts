@@ -157,7 +157,6 @@ async function main() {
   const entreeDevice = await prisma.entreeDevice.create({
     data: {
       title: 'entreeDevice1',
-      rapport: 'rapport',
       description: 'desscc',
       clientId: 1,
       etapeId: 1,
@@ -168,13 +167,9 @@ async function main() {
       confirm: true,
       clientId: 1,
       orderReparationId: 1,
-      total:1000.3,
-      subTotal:1000,
-      invoiceNumber:1,
       
     },
   });
-
   const FicheInterventionDetails = await prisma.ficheInterventionDetails.create(
     {
       data: {

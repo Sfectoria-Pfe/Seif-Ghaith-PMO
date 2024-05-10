@@ -68,9 +68,9 @@ export default function Order() {
     renderCell: (params) => {
       console.log(params.row,"this is the params")
       return ( <div>
-        <Link to={`orderdetails/${params.row.id}`}>
-        <VisibilityIcon />
-        </Link>
+        
+        <VisibilityIcon  onClick={() => handleOpenModal(params.row)} />
+        
         <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
         <Link to={`editorder/${params.row.id}`} className="text-decoration-none text-reset">
         <EditIcon />
@@ -89,7 +89,7 @@ export default function Order() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addorder"}>
-              <Button> Ajouter une facture </Button>
+              <Button> Ajouter une devis </Button>
             </Link>
           </div>
         </div>
@@ -117,7 +117,7 @@ export default function Order() {
         </div>
       </CardBody>
       <div>
-      {<OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
+      {showModal && <OrderDetails order={selectedOrder} onClose={handleCloseModal} />}
       </div>
     </Card>
   );

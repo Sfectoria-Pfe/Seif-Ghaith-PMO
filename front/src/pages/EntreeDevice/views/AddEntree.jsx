@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { ToastContainer, toast } from "react-toastify";
 
 
 function AddEntree() {
@@ -34,8 +35,6 @@ const filter = createFilterOptions();
     clientId: "",
     title: "",
     description: "",
-    rapport:"",
-    statues:"",
     image: null,
   });
 
@@ -54,8 +53,20 @@ const filter = createFilterOptions();
     const productWithCover = { ...data, image: response.data.path };
 
     console.log(data, "this is the data ");
-    dispatch(addentree_device(productWithCover));
-    navigate(-1)
+    dispatch(addentree_device(productWithCover))
+    .then((res) => {
+      if (!res.error) {
+        toast.success("bond entree a été ajouté avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
+      } else {
+        toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+      }
+    })
+    .catch(() => {
+      toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+    })
   }
 
   return (
@@ -157,34 +168,6 @@ const filter = createFilterOptions();
             value={data.description}
             required
           />
-          <p className="mb-0 mt-3">Rapport</p>
-          <Textarea
-            label="rapport"
-            name="rapport"
-            onChange={handle}
-            value={data.rapport}
-            required
-          />
-          <p className="mb-0 mt-3">Status</p>
-          <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Status</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-         value={data.statues}
-          label="Status"
-          name="statues"
-          onChange={handle}
-        >
-          <MenuItem value={"valider"}>valider</MenuItem>
-          <MenuItem value={"rejeter"}>A rejeter</MenuItem>
-          <MenuItem value={"terminer"}>terminer</MenuItem>
-          <MenuItem value={"en cours"}>en cours</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
-
           <p className="mb-0 mt-3">Inserer une image</p>
           <input
             type="file"
@@ -210,6 +193,7 @@ const filter = createFilterOptions();
               (<span className="text-danger">*</span>) est obligatoire{" "}
             </p>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>

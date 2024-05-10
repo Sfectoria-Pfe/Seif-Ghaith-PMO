@@ -35,7 +35,7 @@ export class OrdersService {
   }
 
   findOne(id: number) {
-    return this.prisma.order.findUnique({ where: { id } });
+    return this.prisma.order.findUnique({ where: { id },include:{Client:true,orderline:true} });
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
@@ -44,8 +44,8 @@ export class OrdersService {
       data :updateOrderDto,
     });;
   }
-
   remove(id: number) {
     return  this.prisma.order.delete({ where: { id } });
   }
 }
+
