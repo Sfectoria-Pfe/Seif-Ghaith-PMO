@@ -20,6 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import FicheDetails from "./FicheDetails";
 
 export default function Fiche_intervention() {
   const [show, setShow] = useState(false);
@@ -71,6 +72,16 @@ export default function Fiche_intervention() {
     { field: "statusr", headerName: "Status OR", width: 200 },
     { field: "reclamationID", headerName: "reclamation ID", width: 150 },
     { field: "clientID", headerName: "Client ID", width: 200 },
+    { field: "Action", headerName: "Action", width: 200 ,cellClassName: 'actions',
+    renderCell: (params) => {
+      console.log(params.row,"this is the params")
+      return ( <div>
+        <VisibilityIcon onClick={() => handleShow(params)}/>
+        <DeleteIcon onClick={() => handledelete(params.id)}/>
+        
+        <EditIcon onClick={() => handleEdit(params)}/>
+        
+      </div>)}}
 
     // {
     //   field: "action",
@@ -101,7 +112,7 @@ export default function Fiche_intervention() {
     //   },
     // },
   ];
-
+console.log(Store.fiche_interventions.find((e)=>e.id === fiche_interventionData.id ),"this is gaith")
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -139,11 +150,11 @@ export default function Fiche_intervention() {
           />
         </div>
       </CardBody>
-      {/* <fiche_interventionsDetails
+      <FicheDetails
         show={show}
         setShow={setShow}
         fiche_interventionsData={fiche_interventionData?.row}
-      /> */}
+      />
     </Card>
   );
 }
