@@ -1,53 +1,55 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
+import {
+  deleteRequestWithHeader,
+  getRequestWithHeader,
+  postRequestWithHeader,
+  putRequestWithHeader,
+} from "../helpers/axiosRequests";
 
 export const getetapes = createAsyncThunk("getetapes", async () => {
-    try {
-      const res = await getRequestWithHeader("etapes");
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  try {
+    const res = await getRequestWithHeader("etapes");
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-  export const getetape = createAsyncThunk("getetape", async (id) => {
-    try {
-      const res = await getRequestWithHeader(`etapes/${id}`);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+export const getetape = createAsyncThunk("getetape", async (id) => {
+  try {
+    const res = await getRequestWithHeader(`etapes/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-  export const updateetape = createAsyncThunk("updateetape", async (args) => {
-    const {id,body} = args
-    try {
-      const res = await putRequestWithHeader(`etapes/${id}`,body);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+export const updateetape = createAsyncThunk("updateetape", async (args) => {
+  const { id, body } = args;
+  try {
+    const res = await putRequestWithHeader(`etapes/${id}`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-  export const addetape = createAsyncThunk("addetape", async (body) => {
-    try {
-      const res = await postRequestWithHeader(`etapes`,body);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  export const deleteetape = createAsyncThunk("deleteetape",  async (id) => {
-    try {
-      const res = await deleteRequestWithHeader(`etapes/${id}`);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  
-  
+export const addetape = createAsyncThunk("addetape", async (body) => {
+  try {
+    const res = await postRequestWithHeader(`etapes`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+export const deleteetape = createAsyncThunk("deleteetape", async (id) => {
+  try {
+    const res = await deleteRequestWithHeader(`etapes/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const etapeSlice = createSlice({
   name: "etape",
@@ -65,14 +67,14 @@ export const etapeSlice = createSlice({
       state.etape = action.payload;
     });
     builder.addCase(updateetape.fulfilled, (state, action) => {
-        state.etapes = action.payload;
-      });
-      builder.addCase(addetape.fulfilled, (state, action) => {
-        state.etapes = action.payload;
-      });
-      builder.addCase(deleteetape.fulfilled, (state, action) => {
-        state.etapes = action.payload;
-      });
+      state.etapes = action.payload;
+    });
+    builder.addCase(addetape.fulfilled, (state, action) => {
+      state.etapes = [...state.etapes, action.payload];
+    });
+    builder.addCase(deleteetape.fulfilled, (state, action) => {
+      state.etapes = action.payload;
+    });
   },
 });
 export default etapeSlice.reducer;

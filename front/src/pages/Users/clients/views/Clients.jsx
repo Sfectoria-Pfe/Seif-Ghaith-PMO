@@ -62,7 +62,6 @@ export default function Clients() {
     setclientData(data);
   };
 
-  console.log(Store.clients);
   const columns = [
     { field: "id", headerName: "ID", width: 30, filterable: false },
     {
@@ -98,7 +97,6 @@ export default function Clients() {
             />
             <EditIcon
               onClick={() => {
-                // console.log(params.id)
                 handleEdit(params);
               }}
             />
