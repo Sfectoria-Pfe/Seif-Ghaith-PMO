@@ -158,6 +158,7 @@ async function main() {
     data: {
       title: 'entreeDevice1',
       description: 'desscc',
+      rapport:"rapporteee",
       clientId: 1,
       etapeId: 1,
     },
