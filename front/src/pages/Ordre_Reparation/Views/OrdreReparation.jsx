@@ -10,9 +10,15 @@ import {
   CardBody,
   Button,
 } from "@material-tailwind/react";
+
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { getorderreparations } from '../../../store/order_reparation';
+import OrderReparationDetails from './OrdeReparationDetails';
 
 function OrdreReparation() {
 
@@ -20,25 +26,33 @@ function OrdreReparation() {
     const store = useSelector((state) => state.orderreparation.orderreparations);
     console.log(store, "fssssrom storee");
 
+    const [show, setShow] = useState(false);
+    const [id, setId] = useState(false);
 
     useEffect(() => {
         dispatch(getorderreparations());
       }, [dispatch]);
       
+
+
+      const handleShow = (id) => {
+        setShow(true);
+        setId(store[id-1]);
+      };
       const rows = store.map((row) => {
       let xd=""
-      if (row.etape[0]===undefined) {
-         xd="rahi undefined"
-      } 
-      else {
-         xd=row.etape[0].title
-      }
+      if (row.etape && row.etape.length > 0) {
+        xd = row.etape[0].title;
+    } else {
+        xd = "rahi undefined";  
+    }
+    
         return {
           id: row?.id,
           title: row?.title,
           titleetape: xd,
           description: row?.description,
-          entreeDeviceId: row?.entreeDeviceId ? row?.entreeDeviceId : "0" ,
+          entreeDeviceId: row?.entreeDeviceId ? row?.EntreeDevice.title: "pas defini" ,
           status: row.status,
           nomclient: row.Client?.first_name+"  "+row.Client?.last_name,
         };
@@ -54,7 +68,7 @@ function OrdreReparation() {
     
         {
           field: "titleetape",
-          headerName: "titleetape",
+          headerName: "etape",
           width: 200,
         
         },
@@ -62,7 +76,7 @@ function OrdreReparation() {
         { field: "description", headerName: "description", width: 200 },
         {
           field: "entreeDeviceId",
-          headerName: "entreeDeviceId",
+          headerName: "Titre de band d'entree",
           width: 200,
         
         },
@@ -76,6 +90,30 @@ function OrdreReparation() {
             headerName: "nomclient",
             width: 250,
           },
+          { field: "action", headerName: "Action", width: 200,
+          renderCell:(params)=>{
+            return(
+              <div className="h-100 w-100 d-flex justify-content-around align-items-center">
+              <VisibilityIcon
+                onClick={() => {
+                  handleShow(params.row.id);
+                }}
+              />
+              <DeleteIcon
+                onClick={() => {
+                  // handledelete(params.id);
+                }}
+              />
+              <EditIcon
+                onClick={() => {
+                  // handleEdit(params);
+                }}
+              />
+            </div>
+            )
+          }
+         },
+        
       ];
   return (
     <Card className="h-full w-full">
@@ -83,7 +121,7 @@ function OrdreReparation() {
       <div className="mb-8 flex items-center justify-between gap-8">
         <div>
           <Typography variant="h5" color="blue-gray">
-            Liste des 
+            Liste des Orders de reparation
           </Typography>
           
         </div>
@@ -114,6 +152,10 @@ function OrdreReparation() {
         />
       </div>
     </CardBody>
+    <OrderReparationDetails 
+            show={show}
+            setShow={setShow}
+            id={id}/>
   </Card>
   )
 }

@@ -10,7 +10,7 @@ export class OrderreparationsService {
     return this.prisma.orderReparation.create({data:createOrderreparationDto})  }
 
   findAll() {
-    return this.prisma.orderReparation.findMany({include:{Client:true,Reclamation:true,etape:true}});
+    return this.prisma.orderReparation.findMany({include:{Client:true,Reclamation:true,etape:true,EntreeDevice:true }});
   }
 
   findOne(id: number) {

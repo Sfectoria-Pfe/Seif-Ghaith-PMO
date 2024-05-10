@@ -105,7 +105,7 @@ async function main() {
       reclamationId: null,
     },
   });
-
+  
   const orderReparation2 = await prisma.orderReparation.create({
     data: {
       title: 'Pc',
