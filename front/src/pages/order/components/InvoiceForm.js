@@ -30,7 +30,7 @@ function InvoiceForm() {
   const [currentDate, setCurrentDate] = useState(
     new Date().toLocaleDateString()
   );
-  const [invoiceNumber, setInvoiceNumber] = useState(1);
+  // const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [dateOfIssue, setDateOfIssue] = useState("");
   const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
@@ -71,7 +71,7 @@ function InvoiceForm() {
       addorder({
         currentDate,
         dateOfIssue,
-        invoiceNumber,
+        // invoiceNumber,
         clientId: client?.id,
         notes,
         currency,
@@ -161,9 +161,9 @@ function InvoiceForm() {
       case "dateOfIssue":
         setDateOfIssue(value);
         break;
-      case "invoiceNumber":
-        setInvoiceNumber(value);
-        break;
+      // case "invoiceNumber":
+      //   setInvoiceNumber(+value);
+      //   break;
       case "taxRate":
         setTaxRate(value);
         break;
@@ -215,18 +215,21 @@ function InvoiceForm() {
                   />
                 </div>
               </div>
-              <div className="d-flex flex-row align-items-center">
-                <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
-                <Form.Control
+              {/* <div className="d-flex flex-row align-items-center"> */}
+                {/* <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span> */}
+                {/* <Form.Control
                   type="number"
                   value={invoiceNumber}
                   name="invoiceNumber"
-                  onChange={editField}
+                  onChange={(e) => {
+                    console.log(e.target.type,"this is the value for the invoice nb")
+                    editField(e);
+                  }}
                   min="1"
                   style={{ maxWidth: "70px" }}
                   required
-                />
-              </div>
+                /> */}
+              {/* </div> */}
             </div>
             <hr className="my-4" />
             {/* Client information */}
@@ -429,7 +432,7 @@ function InvoiceForm() {
               info={{
                 currentDate,
                 dateOfIssue,
-                invoiceNumber,
+                // invoiceNumber,
                 client,
 
                 notes,
@@ -497,8 +500,8 @@ function InvoiceForm() {
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>
+
             
-            <ToastContainer />
           </div>
         </Col>
       </Row>

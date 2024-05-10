@@ -1,18 +1,53 @@
-import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  createFilterOptions,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getorderreparations } from "../../../store/order_reparation";
+import { Link, useNavigate } from "react-router-dom";
+import { addfiche_intervention } from "../../../store/fiche_intervention";
+import AddFicheInterventionDetails from "../components/AddFicheInterventionDetails";
 
 export default function AddFicheIentervention() {
   const [data, setData] = useState({
-    description: "",
-    status: "",
-    ordreReparationid: null,
+    
   });
+  const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.orderreparation.orderreparations);
+  const filter = createFilterOptions();
+
+  function handlechange(e) {
+    console.log(e, "eeeeeeeeeee");
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+    console.log(data, "handelllllllllll");
+  }
+
+  const [show, setShow] = useState(false);
+  const [idFiche, setIdFiche] = useState();
+
+  function handelSubmit(e) {
+    e.preventDefault();
+    dispatch(addfiche_intervention(data)).then((res) => {
+    
+    });
+  }
+  useEffect(() => {
+    dispatch(getorderreparations());
+  }, [dispatch]);
   return (
     <div>
-      <h5
-        style={{ fontSize: 24, fontFamily: "sans-serif", fontWeight: "bold" }}
-      >
+      <form onSubmit={handelSubmit}>
         <div>
           <p className="mb-2">Order Reparation :</p>
           <Autocomplete
@@ -22,15 +57,14 @@ export default function AddFicheIentervention() {
 
               if (!(value === null)) {
                 setData((prev) => {
-                  return { ...prev, ordreReparationid: value.id };
+                  return { ...prev, orderReparationId: value.id };
                 });
               }
             }}
             fullWidth
             options={store}
-            // autoHighlight
             getOptionLabel={(option) => {
-              return option.titel;
+              return option.title;
             }}
             selectOnFocus
             clearOnBlur
@@ -38,22 +72,20 @@ export default function AddFicheIentervention() {
             filterOptions={(options, params) => {
               const filtered = filter(options, params);
               const { inputValue } = params;
-              // Suggest the creation of a new value
               const isExisting = options.some(
                 (option) => inputValue === option.title
               );
               if (inputValue !== "" && !isExisting) {
                 filtered.push({
                   inputValue,
-                  title: `Add new bande`,
+                  title: `Add new Order`,
                 });
               }
-
               return filtered;
             }}
             freeSolo
             renderOption={(props, option) =>
-              option.title !== "Add new bande" ? (
+              option.title !== "Add new Order" ? (
                 <Box
                   component="li"
                   sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
@@ -62,8 +94,8 @@ export default function AddFicheIentervention() {
                   {option.title}
                 </Box>
               ) : (
-                <Link to="/entreedevices/addband">
-                  Ajouter un bande d'entree
+                <Link to="/orderReparation/addorderreparation">
+                  Ajouter un order reparation
                 </Link>
               )
             }
@@ -71,7 +103,7 @@ export default function AddFicheIentervention() {
               return (
                 <TextField
                   {...params}
-                  label="Titre de bande d'entree "
+                  label="Titre de order reparation"
                   inputProps={{
                     ...params.inputProps,
                     // autoComplete: "new-password", // disable autocomplete and autofill
@@ -81,23 +113,13 @@ export default function AddFicheIentervention() {
             }}
           />
         </div>
-        Fiche d'intervention
-      </h5>
-      <div>
-        <form>
-          <div className="pb-3">
-            <p className="mb-2">Description</p>
-            <TextField
-              fullWidth={true}
-              label="description"
-              name="description"
-              // onChange={handlechange}
-              // value={data.description}
-              required
-            />
-          </div>
-        </form>
-      </div>
+<Button onSubmit={handelSubmit} type="submit">submit</Button>
+        <div>
+
+        </div>
+        {/* <div>{show ? <AddFicheInterventionDetails idFiche={idFiche} /> : " "}</div> */}
+
+      </form>
     </div>
   );
 }

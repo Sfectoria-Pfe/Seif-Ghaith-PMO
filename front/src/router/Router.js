@@ -15,7 +15,7 @@ import EmployeePage from "../pages/Users/employees/EmployeePage";
 import AddEmployee from "../pages/Users/employees/views/AddEmployee";
 import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
-import Inbox from "../pages/Inbox";
+import Inbox from "../pages/inbox/Inbox";
 import Employees from "../pages/Users/employees/views/Employees";
 import Reclamations from "../pages/Reclamation/views/Reclamations";
 import AddReclamation from "../pages/Reclamation/views/AddReclamation";
@@ -38,7 +38,6 @@ import AddUser from "../pages/Users/users/Views/AddUsers";
 import OrdreReparation from "../pages/Ordre_Reparation/Views/OrdreReparation";
 import OrdreReparationPage from "../pages/Ordre_Reparation/OrdreReparationPage";
 import AddOrder from "../pages/order/views/AddOrder";
-import OrderDetails from "../pages/order/views/OrderDetails";
 import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
 import FicheInterventionPage from "../pages/Les Fiche d'intervention/FicheInterventionPage";
 import AddFicheIentervention from "../pages/Les Fiche d'intervention/views/AddFicheIntervention";
@@ -116,7 +115,6 @@ function Router() {
             <Route path="/orders" element={<OrderPage />}>
               <Route index element={<Order />} />
               <Route path="addorder" element={<AddOrder />} />
-              <Route path="orderdetails/:id" element={<OrderDetails />} />
             </Route>
           </Route>
         ) : (

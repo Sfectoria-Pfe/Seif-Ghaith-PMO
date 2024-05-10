@@ -65,10 +65,10 @@ export const updateentree_device = createAsyncThunk(
 
 export const addentree_device = createAsyncThunk(
   "addentree-device",
-  async (body) => {
+  async (body,{dispatch}) => {
     try {
       const res = await postRequestWithHeader(`entree-devices`, body);
-      return res.data;
+      dispatch(getentree_devices())
     } catch (error) {
       console.log(error);
     }
@@ -104,9 +104,9 @@ export const entree_deviceSlice = createSlice({
     builder.addCase(updateentree_device.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });
-    builder.addCase(addentree_device.fulfilled, (state, action) => {
-      state.entree_devices = action.payload;
-    });
+    // builder.addCase(addentree_device.fulfilled, (state, action) => {
+    //   state.entree_devices = action.payload;
+    // });
     // builder.addCase(deleteentree_device.fulfilled, (state, action) => {
     //   state.entree_devices = action.payload;
     // });
