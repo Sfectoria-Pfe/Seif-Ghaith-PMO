@@ -1,11 +1,6 @@
 import {
   Autocomplete,
   Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   createFilterOptions,
 } from "@mui/material";
@@ -15,11 +10,10 @@ import { getorderreparations } from "../../../store/order_reparation";
 import { Link, useNavigate } from "react-router-dom";
 import { addfiche_intervention } from "../../../store/fiche_intervention";
 import AddFicheInterventionDetails from "../components/AddFicheInterventionDetails";
+import Button from "@mui/joy/Button";
 
 export default function AddFicheIentervention() {
-  const [data, setData] = useState({
-    
-  });
+  const [data, setData] = useState({});
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -38,18 +32,22 @@ export default function AddFicheIentervention() {
 
   function handelSubmit(e) {
     e.preventDefault();
-    dispatch(addfiche_intervention(data)).then((res) => {
-    
-    });
+    dispatch(addfiche_intervention(data)).then((res) => {});
   }
   useEffect(() => {
     dispatch(getorderreparations());
   }, [dispatch]);
   return (
-    <div>
-      <form onSubmit={handelSubmit}>
+    <div className=" d-flex  justify-content-center">
+      <form
+        className="h-50 w-50"
+        onSubmit={handelSubmit}
+      >
+        <h1 className="pt-9 d-flex justify-content-center">
+          Ajout d'une fiche d'intervention
+        </h1>
         <div>
-          <p className="mb-2">Order Reparation :</p>
+          <p className="pt-10 mb-2">Order Reparation :</p>
           <Autocomplete
             onChange={(event, value, option) => {
               console.log(value);
@@ -113,12 +111,16 @@ export default function AddFicheIentervention() {
             }}
           />
         </div>
-<Button onSubmit={handelSubmit} type="submit">submit</Button>
-        <div>
+        <div className="d-flex justify-content-center">
 
-        </div>
-        {/* <div>{show ? <AddFicheInterventionDetails idFiche={idFiche} /> : " "}</div> */}
-
+        <Button 
+          className="w-25 mt-5 "
+          onSubmit={handelSubmit}
+          type="submit"
+          >
+          submit
+        </Button>
+          </div>
       </form>
     </div>
   );

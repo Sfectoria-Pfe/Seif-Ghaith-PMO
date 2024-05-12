@@ -41,6 +41,8 @@ import AddOrder from "../pages/order/views/AddOrder";
 import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
 import FicheInterventionPage from "../pages/Les Fiche d'intervention/FicheInterventionPage";
 import AddFicheIentervention from "../pages/Les Fiche d'intervention/views/AddFicheIntervention";
+import AddEtape from "../components/AddEtape";
+import EditOrderReparation from "../pages/Ordre_Reparation/Views/EditOrderReparation";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -65,9 +67,13 @@ function Router() {
             <Route index element={<Dashboard />} />
             <Route
               path="/fiches_intervention"
-              element={<FicheInterventionPage />}>
+              element={<FicheInterventionPage />}
+            >
               <Route index element={<FicheIentervention />} />
-              <Route path="addfiche_intervention" element={<AddFicheIentervention/>}/>
+              <Route
+                path="addfiche_intervention"
+                element={<AddFicheIentervention />}
+              />
             </Route>
             <Route path="/reclamations" element={<ReclamationPage />}>
               <Route index element={<Reclamations />} />
@@ -98,6 +104,9 @@ function Router() {
                 path="addorderreparation"
                 element={<AddOrderReparation />}
               />
+              <Route path="editorder/:id" element={<EditOrderReparation />} />
+
+              <Route path="addetape/:id" element={<AddEtape />} />
             </Route>
 
             <Route path="/inbox" element={<Inbox />} />

@@ -86,6 +86,7 @@ async function main() {
 
   const reclamation = await prisma.reclamation.create({
     data: {
+      
       titel: 'reclamation1',
       description: 'desscccc',
       clientId: client.id,
@@ -119,13 +120,11 @@ async function main() {
   });
   const fiche_intervention = await prisma.ficheIntervention.create({
     data: {
-      status: 'inProgress',
       orderReparationId: orderReparation2.id,
     },
   });
   const fiche_intervention2 = await prisma.ficheIntervention.create({
     data: {
-      status: 'inProgress',
       orderReparationId: orderReparation.id,
     },
   });
@@ -158,7 +157,6 @@ async function main() {
     data: {
       title: 'entreeDevice1',
       description: 'desscc',
-      rapport:"rapporteee",
       clientId: 1,
       etapeId: 1,
     },
@@ -175,9 +173,9 @@ async function main() {
     {
       data: {
         ficheInterventionId: 1,
-        title: 'String',
-        rapport: 'String',
-        description: 'String',
+        title: 'Strimmmng',
+        rapport: 'Strimmmng',
+        description: 'Sjjjtring',
       },
     },
   );

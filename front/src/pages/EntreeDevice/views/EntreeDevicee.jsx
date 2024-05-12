@@ -21,7 +21,6 @@ export default function Entree_devicee() {
   const [row, setRow] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedBond, setSelectedBond] = useState(null);
-
   
   const Store = useSelector((state) => state.entree_device.entree_devices);
   const dispatch = useDispatch();

@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EntreeDevicesService } from './entree-devices.service';
 import { CreateEntreeDeviceDto } from './dto/create-entree-device.dto';
 import { UpdateEntreeDeviceDto } from './dto/update-entree-device.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
+import { RolesGuard } from 'src/auth/roles.guard';
 @ApiTags('entree--device')
 
 @Controller('entree-devices')
@@ -15,6 +18,8 @@ export class EntreeDevicesController {
   }
 
   @Get()
+  // @Roles(Role.Admin)
+  // @UseGuards(RolesGuard)
   findAll() {
     return this.entreeDevicesService.findAll();
   }

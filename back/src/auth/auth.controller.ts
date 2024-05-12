@@ -8,6 +8,8 @@ import {
   Delete,
   Request,
   UseGuards,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -33,9 +35,10 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   myInfo(@Request() req: any) {
-    console.log(req.user,"req.user");
+    console.log(req.user,"req.usessssssssssr");
     
     return req.user;
+    
   }
 
   @Get()

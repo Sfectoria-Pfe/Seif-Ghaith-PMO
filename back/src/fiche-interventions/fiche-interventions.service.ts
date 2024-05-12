@@ -26,13 +26,14 @@ export class FicheInterventionsService {
     });
   }
 
-  findAll() {
+  findAll() { 
+    
     return this.prisma.ficheIntervention.findMany({
       include: {
         OrderReparation: { include: { Client: true, Reclamation: true } },
       },
     });
-    
+
   }
 
   findOne(id: number) {
