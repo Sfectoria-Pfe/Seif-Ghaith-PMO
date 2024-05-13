@@ -66,7 +66,6 @@ function AddUser() {
             label="email"
             name="email"
             onChange={handle}
-            // value={data.titel}y
             required
           />
           <p className="mb-0 mt-3">client :</p>
@@ -79,7 +78,9 @@ function AddUser() {
                 });
               }
             }}
-            options={storeClients}
+            options={storeClients.filter((elem,i)=>(elem?.user.length===0)
+
+            )}
             getOptionLabel={(option) => {
               return option.first_name + " " + option.last_name;
             }}
@@ -138,7 +139,9 @@ function AddUser() {
               });
             }
           }}
-          options={storeEmployees}
+          options={storeEmployees.filter((elem,i)=>(elem?.user.length===0)
+
+          )}
           getOptionLabel={(option) => {
             return option.first_name + " " + option.last_name;
           }}

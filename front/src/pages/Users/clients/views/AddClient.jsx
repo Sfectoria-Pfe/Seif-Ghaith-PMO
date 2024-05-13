@@ -17,6 +17,8 @@ function AddClient() {
       last_name: "",
       email: "",
       photo: null,
+      adresse:"",
+      numero:"",
     },
     onSubmit: async (values) => {
       console.log(values.photo)
@@ -69,7 +71,24 @@ function AddClient() {
         required
         />
 
-     
+<p className="mb-0 mt-3">adresse</p>
+      <Input
+        label="adresse"
+        name="adresse"
+        onChange={formik.handleChange}
+        value={formik.values.adresse}
+        required
+      />
+      <p className="mb-0 mt-3">numero</p>
+      <Input
+        label="numero"
+        name="numero"
+        onChange={formik.handleChange}
+        value={formik.values.numero}
+        required
+      />
+
+
       <p className="mb-0 mt-3">Inserer une image</p>
       <input
         type="file"

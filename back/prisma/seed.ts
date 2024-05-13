@@ -13,13 +13,12 @@ async function main() {
       numero: '50111290',
     },
   });
-  
   const aymen = await prisma.employee.create({
     data: {
       first_name: 'Aymen',
       last_name: 'Amri',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       email: 'aymen.amri@sfectoria.com',
       role: 'admin',
       adresse: 'montplaisir,bachaCenter',
@@ -31,7 +30,7 @@ async function main() {
       first_name: 'khalil',
       last_name: 'kraiem',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       email: 'khalil.kraiem@sfectoria.com',
       role: 'manager',
       adresse: 'montplaisir,bachaCenter',
@@ -43,7 +42,7 @@ async function main() {
       first_name: 'seif',
       last_name: 'boughrara',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       email: 'seif.boughrara@sfectoria.com',
       role: 'technicien',
       adresse: 'montplaisir,bachaCenter',

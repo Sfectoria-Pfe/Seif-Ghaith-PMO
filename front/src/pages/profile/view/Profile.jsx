@@ -33,7 +33,6 @@ export default function Profile() {
             <Typography level="title-md">Information Personelle</Typography>
             
           </Box>
-          <Divider />
 
           <Stack
             direction="column"

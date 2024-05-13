@@ -27,11 +27,14 @@ export default function Entree_devicee() {
   useEffect(() => {
     dispatch(getentree_devices());
   }, []);
+
+  console.log(Store,"this is Stooooooooore")
+  ;
   useEffect(() => {
     setRow(Store);
 
   }, [Store]);  
-  console.log(row ,"this is store")
+  console.log(row ,"this is rowwwwwwwwwwwwww")
 
   const handleOpenModal = (entree_device) => {
     setSelectedBond(entree_device);

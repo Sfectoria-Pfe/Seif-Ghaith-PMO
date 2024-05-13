@@ -13,7 +13,7 @@ export class ClientsService {
   }
 
   findAll() {
-    return this.prisma.client.findMany();
+    return this.prisma.client.findMany({include:{user:{select:{email:true}}}});
   }
 
   findOne(id: number) {

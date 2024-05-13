@@ -6,6 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('entree--device')
 
 @Controller('entree-devices')
@@ -18,8 +19,8 @@ export class EntreeDevicesController {
   }
 
   @Get()
-  // @Roles(Role.Admin)
-  // @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'),RolesGuard)
   findAll() {
     return this.entreeDevicesService.findAll();
   }
