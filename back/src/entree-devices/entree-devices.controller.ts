@@ -7,24 +7,25 @@ import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('entree--device')
 
+@ApiTags('entree--device')
 @Controller('entree-devices')
+@UseGuards(AuthGuard('jwt'),RolesGuard)
 export class EntreeDevicesController {
   constructor(private readonly entreeDevicesService: EntreeDevicesService) {}
-
+ 
+  @Roles(Role.Admin,Role.Manager,Role.Receptionniste,Role.Technicien)
   @Post()
   create(@Body() createEntreeDeviceDto: CreateEntreeDeviceDto) {
     return this.entreeDevicesService.create(createEntreeDeviceDto);
   }
-
+  @Roles(Role.Admin,Role.Manager,Role.Receptionniste,Role.Technicien)
   @Get()
-  @Roles(Role.Admin)
-  @UseGuards(AuthGuard('jwt'),RolesGuard)
   findAll() {
     return this.entreeDevicesService.findAll();
   }
 
+  @Roles(Role.Admin,Role.Manager,Role.Receptionniste,Role.Technicien)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.entreeDevicesService.findOne(+id);
@@ -34,7 +35,8 @@ export class EntreeDevicesController {
   update(@Param('id') id: string, @Body() updateEntreeDeviceDto: UpdateEntreeDeviceDto) {
     return this.entreeDevicesService.update(+id, updateEntreeDeviceDto);
   }
-
+  
+  @Roles(Role.Admin,Role.Manager,Role.Receptionniste,Role.Technicien)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.entreeDevicesService.remove(+id);
