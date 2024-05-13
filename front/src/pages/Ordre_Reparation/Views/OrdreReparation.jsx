@@ -55,7 +55,8 @@ function OrdreReparation() {
     };
   });
   const navigate = useNavigate();
- 
+  const myInfo = useSelector((state) => state.auth.me);
+
   const columns = [
     { field: "id", headerName: "ID", width: 30 },
     {
@@ -90,17 +91,25 @@ function OrdreReparation() {
       field: "ajout",
       headerName: "Ajouter une etape",
       width: 250,
+      
       renderCell: (params) => {
         return (
+          <>
+          {(myInfo.Employee.role === "admin" ||
+          myInfo.Employee.role==="receptionist" ||
+          myInfo.Employee.role==="manager" ||
+          myInfo.Employee.role==="technicien") && 
           <div className="h-50 w-75 d-flex justify-content-around align-items-center">
-            <Button
-              onClick={() => {
-                navigate(`addetape/${params.row.id}`);
-              }}
-            >
-              Ajouter une etape
-            </Button>
+          <Button
+          onClick={() => {
+            navigate(`addetape/${params.row.id}`);
+          }}
+          >
+          Ajouter une etape
+          </Button>
           </div>
+        }
+        </>
         );
       },
     },

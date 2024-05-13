@@ -219,13 +219,14 @@ export default function MiniDrawer() {
               </ListItemButton>
             </Link>
           </ListItem>
-
+          {(myInfo.Employee.role === "admin" || 
+                myInfo.Employee.role === "receptionist"||myInfo.Employee.role === "manager") && 
+                  <>
           <ListItemButton
             onClick={() => {
               handleClickopenn();
               handleDrawerOpen();
-            }}
-          >
+            }}  >
             <ListItemIcon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +253,7 @@ export default function MiniDrawer() {
             <ListItemText primary="Users" />
             {openn ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-
+</>}
           <Collapse in={openn} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {myInfo.Employee.role === "admin" && (
@@ -413,8 +414,7 @@ export default function MiniDrawer() {
 
 {(myInfo.Employee.role === "admin" ||
             myInfo.Employee.role==="receptionist" ||
-            myInfo.Employee.role==="manager" ||
-            myInfo.Employee.role==="technicien") && 
+            myInfo.Employee.role==="manager") && 
               <>
                 <Link // fiche interventionnn
                   to={"/fiches_intervention"}

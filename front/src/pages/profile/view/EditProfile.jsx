@@ -45,13 +45,7 @@ export default function EditProfile() {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   }
-  const [data, setData] = React.useState({
-    // first_name: myInfo.Employee?.first_name,
-    // last_name: myInfo.Employee?.last_name,
-    // photo: myInfo.Employee?.photo,
-    // adresse: myInfo.Employee?.adresse,
-    // numero: myInfo.Employee?.numero,
-  });
+  const [data, setData] = React.useState({});
 
   console.log(data,"this iss data");
   const [id, setId] = React.useState(3);

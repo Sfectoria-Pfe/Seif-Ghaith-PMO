@@ -29,7 +29,6 @@ export default function Entree_devicee() {
   }, []);
 
   console.log(Store,"this is Stooooooooore")
-  ;
   useEffect(() => {
     setRow(Store);
 
@@ -58,9 +57,14 @@ export default function Entree_devicee() {
     { field: "action", headerName: "Action", width: 200,
       renderCell:(params)=>{
         return(
-          <div>
+          <div className="h-100 w-100 d-flex justify-content-around align-items-center">
             <VisibilityIcon onClick={() => handleOpenModal(params.row)}/>
+            {(myInfo.Employee.role === "admin" ||
+                myInfo.Employee.role==="receptionist" ||
+                myInfo.Employee.role==="manager") && 
+                  <> 
             <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
+            </>}
             <Link to={`editentree/${params.row.id}`} className="text-decoration-none text-reset">
             <EditIcon />
             </Link>
@@ -71,6 +75,7 @@ export default function Entree_devicee() {
     
     
   ];
+  const myInfo = useSelector((state) => state.auth.me);
 
   return (
     <Card className="h-full w-full">
@@ -83,9 +88,14 @@ export default function Entree_devicee() {
             
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          {(myInfo.Employee.role === "admin" ||
+                myInfo.Employee.role==="receptionist" ||
+                myInfo.Employee.role==="manager") && 
+                  <> 
           <Link to={"addband"}>
             <Button> Ajouter band entreé </Button>
 </Link>
+</>}
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
