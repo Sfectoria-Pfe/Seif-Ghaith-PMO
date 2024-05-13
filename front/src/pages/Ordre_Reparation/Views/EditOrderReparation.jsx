@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getclients } from "../../../store/client";
 import { getentree_devices } from "../../../store/entree_device";
-import { getorderreparation } from "../../../store/order_reparation";
+import { getorderreparation, updateorderreparation } from "../../../store/order_reparation";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/joy/Button";
 import dayjs from "dayjs";
@@ -37,26 +37,47 @@ function EditOrderReparation() {
   }, []);
 
   const [data, setData] = useState({
-    title: storInit.title,
-    description: storInit.description,
-    status: storInit.status,
-    date: dayjs(storInit.date),
-    clientId: storInit.clientId,
-    reclamationId: storInit.reclamationId,
-    entreeDeviceId: storInit.entreeDeviceId,
+    // title: storInit.title,
+    // description: storInit.description,
+    // status: storInit.status,
+    // date: dayjs(storInit.date),
+    // clientId: storInit.clientId,
+    // reclamationId: storInit.reclamationId,
+    // entreeDeviceId: storInit.entreeDeviceId,
     // order:null
     // etapeIds: [{}],
   });
+  useEffect(() => {
+    setData(storInit);
+    setData((storInit) => {
+      return { ...storInit, date: dayjs(storInit.date) };
+    });
+  }, [storInit]);
+  console.log(data)
   function handlechange(e) {
     console.log(e, "eeeeeeeeeee");
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
     console.log(data, "handelllllllllll");
   }
+  const navigate=useNavigate()
+  async function handleSubmit(e) {
+    // console.log(values.photo);
+    e.preventDefault(); 
+    
+    const args = { id: +id, body: data };
+    await dispatch(updateorderreparation(args)).then((res) => {if (!res.error) {
+        navigate(-1);
+      } else {
+        alert("eroor");
+      }
+    });
+  }
+
   return (
     <div>
       <form
-        //   onSubmit={handelSubmit}
+          onSubmit={handleSubmit}
         className=" col-5"
       >
         <div className="pb-3">
@@ -74,7 +95,6 @@ function EditOrderReparation() {
           <p className="mb-2">bande d'entree :</p>
           <Autocomplete
             onChange={(event, value, option) => {
-      
               if (!(value === null)) {
                 setData((prev) => {
                   return { ...prev, entreeDeviceId: value.id };
@@ -126,9 +146,8 @@ function EditOrderReparation() {
               return (
                 <TextField
                   {...params}
-                  
                   label="Titre de bande d'entree "
-                //   defaultValue={}
+                  //   defaultValue={}
                   inputProps={{
                     ...params.inputProps,
                     // autoComplete: "new-password", // disable autocomplete and autofill

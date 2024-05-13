@@ -13,6 +13,7 @@ async function main() {
       numero: '50111290',
     },
   });
+  
   const aymen = await prisma.employee.create({
     data: {
       first_name: 'Aymen',
@@ -66,6 +67,7 @@ async function main() {
       isClient: false,
       employeeId: khalil.id,
     },
+
   });
   const userSeif = await prisma.user.create({
     data: {
@@ -86,7 +88,6 @@ async function main() {
 
   const reclamation = await prisma.reclamation.create({
     data: {
-      
       titel: 'reclamation1',
       description: 'desscccc',
       clientId: client.id,

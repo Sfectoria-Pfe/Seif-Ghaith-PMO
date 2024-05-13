@@ -70,7 +70,7 @@ export const userSlice = createSlice({
       state.users = action.payload;
     });
     builder.addCase(addUser.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.users = [...state.users, action.payload];
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.users = action.payload;

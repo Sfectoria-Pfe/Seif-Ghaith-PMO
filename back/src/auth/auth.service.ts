@@ -17,7 +17,7 @@ export class AuthService {
       include: { Employee:true, Client: true },
     }); 
     if (!user) {
-      throw new HttpException('invalid emai l', HttpStatus.BAD_REQUEST);
+      throw new HttpException('invalid email', HttpStatus.BAD_REQUEST);
     }
     const VPass = await bcrypt.compare(Dto.password, user.password);
     if (!VPass) {

@@ -30,15 +30,10 @@ export class AuthController {
   singup(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.singup(createAuthDto);
   }
-
-  
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  myInfo(@Request() req: any) {
-    console.log(req.user,"req.usessssssssssr");
-    
+  myInfo(@Request() req: any) {    
     return req.user;
-    
   }
 
   @Get()

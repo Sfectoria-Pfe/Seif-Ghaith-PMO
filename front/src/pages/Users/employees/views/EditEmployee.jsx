@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 function EditEmployee() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   
   const employeeStore = useSelector((state) => state.employee);
   const [data, setData] = useState({});
