@@ -51,7 +51,7 @@ function AddReclamation() {
     dispatch(addreclamation(productWithCover))
     .then((res) => {
       if (!res.error) {
-        toast.success("Le devis a été ajouté avec succès !");
+        toast.success("La recalamation a été ajouté avec succès !");
         setTimeout(() => {
           navigate(-1)
         }, 2000);

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Avatar } from "@mui/material";
-function FicheDetails({ show, setShow, fiche_interventionsData }) {
+import { useDispatch, useSelector } from "react-redux";
+import { getfiche_intervention } from "../../../store/fiche_intervention";
+function FicheDetails({ show, setShow,fiche }) {
   const handleClose = () => setShow(false);
+  console.log(fiche,"hhhhhhhh");
 
-  console.log(fiche_interventionsData, "this is the data setted");
 
   return (
     <Modal
@@ -19,14 +21,20 @@ function FicheDetails({ show, setShow, fiche_interventionsData }) {
         <Modal.Title>Fiche_intervention Details</Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex align-items-center justify-content-center flex-column">
-        <p>id:{fiche_interventionsData?.id}</p>
-        <p>title:{fiche_interventionsData?.title}</p>
-        <p>description:{fiche_interventionsData?.description}</p>
-        <p>rapport:{fiche_interventionsData?.rapport}</p>
-        <p>status intervention:{fiche_interventionsData?.status}</p>
-        <p>status order :{fiche_interventionsData?.status}</p>
-        <p>cliendt id :{fiche_interventionsData?.clientId}</p>
-        <p>reclamation id :{fiche_interventionsData?.reclamationID}</p>
+        <p>id:{fiche?.id}</p>
+        <p>title:{fiche?.OrderReparation?.title}</p>
+        <p>description:{fiche?.OrderReparation?.description}</p>
+        <p>status intervention:{fiche?.status}</p>
+        <p>status order :{fiche?.OrderReparation?.status}</p>
+        <p>cliendt id :{fiche?.OrderReparation?.Client?.id}</p>
+        <p>reclamation id :{fiche?.OrderReparation?.Reclamation?.id}</p>
+        {fiche?.details?.map((item, index) => (
+          <>
+        <p>etapeTitle:{item?.title}</p>
+        <p>rapportTitle:{item?.rapport}</p>
+        </>
+
+      ))}
         
       </Modal.Body>
       <Modal.Footer>
