@@ -15,7 +15,7 @@ export class EntreeDevicesService {
   }
 
   findOne(id: number) {
-    return this.prisma.entreeDevice.findUnique({ where: { id } });
+    return this.prisma.entreeDevice.findUnique({ where: { id },include:{Client:true} });
   }
 
   update(id: number, updateEntreeDeviceDto: UpdateEntreeDeviceDto) {

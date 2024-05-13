@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addemployee } from "../../../../store/empolyee";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 function AddEmplyee() {
   const [file, setFile] = useState({});
   const dispatch = useDispatch();
@@ -29,16 +30,20 @@ const navigate = useNavigate();
       const response = await axios.post("http://localhost:4000/upload", im);
       console.log(response.data);
       const productWithCover = { ...values, photo: response.data.path };
-      console.log("Form submitted with data:", productWithCover);
-      dispatch(addemployee(productWithCover)).then((res) => {
+      console.log("Form submitted with data:", productWithCover).then((res) => {
         if (!res.error) {
-          navigate(-1)
-        }else{
-          alert("eroor")
-
-
+          toast.success(" Employee ajouter  avec succès !");
+          setTimeout(() => {
+            navigate(-1)
+          }, 2000);
+        } else {
+          toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
         }
-      });
+      })
+      .catch(() => {
+        toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+      })
+      
     },
   });
   return (
@@ -142,6 +147,7 @@ const navigate = useNavigate();
               (<span className="text-danger">*</span>) est obligatoire{" "}
             </p>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>

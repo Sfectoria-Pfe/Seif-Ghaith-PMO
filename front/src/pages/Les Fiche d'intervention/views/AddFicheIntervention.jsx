@@ -45,6 +45,7 @@ export default function AddFicheIentervention() {
   useEffect(() => {
     dispatch(getorderreparations());
   }, [dispatch]);
+  console.log(store, "storssssssssssssssssssssssssssssssssssssssssssssssssse");
   return (
     <div>
       <form onSubmit={handelSubmit}>

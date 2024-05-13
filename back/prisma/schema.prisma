@@ -96,11 +96,11 @@ model FicheIntervention {
   id                Int                        @id @default(autoincrement())
   OrderReparation   OrderReparation            @relation(fields: [orderReparationId], references: [id])
   orderReparationId Int
-  details           FicheInterventionDetail[]
+  details           FicheInterventionDetails[]
   status            StatusFiche                @default(inProgress)
 }
 
-model FicheInterventionDetail {
+model FicheInterventionDetails {
   id                  Int                @id @default(autoincrement())
   title               String
   rapport             String

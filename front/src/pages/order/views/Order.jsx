@@ -62,7 +62,6 @@ export default function Order() {
     },
     { field: "total", headerName: "Total", width: 200 },
     { field: "subTotal", headerName: "SubTotal", width: 200 },
-    { field: "invoiceNumber", headerName: "NumDevis", width: 200 },
     { field: "confirm", headerName: "Confirm", width: 200 },
     { field: "Action", headerName: "Action", width: 200 ,cellClassName: 'actions',
     renderCell: (params) => {

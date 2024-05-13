@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Input } from '@material-tailwind/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ToastContainer, toast } from 'react-toastify';
 
 function AddClient() {
     const [file,setFile]=useState({})
@@ -25,7 +26,20 @@ function AddClient() {
       const response = await axios.post("http://localhost:4000/upload", im);
       const productWithCover = { ...values, photo: response.data.path };
       console.log("Form submitted with data:", productWithCover);
-      dispatch(addclient(productWithCover));
+      dispatch(addclient(productWithCover))
+      .then((res) => {
+        if (!res.error) {
+          toast.success("Client ajouter avec succès !");
+          setTimeout(() => {
+            navigate(-1)
+          }, 2000);
+        } else {
+          toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+        }
+      })
+      .catch(() => {
+        toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+      })
     },
   });
   return (
@@ -91,6 +105,7 @@ function AddClient() {
 
         <p> (<span className="text-danger">*</span>)  est obligatoire   </p>
         </div>
+        <ToastContainer className="toast-position" position="bottom-center"/>
     </form>
         </div>
         </div>  )

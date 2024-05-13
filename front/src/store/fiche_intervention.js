@@ -1,10 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
 
+
+
+
+// export const filterfiche_interventions_lastname = createAsyncThunk(
+//   "filterfiche_interventions_lastname",
+//   async (str) => {
+//     try {
+//       const res = await getRequestWithHeader("employees");
+//       return res.data.filter((elem) => {
+//         return (
+//           elem.OrderReparation?.title.toUpperCase().includes(str.toUpperCase()) ||
+//           elem.OrderReparation?.description.toUpperCase().includes(str.toUpperCase())
+//         );
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
+
 export const getfiche_interventions = createAsyncThunk("getfiche_interventions", async () => {
     try {
       const res = await getRequestWithHeader("fiche-interventions");
-      console.log(res.data,"ssdsdnsdj")
       return res.data;
     } catch (error) {
       console.log(error);
@@ -20,11 +39,11 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
     }
   });
 
-  export const updatefiche_intervention = createAsyncThunk("updatefiche_intervention", async (args) => {
+  export const updatefiche_intervention = createAsyncThunk("updatefiche_intervention", async (args,{dispatch}) => {
     const {id,body} = args
     try {
       const res = await putRequestWithHeader(`fiche-interventions/${id}`,body);
-      return res.data;
+      dispatch(getfiche_interventions())
     } catch (error) {
       console.log(error);
     }
@@ -38,10 +57,10 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
       console.log(error);
     }
   });
-  export const deletefiche_intervention = createAsyncThunk("deletefiche_intervention",  async (id) => {
+  export const deletefiche_intervention = createAsyncThunk("deletefiche_intervention",  async (id,{dispatch}) => {
     try {
       const res = await deleteRequestWithHeader(`fiche-interventions/${id}`);
-      return res.data;
+      dispatch(getfiche_interventions())
     } catch (error) {
       console.log(error);
     }
@@ -65,15 +84,15 @@ export const fiche_interventionSlice = createSlice({
     builder.addCase(getfiche_intervention.fulfilled, (state, action) => {
       state.fiche_intervention = action.payload;
     });
-    builder.addCase(updatefiche_intervention.fulfilled, (state, action) => {
-        state.fiche_interventions = action.payload;
-      });
+    // builder.addCase(updatefiche_intervention.fulfilled, (state, action) => {
+    //     state.fiche_interventions = action.payload;
+    //   });
       builder.addCase(addfiche_intervention.fulfilled, (state, action) => {
         state.fiche_interventions = action.payload;
       });
-      builder.addCase(deletefiche_intervention.fulfilled, (state, action) => {
-        state.fiche_interventions = action.payload;
-      });
+      // builder.addCase(deletefiche_intervention.fulfilled, (state, action) => {
+      //   state.fiche_interventions = action.payload;
+      // });
   },
 });
 export default fiche_interventionSlice.reducer;

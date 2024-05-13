@@ -7,6 +7,7 @@ import { getemployee, updateemployee } from "../../../../store/empolyee";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function EditEmployee() {
   const { id } = useParams();
@@ -35,12 +36,19 @@ function EditEmployee() {
     e.preventDefault(); 
     
     const args = { id: +id, body: data };
-    await dispatch(updateemployee(args)).then((res) => {if (!res.error) {
-        navigate(-1);
+    await dispatch(updateemployee(args)).then((res) => {
+      if (!res.error) {
+        toast.success("employee modifier avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
       } else {
-        alert("eroor");
+        toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
       }
-    });
+    })
+    .catch(() => {
+      toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
+    })
   }
 
 
@@ -149,6 +157,7 @@ function EditEmployee() {
               (<span className="text-danger">*</span>) est obligatoire{" "}
             </p>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>
