@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateFicheInterventionDto } from './dto/create-fiche-intervention.dto';
 import { UpdateFicheInterventionDto } from './dto/update-fiche-intervention.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class FicheInterventionsService {
@@ -30,6 +31,7 @@ export class FicheInterventionsService {
     
     return this.prisma.ficheIntervention.findMany({
       include: {
+        details: true,
         OrderReparation: { include: { Client: true, Reclamation: true } },
       },
     });
@@ -37,14 +39,45 @@ export class FicheInterventionsService {
   }
 
   findOne(id: number) {
-    return this.prisma.ficheIntervention.findUnique({ where: { id },include:{details:true} });
+    return this.prisma.ficheIntervention.findUnique({
+      where: { id },
+      include: {
+        details: true,
+        OrderReparation: {
+          include: { Client: true, Reclamation: true, EntreeDevice: true },
+        },
+      },
+    });
   }
 
-  update(id: number, updateFicheInterventionDto: UpdateFicheInterventionDto) {
-    return this.prisma.ficheIntervention.update({
-      where: { id },
-      data: updateFicheInterventionDto,
-    });
+  async update(
+    id: number,
+    updateFicheInterventionDto: UpdateFicheInterventionDto,
+  ) {
+    return await this.prisma.$transaction(
+      async (prisma: Prisma.TransactionClient) => {
+        await prisma.ficheIntervention.update({
+          data: {
+            status: updateFicheInterventionDto.status,
+          },
+          where: { id },
+        });
+        return await Promise.all(
+          updateFicheInterventionDto.details
+            .map((elem) => ({
+              data: {
+                rapport: elem.rapport,
+                description: elem.description,
+                title: elem.title,
+              },
+              where: { id: elem.id },
+            }))
+            .map((e) => prisma.ficheInterventionDetails.update(e)),
+        );
+
+        // data: updateFicheInterventionDto,
+      },
+    );
   }
 
   remove(id: number) {

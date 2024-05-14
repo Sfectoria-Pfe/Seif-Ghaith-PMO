@@ -7,6 +7,7 @@ import {
   getreclamation,
   updatereclamation,
 } from "../../../store/reclamation";
+import { ToastContainer, toast } from "react-toastify";
 
 function EditReclamation({ route }) {
   const navigate = useNavigate();
@@ -30,7 +31,20 @@ function EditReclamation({ route }) {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch(updatereclamation({id:+id,body: data}));
+    dispatch(updatereclamation({id:+id,body: data}))
+    .then((res) => {
+      if (!res.error) {
+        toast.success("reclamation modifier avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
+      } else {
+        toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
+      }
+    })
+    .catch(() => {
+      toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
+    })
     navigate(-1);
   };
 
@@ -78,6 +92,7 @@ function EditReclamation({ route }) {
               Modifier
             </Button>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>

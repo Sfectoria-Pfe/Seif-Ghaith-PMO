@@ -12,10 +12,8 @@ export class CreateEntreeDeviceDto {
     rapport :string;
     @ApiProperty()
     @IsString()
-    statues :string;
-    @ApiProperty()
-    @IsString()
    description :string;
+   
 
 
 }

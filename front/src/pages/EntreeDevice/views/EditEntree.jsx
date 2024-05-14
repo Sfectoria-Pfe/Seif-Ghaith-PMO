@@ -4,6 +4,7 @@ import { Button, Input, Textarea } from "@material-tailwind/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import entree_device, { getentree_device, updateentree_device } from "../../../store/entree_device";
+import { ToastContainer, toast } from "react-toastify";
 
 function EditEntree({ route }) {
   const navigate = useNavigate();
@@ -17,7 +18,11 @@ function EditEntree({ route }) {
   }, []);
   const [data, setData] = useState();
   useEffect(() => {
-    if (store) setData(store);
+    if (store) setData({
+      title:store.title,
+      description:store.description,
+      
+    });
   }, [store]);
   function handle(e) {
     const { name, value } = e.target;
@@ -27,7 +32,20 @@ function EditEntree({ route }) {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch(updateentree_device({id:+id,body: data}));
+    dispatch(updateentree_device({id:+id,body: data}))
+    .then((res) => {
+      if (!res.error) {
+        toast.success("bond entree modifier avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
+      } else {
+        toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
+      }
+    })
+    .catch(() => {
+      toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
+    })
     navigate(-1);
   };
 
@@ -50,13 +68,11 @@ function EditEntree({ route }) {
             name="first_name"
             sx={{ width: 300 }}
             disabled
-            Value={data?.Client?.first_name}
+            Value={store?.Client?.first_name}
             />
 
           <p className="mb-0 mt-3">Titre</p>
           <Input name="title" value={data?.title} onChange={handle} />
-          <p className="mb-0 mt-3">Statues</p>
-          <Input name="statues" value={data?.statues} onChange={handle} />
           <p className="mb-0 mt-3">Description</p>
           <Textarea
             name="description"
@@ -77,6 +93,7 @@ function EditEntree({ route }) {
               Modifier
             </Button>
           </div>
+          <ToastContainer className="toast-position" position="bottom-center"/>
         </form>
       </div>
     </div>

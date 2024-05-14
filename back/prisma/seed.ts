@@ -120,11 +120,13 @@ async function main() {
   });
   const fiche_intervention = await prisma.ficheIntervention.create({
     data: {
+      
       orderReparationId: orderReparation2.id,
     },
   });
   const fiche_intervention2 = await prisma.ficheIntervention.create({
     data: {
+      
       orderReparationId: orderReparation.id,
     },
   });
@@ -172,10 +174,20 @@ async function main() {
   const FicheInterventionDetails = await prisma.ficheInterventionDetails.create(
     {
       data: {
-        ficheInterventionId: 1,
-        title: 'Strimmmng',
-        rapport: 'Strimmmng',
-        description: 'Sjjjtring',
+        ficheInterventionId: fiche_intervention.id,
+        title: 'String',
+        rapport: 'String',
+        description: 'String',
+      },
+    },
+  );
+  const FicheInterventionDetails2 = await prisma.ficheInterventionDetails.create(
+    {
+      data: {
+        ficheInterventionId: fiche_intervention2.id,
+        title: 'String',
+        rapport: 'ghaghagha',
+        description: 'String',
       },
     },
   );

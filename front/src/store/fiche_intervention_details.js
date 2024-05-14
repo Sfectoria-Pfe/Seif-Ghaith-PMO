@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteRequestWithHeader, getRequestWithHeader, postRequestWithHeader, putRequestWithHeader } from "../helpers/axiosRequests";
+import { getfiche_intervention } from "./fiche_intervention";
 
 export const getfiche_intervention_details = createAsyncThunk("getfiche_intervention_details", async () => {
     try {
@@ -30,9 +31,10 @@ export const getfiche_intervention_details = createAsyncThunk("getfiche_interven
     }
   });
 
-  export const addfiche_intervention_detail = createAsyncThunk("addfiche_intervention_detail", async (body) => {
+  export const addfiche_intervention_detail = createAsyncThunk("addfiche_intervention_detail", async (body,{dispatch}) => {
     try {
       const res = await postRequestWithHeader(`ficheintervention-details`,body);
+      dispatch(getfiche_intervention(body.ficheInterventionId))
       return res.data;
     } catch (error) {
       console.log(error);
@@ -69,7 +71,7 @@ export const fiche_intervention_detailSlice = createSlice({
         state.fiche_intervention_details = action.payload;
       });
       builder.addCase(addfiche_intervention_detail.fulfilled, (state, action) => {
-        state.fiche_intervention_details = action.payload;
+        state.fiche_intervention_detail = action.payload;
       });
       builder.addCase(deletefiche_intervention_detail.fulfilled, (state, action) => {
         state.fiche_intervention_details = action.payload;
