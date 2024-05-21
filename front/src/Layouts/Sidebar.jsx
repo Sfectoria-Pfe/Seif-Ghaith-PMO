@@ -518,7 +518,7 @@ export default function MiniDrawer() {
         </List>
 
         <Divider />
-        <List>
+        {/* <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <Link to={"/inbox"} className="text-decoration-none text-reset">
               <ListItemButton
@@ -554,11 +554,11 @@ export default function MiniDrawer() {
                     <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />
                   </svg>
                 </ListItemIcon>
-                <ListItemText primary={"heyy"} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        </List>
+                {/* <ListItemText primary={"heyy"} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton> */}
+            {/* </Link>
+          </ListItem> */}
+        {/* </List> */} 
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
