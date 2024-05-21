@@ -11,10 +11,10 @@ model User {
   id         Int       @id @default(autoincrement())
   password   String
   email      String    @unique
-  isClient   Boolean   @default(true)
-  Client     Client?   @relation(fields: [clientId], references: [id])
+  isClient   Boolean   @default(false)
+  Client     Client?   @relation(fields : [clientId], references: [id])
   clientId   Int?
-  Employee   Employee? @relation(fields: [employeeId], references: [id])
+  Employee   Employee? @relation(fields : [employeeId], references: [id])
   employeeId Int?
   isActive   Boolean   @default(true)
 }
@@ -76,8 +76,8 @@ model EntreeDevice {
 }
 
 model OrderReparation {
-  id    Int    @id @default(autoincrement())
-  title String
+  id             Int                 @id @default(autoincrement())
+  title          String
   description    String
   status         Status
   date           DateTime?
@@ -152,7 +152,7 @@ model Orderline {
   item          String
   prix_unitaire Float
   qunatity      Int
-  Order         Order @relation(fields: [orderId], references: [id],onDelete: Cascade)
+  Order         Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId       Int
 }
 

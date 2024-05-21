@@ -24,11 +24,11 @@ export const getUser = createAsyncThunk("getUser", async (id) => {
   }
 });
 
-export const updateUser = createAsyncThunk("updateUser", async (args) => {
+export const updateUser = createAsyncThunk("updateUser", async (args,{dispatch}) => {
   const { id, body } = args;
   try {
     const res = await putRequestWithHeader(`users/${id}`, body);
-    return res.data;
+    dispatch(getUsers())
   } catch (error) {
     console.log(error);
   }
@@ -66,11 +66,11 @@ export const userSlice = createSlice({
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.user = action.payload;
     });
-    builder.addCase(updateUser.fulfilled, (state, action) => {
-      state.users = action.payload;
-    });
+    // builder.addCase(updateUser.fulfilled, (state, action) => {
+    //   state.users = action.payload;
+    // });
     builder.addCase(addUser.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.users = [...state.users, action.payload];
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.users = action.payload;

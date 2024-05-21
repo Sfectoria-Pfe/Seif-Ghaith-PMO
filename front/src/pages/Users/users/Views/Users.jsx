@@ -1,11 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Card,
   CardHeader,
-  Input,
   Typography,
   CardBody,
   Button,
@@ -14,18 +13,42 @@ import {
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 import { Link, useNavigate } from "react-router-dom";
-import { getUsers } from "../../../../store/user";
+import { getUsers, updateUser } from "../../../../store/user";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Users() {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.user.users);
-  console.log(store, "from storee");
-
-  const navigate = useNavigate();
+  // console.log(store, "from storee");
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
+
+  const [data, setData] = useState();
+  
+  async function handli(idrow,isActive) {
+    // setData(store[idrow])
+    // console.log(active)
+    // setData({isActive:(!active)})
+    // console.log(data)
+    const args = { id: +idrow, body: {isActive} };
+    await dispatch(updateUser(args))
+      .then((res) => {
+        if (!res.error) {
+          toast.success("utilisateur desactiver avec succès !");
+        } else {
+          toast.error(
+            "Erreur. Veuillez réessayer."
+          );
+        }
+      })
+      .catch(() => {
+        toast.error(
+          "Erreur lors de modification du bond entree. Veuillez réessayer."
+        );
+      });
+  }
 
   const Rows = store.map((row) => {
     return {
@@ -93,6 +116,17 @@ export default function Users() {
         }
       },
     },
+    {
+      field: "action",
+      headerName: "action",
+      width: 90,
+      renderCell: (params) => {
+        return <span   onClick={() => {
+          // console.log(params.id)
+          handli(params.row.id,!params.row.isactive);
+        }}> action </span>
+      },
+    },
   ];
 
   return (
@@ -133,6 +167,8 @@ export default function Users() {
             slots={{ toolbar: GridToolbar }}
           />
         </div>
+        <ToastContainer className="toast-position" position="bottom-center" />
+
       </CardBody>
     </Card>
   );

@@ -95,6 +95,7 @@ export const entree_deviceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getentree_devices.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.entree_devices = action.payload;
     });
 
@@ -104,12 +105,7 @@ export const entree_deviceSlice = createSlice({
     builder.addCase(updateentree_device.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });
-    // builder.addCase(addentree_device.fulfilled, (state, action) => {
-    //   state.entree_devices = action.payload;
-    // });
-    // builder.addCase(deleteentree_device.fulfilled, (state, action) => {
-    //   state.entree_devices = action.payload;
-    // });
+   
     builder.addCase(filterentree_lastname.fulfilled, (state, action) => {
       state.entree_devices = action.payload;
     });

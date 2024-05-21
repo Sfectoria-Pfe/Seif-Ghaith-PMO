@@ -4,12 +4,12 @@ const prisma = new PrismaClient();
 async function main() {
   const client = await prisma.client.create({
     data: {
-      last_name: 'client0',
-      first_name: 'last 0',
+      last_name: 'selena',
+      first_name: 'sherbrook',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
+        'https://img.freepik.com/photos-gratuite/jolie-fille-blonde-chemise-rayee-montrant-signe-paix-vue-face-dame-francaise-riant-posant-mur-bleu_197531-14466.jpg',
       email: 'client@sfectoria.com',
-      adresse: 'montplaisir,bachaCenter',
+      adresse: 'bardo ,tunis',
       numero: '50111290',
     },
   });
@@ -18,7 +18,7 @@ async function main() {
       first_name: 'Aymen',
       last_name: 'Amri',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://media.licdn.com/dms/image/C5603AQEphgWI8aHhKQ/profile-displayphoto-shrink_800_800/0/1585496614535?e=1721865600&v=beta&t=2BcETFzhUeSeBkYbhx9MfodLbHcYKExjXvFDrfmXLes',
       email: 'aymen.amri@sfectoria.com',
       role: 'admin',
       adresse: 'montplaisir,bachaCenter',
@@ -30,7 +30,7 @@ async function main() {
       first_name: 'khalil',
       last_name: 'kraiem',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://media.licdn.com/dms/image/D4D03AQF40_sGllzM5g/profile-displayphoto-shrink_800_800/0/1694774554353?e=1721865600&v=beta&t=vSoDHLpiCiy_fJ0_BAS8AfgKNPBsNRIY3Yt3LbeAveI',
       email: 'khalil.kraiem@sfectoria.com',
       role: 'manager',
       adresse: 'montplaisir,bachaCenter',
@@ -42,7 +42,7 @@ async function main() {
       first_name: 'seif',
       last_name: 'boughrara',
       photo:
-        'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg',
+        'https://media.licdn.com/dms/image/D4D03AQEszHl_7zIbMQ/profile-displayphoto-shrink_200_200/0/1703595693595?e=2147483647&v=beta&t=SY5sRMSYgQpzSDWwCApHP8OxENyWI4W_0rcnukW_Q0U',
       email: 'seif.boughrara@sfectoria.com',
       role: 'technicien',
       adresse: 'montplaisir,bachaCenter',
@@ -57,6 +57,7 @@ async function main() {
       password: Hpass,
       email: 'cleint@sfectoria.com',
       clientId: client.id,
+      isClient:true,
     },
   });
   const userKhalil = await prisma.user.create({
@@ -66,6 +67,7 @@ async function main() {
       isClient: false,
       employeeId: khalil.id,
     },
+
   });
   const userSeif = await prisma.user.create({
     data: {

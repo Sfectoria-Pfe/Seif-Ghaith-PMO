@@ -1,19 +1,10 @@
 import {
-    Autocomplete,
-    Box,
-    
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
     TextField,
-    createFilterOptions,
   } from "@mui/material";
-  import React, { useEffect, useState } from "react";
+  import React, {  useState } from "react";
   import Textarea from "@mui/joy/Textarea";
-  import { DatePicker } from "@mui/x-date-pickers/DatePicker";
   import { Link, useNavigate } from "react-router-dom";
-  import { useDispatch, useSelector } from "react-redux";
+  import { useDispatch } from "react-redux";
   import Button from "@mui/joy/Button";
   import { addfiche_intervention } from "../../../store/fiche_intervention";
   

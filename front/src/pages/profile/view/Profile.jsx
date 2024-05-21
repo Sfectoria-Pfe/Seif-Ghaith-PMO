@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
@@ -9,13 +9,22 @@ import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdEdit } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { getemployee } from '../../../store/empolyee';
 export default function Profile() {
-  const myInfo=useSelector(state=>state.auth.me)
+  const dispatch = useDispatch();
 
-  
+  const myInfo=useSelector(state=>state.auth.me)
+  const employeestore = useSelector((state) => state.employee.employee);
+  useEffect(() => {
+    dispatch(getemployee(+myInfo.employeeId))
+
+  },[])
+  console.log(employeestore)
+  console.log(myInfo)
+
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
       <Stack
@@ -33,7 +42,6 @@ export default function Profile() {
             <Typography level="title-md">Information Personelle</Typography>
             
           </Box>
-          <Divider />
 
           <Stack
             direction="column"
@@ -48,7 +56,7 @@ export default function Profile() {
                 sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
               >
                 <img
-                  src={myInfo.Employee?.photo}
+                  src={employeestore.photo}
                   loading="lazy"
                   alt=""
                 />
@@ -60,21 +68,21 @@ export default function Profile() {
             <Stack direction="row" spacing={15} >
                 <FormControl>
                   <FormLabel>Nom</FormLabel>
-                  <Typography size="sm">{myInfo.Employee?.first_name} </Typography>  
+                  <Typography size="sm">{employeestore.first_name} </Typography>  
                 </FormControl>
                 <FormControl sx={{ flexGrow: 1 }}>
                   <FormLabel>Prenom</FormLabel>
-                  <Typography size="sm" sx={{ flexGrow: 1 }}>{myInfo.Employee?.last_name}</Typography>
+                  <Typography size="sm" sx={{ flexGrow: 1 }}>{employeestore.last_name}</Typography>
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={10}>
                 <FormControl>
                   <FormLabel>Role</FormLabel>
-                  <Typography size="sm">{myInfo.Employee?.role} </Typography>  
+                  <Typography size="sm">{employeestore.role} </Typography>  
                 </FormControl>
                 <FormControl sx={{ flexGrow: 1 }}>
                   <FormLabel>Email</FormLabel>
-                  <Typography size="sm" sx={{ flexGrow: 1 }}>{myInfo.Employee?.email}</Typography>
+                  <Typography size="sm" sx={{ flexGrow: 1 }}>{employeestore.email}</Typography>
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={8}>
@@ -103,7 +111,7 @@ export default function Profile() {
                   sx={{ flex: 1, minWidth: 108, borderRadius: '100%' }}
                 >
                   <img
-                    src={myInfo.Employee?.photo}
+                    src={employeestore.photo}
                     loading="lazy"
                     alt=""
                   />
@@ -120,7 +128,7 @@ export default function Profile() {
                     gap: 2,
                   }}
                 >
-                  <Typography size="sm">{myInfo.Employee?.first_name}</Typography> 
+                  <Typography size="sm">{employeestore.first_name}</Typography> 
                   </FormControl>
                   <FormLabel>Prenom</FormLabel>
                   <FormControl
@@ -132,29 +140,29 @@ export default function Profile() {
                     gap: 2,
                   }}
                 >
-                  <Typography size="sm">{myInfo.Employee?.last_name}</Typography>
+                  <Typography size="sm">{employeestore.last_name}</Typography>
                 </FormControl>
               </Stack>
             </Stack>
             <FormControl>
               <FormLabel>Role</FormLabel>
-              <Typography size="sm">{myInfo.Employee?.role} </Typography> 
+              <Typography size="sm">{employeestore.role} </Typography> 
             </FormControl>
             <FormControl sx={{ flexGrow: 1 }}>
               <FormLabel>Email</FormLabel>
               <Typography
-                size="sm" sx={{ flexGrow: 1 }}>{myInfo.Employee?.email}</Typography>
+                size="sm" sx={{ flexGrow: 1 }}>{employeestore.email}</Typography>
             </FormControl>
             <div>
               <FormControl sx={{ display: { sm: 'contents' } }}>
                 <FormLabel>Adresse</FormLabel>
-                <Typography size="sm">{myInfo.Employee?.adresse}</Typography>
+                <Typography size="sm">{employeestore.adresse}</Typography>
               </FormControl>
             </div>
             <div>
             <FormControl sx={{ display: { sm: 'contents' } }}>
                 <FormLabel>Numero</FormLabel>
-                <Typography size="sm">{myInfo.Employee?.numero}</Typography>
+                <Typography size="sm">{employeestore.numero}</Typography>
               </FormControl>
             </div>
           </Stack>
