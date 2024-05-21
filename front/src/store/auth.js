@@ -14,12 +14,10 @@ export const login = createAsyncThunk("login", async (body,{dispatch}) => {
 });
 
 export const getMe = createAsyncThunk("getMe", async (id) => {
-  // try {
+
     const res = await getRequestWithHeader(`auth/me`);
     return res.data;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+
 });
 
 export const authSlice = createSlice({

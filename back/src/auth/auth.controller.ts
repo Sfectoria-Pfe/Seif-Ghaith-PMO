@@ -30,6 +30,11 @@ export class AuthController {
   singup(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.singup(createAuthDto);
   }
+  // @Get('verif')
+  // verifier(@Request() req: any) {
+
+  //   return req.user;
+  // }
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   myInfo(@Request() req: any) {    

@@ -1,7 +1,6 @@
 import {
   Autocomplete,
   Box,
-  
   FormControl,
   InputLabel,
   MenuItem,

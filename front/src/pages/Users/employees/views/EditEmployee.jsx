@@ -8,24 +8,25 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Input from "@mui/joy/Input";
 
 function EditEmployee() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch(); 
-  
+  const dispatch = useDispatch();
+
   const employeeStore = useSelector((state) => state.employee);
   const [data, setData] = useState({});
   const [file, setFile] = useState({});
-  
+
   useEffect(() => {
     dispatch(getemployee(+id));
   }, []);
-  
+
   useEffect(() => {
     setData(employeeStore.employee);
   }, [employeeStore]);
-  
+
   function handleChange(e) {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
@@ -33,24 +34,28 @@ function EditEmployee() {
 
   async function handleSubmit(e) {
     // console.log(values.photo);
-    e.preventDefault(); 
-    
-    const args = { id: +id, body: data };
-    await dispatch(updateemployee(args)).then((res) => {
-      if (!res.error) {
-        toast.success("employee modifier avec succès !");
-        setTimeout(() => {
-          navigate(-1)
-        }, 2000);
-      } else {
-        toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
-      }
-    })
-    .catch(() => {
-      toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");
-    })
-  }
+    e.preventDefault();
 
+    const args = { id: +id, body: data };
+    await dispatch(updateemployee(args))
+      .then((res) => {
+        if (!res.error) {
+          toast.success("employee modifier avec succès !");
+          setTimeout(() => {
+            navigate(-1);
+          }, 2000);
+        } else {
+          toast.error(
+            "Erreur lors de modification du bond entree. Veuillez réessayer."
+          );
+        }
+      })
+      .catch(() => {
+        toast.error(
+          "Erreur lors de modification du bond entree. Veuillez réessayer."
+        );
+      });
+  }
 
   return (
     <div>
@@ -68,49 +73,44 @@ function EditEmployee() {
           </div>
           <p className="mb-0">First name</p>
 
-          <input
-             label="first name"
-             name="first_name"        
-             onChange={handleChange}
+          <Input
+            label="first name"
+            name="first_name"
+            onChange={handleChange}
             value={data?.first_name}
-            
           />
           <p className="mb-0 mt-3">Last name</p>
-          <input
+          <Input
             label="Last name"
             name="last_name"
             onChange={handleChange}
             value={data.last_name}
-            
           />
 
           <p className="mb-0 mt-3">Email address</p>
-          <input
+          <Input
             type="email"
             label="Email address"
             name="email"
             onChange={handleChange}
             value={data?.email}
-            
           />
           <p className="mb-0 mt-3">Address</p>
-          <input
+          <Input
             type="string"
             label="adresse"
             name="adresse"
             onChange={handleChange}
             value={data.adresse}
-            
           />
           <p className="mb-0 mt-3">numero</p>
 
-          <input
+          <Input
             type="string"
             label="numero"
             name="numero"
             onChange={handleChange}
             value={data.numero}
-            
           />
 
           <p className="mb-0 mt-3">Role</p>
@@ -119,10 +119,9 @@ function EditEmployee() {
             name="role"
             onChange={handleChange}
             value={data.role}
-            
           >
             <option value="" disabled selected>
-              choisir un role 
+              choisir un role
             </option>
             <option value="receptionist">Receptionniste</option>
             <option value="technicien">Technicient</option>
@@ -136,28 +135,29 @@ function EditEmployee() {
             name="photo"
             onChange={async (e) => {
               setFile(e.target.files[0]);
-              const im = new FormData();
-    im.append("file", file);
-    const response = await axios.post("http://localhost:4000/upload", im);
-    // console.log(response.data);
-    data = { ...data , photo: response.data.path };
-
-            }}            
+              let im = new FormData();
+              im.append("file", e.target.files[0]);
+              const response = await axios.post(
+                "http://localhost:4000/upload",
+                im
+              );
+              console.log(response.data);
+              setData({ ...data, photo: response.data.path });
+            }}
             className="mb-5"
           />
           <br />
           <div className="d-flex align-items-center  justify-content-center">
-            <Button color="green" type="submit" >
+            <Button color="green" type="submit">
               Submit
             </Button>
           </div>
           <div>
             <p>
-             
-              (<span className="text-danger">*</span>) est obligatoire{" "}
+              (<span className="text-danger">*</span>) est obligatoire
             </p>
           </div>
-          <ToastContainer className="toast-position" position="bottom-center"/>
+          <ToastContainer className="toast-position" position="bottom-center" />
         </form>
       </div>
     </div>

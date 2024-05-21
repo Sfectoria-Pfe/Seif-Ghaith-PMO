@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import LogoImg from "../images/LogoImg.png";
+import LogoImg from "../images/LogoImg.jpg";
 import { useDispatch } from "react-redux";
 import { login } from "../store/auth";
+import { Input } from "@mui/material";
 
 function Login() {
   const [state, setState] = useState({ email: "", password: "" });
@@ -17,17 +18,18 @@ function Login() {
 
   return (
     <div className="d-flex align-items-center" style={{ height: "100vh" }}>
-      <div className=" col-md-4 d-flex justify-content-center">
+      <div className=" col-md-5 d-flex justify-content-center">
         <img
           style={{
-            height: "70%",
-            width: "70%",
+            height: "80%",
+            width: "100%",
+            objectFit:"cover"
           }}
           src={LogoImg}
           alt="logoImage"
         />
       </div>
-      <div className=" col-md-8  col-12 d-flex   align-items-center flex-column">
+      <div className=" col-md-7  col-12 d-flex   align-items-center flex-column">
         <div>
           <p
             className="text-center"
@@ -42,7 +44,7 @@ function Login() {
           </p>
           <div style={{ paddingBottom: 30 }}>
             <p style={{ color: "#7C838A", fontSize: 20 }}>Email</p>
-            <input
+            <Input
               type="text"
               placeholder="Email"
               style={{
@@ -56,7 +58,7 @@ function Login() {
           </div>
           <div style={{ paddingBottom: 30 }}>
             <p style={{ color: "#7C838A", fontSize: 20 }}>Password</p>
-            <input
+            <Input
               type="password"
               name="password"
               placeholder="Password"
@@ -65,7 +67,7 @@ function Login() {
                 paddingBottom: 10,
                 width: 500,
               }}
-            ></input>
+            ></Input>
           </div>
           <div
             className="d-flex justify-content-center"
@@ -74,7 +76,7 @@ function Login() {
             <button
               className="px-5"
               style={{
-                backgroundColor: "#F9ED32",
+                backgroundColor: "black",
                 border: 0,
                 paddingBottom: 10,
                 paddingTop: 10,
@@ -82,10 +84,14 @@ function Login() {
                 fontWeight: 550,
                 fontSize: 20,
                 width: 300,
+                color:"white"
               }}
               onClick={handleSubmit}
             >
+              <span className="">
+
               Login
+              </span>
             </button>
           </div>
           <div className="d-flex justify-content-center">
