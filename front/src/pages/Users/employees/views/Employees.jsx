@@ -19,33 +19,32 @@ import {
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
 import EmployeeDetails from "./EmployeeDetails";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import EditEmployee from "./EditEmployee";
 export default function Employees() {
   const dispatch = useDispatch();
   const employeeStore = useSelector((state) => state.employee);
-  
+
   const [show, setShow] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const handleShow = (data) => {
     setShow(true);
     setEmployeeData(data);
   };
   const handledelete = (data) => {
-dispatch(deleteemployee(data))
+    dispatch(deleteemployee(data));
   };
 
   const handleEdit = (data) => {
-
-    setEmployeeData(data.id,);
-    console.log(data.id,"sfsfd");
-    navigate(`editEmployee/${+data.id}`)
+    setEmployeeData(data.id);
+    console.log(data.id, "sfsfd");
+    navigate(`editEmployee/${+data.id}`);
   };
-  
+
   useEffect(() => {
     dispatch(getemployees());
   }, [dispatch]);
@@ -53,36 +52,71 @@ dispatch(deleteemployee(data))
     return {
       id: row?.id,
       photo: row?.photo,
-      first_name: row?.first_name,
-      last_name: row?.last_name,
+      first_name: row?.first_name + "   " + row?.last_name,
+      // last_name: row?.last_name,
       role: row?.role,
-      adresse:row?.adresse,
+      adresse: row?.adresse,
       email: row?.email,
-      numero:row?.numero
+      numero: row?.numero,
     };
   });
 
   const columns = [
-    { field: "id", headerName: "ID", width: 30, filterable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 30,
+      headerAlign: "center",
+      align: "center",
+      filterable: false,
+    },
     {
       field: "photo",
       headerName: "",
       width: 30,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return <Avatar alt="Remy Sharp" src={params.row.photo} />;
       },
     },
-    { field: "first_name", headerName: "First name", width: 150 },
-    { field: "last_name", headerName: "last_name", width: 150 },
-    { field: "role", headerName: "role", width: 150 },
-    { field: "adresse", headerName: "adresse", width: 150 },
+    {
+      field: "first_name",
+      headerName: "Nom et prenom",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    // {
+    //   field: "last_name",
+    //   headerName: "last_name",
+    //   width: 150,
+    //   headerAlign: "center",align:"center",
+    // },
+    { field: "role", headerName: "role", width: 150, headerAlign: "center" },
+    {
+      field: "adresse",
+      headerName: "adresse",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
 
-    { field: "email", headerName: "Email", width: 200 },
-    { field: "numero", headerName: "numero", width: 200 },
+    { field: "email", headerName: "Email", width: 200, headerAlign: "center" },
+    {
+      field: "numero",
+      headerName: "numero",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       field: "action",
       headerName: "Action",
       width: 200,
+      headerAlign: "center",
+      align: "center",
+
       renderCell: (params) => {
         return (
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
@@ -91,13 +125,13 @@ dispatch(deleteemployee(data))
                 handleShow(params);
               }}
             />
-              <DeleteIcon
+            <DeleteIcon
               onClick={() => {
                 // console.log(params.id)
                 handledelete(params.id);
               }}
             />
-           <EditIcon
+            <EditIcon
               onClick={() => {
                 // console.log(params.id)
                 handleEdit(params);
@@ -108,7 +142,6 @@ dispatch(deleteemployee(data))
       },
     },
   ];
-
 
   return (
     <Card className="h-full w-full">
@@ -124,7 +157,7 @@ dispatch(deleteemployee(data))
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addEmployee"}>
-              <Button> Add Employee </Button>
+              <Button> Ajouter un Employee </Button>
             </Link>
           </div>
         </div>
@@ -141,15 +174,33 @@ dispatch(deleteemployee(data))
         </div>
       </CardHeader>
       <CardBody>
-        <div style={{ height: 500, width: "100%" }}>
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             columns={columns}
             rows={Rows}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 5,
+                },
+              },
+            }}
           />
         </div>
       </CardBody>
-      
+
       <EmployeeDetails
         show={show}
         setShow={setShow}

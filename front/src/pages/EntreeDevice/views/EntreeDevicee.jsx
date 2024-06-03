@@ -47,14 +47,20 @@ export default function Entree_devicee() {
   
     };
   const columns = [
-    { field: "id", headerName: "ID", width: 30, filterable: false },
-    { field: "client_name", headerName: "Client Name", width: 150,valueGetter: (value, row) => {
+    {headerAlign: "center",
+      align: "center", field: "id", headerName: "ID", width: 30, filterable: false },
+    {headerAlign: "center",
+      align: "center", field: "client_name", headerName: "Client Name", width: 150,valueGetter: (value, row) => {
       return value.row.Client?.first_name;
     },},
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "createdAt", headerName: "createdAt", width: 200 },
-    { field: "action", headerName: "Action", width: 200,
+    {headerAlign: "center",
+      align: "center", field: "title", headerName: "Title", width: 200 },
+    {headerAlign: "center",
+      align: "center", field: "description", headerName: "Description", width: 200 },
+    {headerAlign: "center",
+      align: "center", field: "createdAt", headerName: "createdAt", width: 200 },
+    {headerAlign: "center",
+      align: "center", field: "action", headerName: "Action", width: 200,
       renderCell:(params)=>{
         return(
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
@@ -83,7 +89,7 @@ export default function Entree_devicee() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Bandes Entrées
+              Liste des Bons Entrées
             </Typography>
             
           </div>
@@ -93,7 +99,7 @@ export default function Entree_devicee() {
                 myInfo.Employee.role==="manager") && 
                   <> 
           <Link to={"addband"}>
-            <Button> Ajouter band entreé </Button>
+            <Button> Ajouter bons d'entreé </Button>
 </Link>
 </>}
           </div>
@@ -116,6 +122,24 @@ export default function Entree_devicee() {
             columns={columns}
             rows={row}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 5,
+                },
+              },
+            }}
           />
         </div>
       </CardBody>

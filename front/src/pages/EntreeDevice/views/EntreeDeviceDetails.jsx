@@ -7,7 +7,7 @@ function EntreeDeviceDetails({ entree_device, onClose }) {
   return (
     <Modal className='m-5' show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Bond Entreé Details</Modal.Title>
+        <Modal.Title>Bons Entreé Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>ID: {entree_device?.id}</p>

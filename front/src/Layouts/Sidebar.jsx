@@ -147,12 +147,12 @@ export default function MiniDrawer() {
             </Link>
           </div>
           <div className="d-flex align-items-center">
-            <Link className="text-reset">
+            {/* <Link className="text-reset">
               <div className="menu-item d-flex align-items-center gap-2 rounded-full lg-rounded-full border p-2">
                 <IoNotificationsOutline size={20} className=" text-black" />
-                {/* <span className="text-gray-900">Notification</span> */}
               </div>
             </Link>
+   */}
 
             <AccountMenu />
           </div>
@@ -213,7 +213,7 @@ export default function MiniDrawer() {
                   </svg>{" "}
                 </ListItemIcon>
                 <ListItemText
-                  primary={"Dashboard"}
+                  primary={"Tableau de bord"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -351,7 +351,7 @@ export default function MiniDrawer() {
                         </svg>
                       </ListItemIcon>
                       <ListItemText
-                        primary={"Les Bande d'entrée"}
+                        primary={"Les Bons d'entrée"}
                         sx={{ opacity: open ? 1 : 0 }}
                       />
                     </ListItemButton>
@@ -466,7 +466,7 @@ export default function MiniDrawer() {
             }
 
 {(myInfo.Employee.role === "admin" ||
-            myInfo.Employee.role==="receptionist" ||
+            
             myInfo.Employee.role==="manager" ||
             myInfo.Employee.role==="technicien") && 
               <>
@@ -571,7 +571,7 @@ export default function MiniDrawer() {
         </List>
 
         <Divider />
-        <List>
+        {/* <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <Link to={"/inbox"} className="text-decoration-none text-reset">
               <ListItemButton
@@ -611,7 +611,7 @@ export default function MiniDrawer() {
               </ListItemButton>
             </Link>
           </ListItem>
-        </List>
+        </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

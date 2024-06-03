@@ -42,7 +42,7 @@ function Dashboard() {
   return (
     <div>
       <div>
-        <p style={{ fontSize: 28 }}>Dashboard</p>
+        <p style={{ fontSize: 28 }}>Tableau de bord</p>
         <div className="d-flex justify-content-center gap-4">
           <div>
             <Card sx={{ minWidth: 275 }}>
@@ -53,7 +53,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Total Bonde d'entée
+                    Total Bons d'entée
                   </Typography>
 
                   <div>
@@ -76,7 +76,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bonde d'entée valider
+                    Bons d'entée valider
                   </Typography>
 
                   <div>
@@ -98,7 +98,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bonde d'entée en cours
+                    Bons d'entée en cours
                   </Typography>
 
                   <div>
@@ -120,7 +120,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bonde d'entée a rejeter
+                    Bons d'entée a rejeter
                   </Typography>
 
                   <div>

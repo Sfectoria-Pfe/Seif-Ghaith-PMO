@@ -3,6 +3,7 @@ import LogoImg from "../images/LogoImg.jpg";
 import { useDispatch } from "react-redux";
 import { login } from "../store/auth";
 import { Input } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 function Login() {
   const [state, setState] = useState({ email: "", password: "" });
@@ -13,7 +14,15 @@ function Login() {
   };
 
   const handleSubmit = () => {
-    dispatch(login(state));
+    dispatch(login(state)).then((res) => {
+      if (!res.error) {
+      } else {
+        toast.error("veuillez verifier vos donnees.");
+      }
+    })
+    .catch(() => {
+      toast.error("veuillez verifier vos donnees.");
+    })
   };
 
   return (
@@ -40,7 +49,7 @@ function Login() {
               paddingTop: 50,
             }}
           >
-            login
+            se connecter
           </p>
           <div style={{ paddingBottom: 30 }}>
             <p style={{ color: "#7C838A", fontSize: 20 }}>Email</p>
@@ -90,17 +99,17 @@ function Login() {
             >
               <span className="">
 
-              Login
+              Se connecter
               </span>
             </button>
-          </div>
-          <div className="d-flex justify-content-center">
-            <p style={{ color: "#7C838A", fontSize: 12 }}>
-              Don't have an account? Register
-            </p>
+            <div>
+
+      <ToastContainer className="toast-position" position="top-center"/>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 }

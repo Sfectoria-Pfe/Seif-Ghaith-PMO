@@ -7,10 +7,10 @@ import reclamation, {
 } from "../../../store/reclamation";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ReclamationDetails from "../views/ReclamationDetails";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Card,
   CardHeader,
@@ -19,11 +19,11 @@ import {
   CardBody,
   Button,
 } from "@material-tailwind/react";
-import { DataGrid,GridToolbar} from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
 export default function Reclamations() {
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const [selectedReclamation, setSelectedReclamation] = useState(null);
   const [row, setRow] = useState([]);
   const Store = useSelector((state) => state.reclamation?.reclamations);
@@ -32,13 +32,11 @@ export default function Reclamations() {
 
   useEffect(() => {
     dispatch(getreclamations());
-
   }, [dispatch]);
 
   useEffect(() => {
     setRow(Store);
-
-  }, [Store]);  
+  }, [Store]);
 
   console.log(row, "row");
   const handleOpenModal = (reclamation) => {
@@ -49,34 +47,73 @@ export default function Reclamations() {
     setSelectedReclamation(null);
     setShowModal(false);
   };
-  const handleDeleteField= (reclamationId) => {
+  const handleDeleteField = (reclamationId) => {
     dispatch(deletereclamation(reclamationId));
-
   };
   const columns = [
-    { field: "id", headerName: "ID", width: 30, filterable: false },
+    {
+      headerAlign: "center",
+      align: "center",
+      field: "id",
+      headerName: "ID",
+      width: 30,
+      filterable: false,
+    },
 
     {
+      headerAlign: "center",
+      align: "center",
       field: "client_name",
       headerName: "Client Name",
       width: 150,
-      valueGetter: (value,row) => {
+      valueGetter: (value, row) => {
         return value.row.Client?.first_name;
       },
     },
-    { field: "titel", headerName: "Title", width: 200 },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "createdAt", headerName: "createdAt", width: 200 },
-    { field: "Action", headerName: "Action", width: 200 ,cellClassName: 'actions',
-    renderCell: (params) => {
-      console.log(params.row,"this is the params")
-      return ( <div>
-        <VisibilityIcon onClick={() => handleOpenModal(params.row)}/>
-        <DeleteIcon onClick={() => handleDeleteField(params.row.id)}/>
-        <Link to={`editreclamation/${params.row.id}`} className="text-decoration-none text-reset">
-        <EditIcon />
-        </Link>
-      </div>)}}
+    {
+      headerAlign: "center",
+      align: "center",
+      field: "titel",
+      headerName: "Title",
+      width: 200,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
+      field: "description",
+      headerName: "Description",
+      width: 300,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
+      field: "createdAt",
+      headerName: "createdAt",
+      width: 200,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
+      field: "Action",
+      headerName: "Action",
+      width: 200,
+      cellClassName: "actions",
+      renderCell: (params) => {
+        console.log(params.row, "this is the params");
+        return (
+          <div className="h-100 w-100 d-flex justify-content-around align-items-center">
+            <VisibilityIcon onClick={() => handleOpenModal(params.row)} />
+            <DeleteIcon onClick={() => handleDeleteField(params.row.id)} />
+            <Link
+              to={`editreclamation/${params.row.id}`}
+              className="text-decoration-none text-reset"
+            >
+              <EditIcon />
+            </Link>
+          </div>
+        );
+      },
+    },
   ];
 
   return (
@@ -112,11 +149,34 @@ export default function Reclamations() {
             columns={columns}
             rows={row}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 5,
+                },
+              },
+            }}
           />
         </div>
       </CardBody>
       <div>
-      {showModal && <ReclamationDetails reclamation={selectedReclamation} onClose={handleCloseModal} />}
+        {showModal && (
+          <ReclamationDetails
+            reclamation={selectedReclamation}
+            onClose={handleCloseModal}
+          />
+        )}
       </div>
     </Card>
   );

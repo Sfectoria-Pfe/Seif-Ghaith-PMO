@@ -30,20 +30,20 @@ const navigate = useNavigate();
       const response = await axios.post("http://localhost:4000/upload", im);
       console.log(response.data);
       const productWithCover = { ...values, photo: response.data.path };
-      console.log("Form submitted with data:", productWithCover).then((res) => {
+      console.log("Form submitted with data:", productWithCover)
+      dispatch(addemployee(productWithCover)).then((res) => {
         if (!res.error) {
           toast.success(" Employee ajouter  avec succès !");
           setTimeout(() => {
             navigate(-1)
           }, 2000);
         } else {
-          toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+          toast.error("Erreur lors de l'ajout du l'employee. Veuillez réessayer.");
         }
       })
       .catch(() => {
-        toast.error("Erreur lors de l'ajout du bond entree. Veuillez réessayer.");
+        toast.error("Erreur lors de l'ajout du l'employee. Veuillez réessayer.");
       })
-      
     },
   });
   return (
@@ -116,7 +116,7 @@ const navigate = useNavigate();
             required
           >
             <option value="" disabled selected>
-              choisir un role *{" "}
+              choisir un role *
             </option>
             <option value="receptionist">Receptionniste</option>
             <option value="technicien">Technicient</option>
@@ -143,8 +143,8 @@ const navigate = useNavigate();
           </div>
           <div>
             <p>
-              {" "}
-              (<span className="text-danger">*</span>) est obligatoire{" "}
+              
+              (<span className="text-danger">*</span>) est obligatoire
             </p>
           </div>
           <ToastContainer className="toast-position" position="bottom-center"/>

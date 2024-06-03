@@ -26,21 +26,19 @@ export default function Users() {
   }, [dispatch]);
 
   const [data, setData] = useState();
-  
-  async function handli(idrow,isActive) {
+
+  async function handli(idrow, isActive) {
     // setData(store[idrow])
     // console.log(active)
     // setData({isActive:(!active)})
     // console.log(data)
-    const args = { id: +idrow, body: {isActive} };
+    const args = { id: +idrow, body: { isActive } };
     await dispatch(updateUser(args))
       .then((res) => {
         if (!res.error) {
           toast.success("utilisateur desactiver avec succès !");
         } else {
-          toast.error(
-            "Erreur. Veuillez réessayer."
-          );
+          toast.error("Erreur. Veuillez réessayer.");
         }
       })
       .catch(() => {
@@ -64,8 +62,16 @@ export default function Users() {
   });
 
   const columns = [
-    { field: "id", headerName: "ID", width: 30 },
     {
+      headerAlign: "center",
+      align: "center",
+      field: "id",
+      headerName: "ID",
+      width: 30,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
       field: "nom",
       headerName: "nom",
       width: 200,
@@ -79,6 +85,8 @@ export default function Users() {
     },
 
     {
+      headerAlign: "center",
+      align: "center",
       field: "prenom",
       headerName: "prenom",
       width: 200,
@@ -91,8 +99,16 @@ export default function Users() {
       },
     },
 
-    { field: "email", headerName: "Email", width: 200 },
     {
+      headerAlign: "center",
+      align: "center",
+      field: "email",
+      headerName: "Email",
+      width: 200,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
       field: "isclient",
       headerName: "Client / Employee",
       width: 200,
@@ -105,6 +121,8 @@ export default function Users() {
       },
     },
     {
+      headerAlign: "center",
+      align: "center",
       field: "isactive",
       headerName: "is active",
       width: 90,
@@ -117,14 +135,23 @@ export default function Users() {
       },
     },
     {
+      headerAlign: "center",
+      align: "center",
       field: "action",
       headerName: "action",
       width: 90,
       renderCell: (params) => {
-        return <span   onClick={() => {
-          // console.log(params.id)
-          handli(params.row.id,!params.row.isactive);
-        }}> action </span>
+        return (
+          <span
+            onClick={() => {
+              // console.log(params.id)
+              handli(params.row.id, !params.row.isactive);
+            }}
+          >
+            {" "}
+            action{" "}
+          </span>
+        );
       },
     },
   ];
@@ -135,15 +162,15 @@ export default function Users() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Users
+              Liste des Utilisateurs
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              Voir des informations sur tous les Users.
+              Voir des informations sur tous les Utilisateurs.
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addUser"}>
-              <Button> Add User </Button>
+              <Button> Ajouter utilisateur </Button>
             </Link>
           </div>
         </div>
@@ -165,10 +192,27 @@ export default function Users() {
             columns={columns}
             rows={Rows}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 5,
+                },
+              },
+            }}
           />
         </div>
         <ToastContainer className="toast-position" position="bottom-center" />
-
       </CardBody>
     </Card>
   );

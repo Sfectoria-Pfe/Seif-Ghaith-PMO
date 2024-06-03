@@ -6,4 +6,10 @@
 p {
     margin-bottom: 0 !important;
 }
-
+.css-128fb87-MuiDataGrid-toolbarContainer{
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row-reverse;
+    align-items: center;
+    
+}

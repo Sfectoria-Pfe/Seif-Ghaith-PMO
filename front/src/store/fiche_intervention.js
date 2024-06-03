@@ -49,10 +49,10 @@ export const getfiche_interventions = createAsyncThunk("getfiche_interventions",
     }
   });
 
-  export const addfiche_intervention = createAsyncThunk("addfiche_intervention", async (body) => {
+  export const addfiche_intervention = createAsyncThunk("addfiche_intervention", async (body,dispatch) => {
     try {
       const res = await postRequestWithHeader(`fiche-interventions`,body);
-      return res.data;
+      dispatch(getfiche_interventions())
     } catch (error) {
       console.log(error);
     }
@@ -87,9 +87,9 @@ export const fiche_interventionSlice = createSlice({
     // builder.addCase(updatefiche_intervention.fulfilled, (state, action) => {
     //     state.fiche_interventions = action.payload;
     //   });
-      builder.addCase(addfiche_intervention.fulfilled, (state, action) => {
-        state.fiche_interventions = action.payload;
-      });
+      // builder.addCase(addfiche_intervention.fulfilled, (state, action) => {
+      //   state.fiche_interventions = action.payload;
+      // });
       // builder.addCase(deletefiche_intervention.fulfilled, (state, action) => {
       //   state.fiche_interventions = action.payload;
       // });

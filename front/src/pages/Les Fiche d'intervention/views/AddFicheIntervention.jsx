@@ -11,9 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { addfiche_intervention } from "../../../store/fiche_intervention";
 import AddFicheInterventionDetails from "../components/AddFicheInterventionDetails";
 import Button from "@mui/joy/Button";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function AddFicheIentervention() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -29,10 +30,32 @@ export default function AddFicheIentervention() {
 
   const [show, setShow] = useState(false);
   const [idFiche, setIdFiche] = useState();
-
+  // const navigate=useNavigate();
   function handelSubmit(e) {
-    e.preventDefault();
-    dispatch(addfiche_intervention(data)).then((res) => {});
+    if (data === null) {
+      alert("verifier les donnee ")
+      e.preventDefault();
+    } else {
+      e.preventDefault();
+      dispatch(addfiche_intervention(data))
+        .then((res) => {
+          if (!res.error) {
+            toast.success("bond entree a été ajouté avec succès !");
+            setTimeout(() => {
+              navigate(-1);
+            }, 2000);
+          } else {
+            toast.error(
+              "Erreur lors de l'ajout du bond entree. Veuillez réessayer."
+            );
+          }
+        })
+        .catch(() => {
+          toast.error(
+            "Erreur lors de l'ajout du bond entree. Veuillez réessayer."
+          );
+        });
+    }
   }
   useEffect(() => {
     dispatch(getorderreparations());
@@ -40,10 +63,7 @@ export default function AddFicheIentervention() {
   console.log(store, "storssssssssssssssssssssssssssssssssssssssssssssssssse");
   return (
     <div className=" d-flex  justify-content-center">
-      <form
-        className="h-50 w-50"
-        onSubmit={handelSubmit}
-      >
+      <form className="h-50 w-50" onSubmit={handelSubmit}>
         <h1 className="pt-9 d-flex justify-content-center">
           Ajout d'une fiche d'intervention
         </h1>
@@ -113,15 +133,12 @@ export default function AddFicheIentervention() {
           />
         </div>
         <div className="d-flex justify-content-center">
+          <Button className="w-25 mt-5 " onSubmit={handelSubmit} type="submit">
+            submit
+          </Button>
+          <ToastContainer className="toast-position" position="bottom-center"/>
 
-        <Button 
-          className="w-25 mt-5 "
-          onSubmit={handelSubmit}
-          type="submit"
-          >
-          submit
-        </Button>
-          </div>
+        </div>
       </form>
     </div>
   );
