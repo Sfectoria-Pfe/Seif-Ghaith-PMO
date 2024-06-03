@@ -32,12 +32,11 @@ function EditEntree({ route }) {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch(updateentree_device({id:+id,body: data}))
-    .then((res) => {
+    dispatch(updateentree_device({id:+id,body: data})).then((res) => {
       if (!res.error) {
         toast.success("bond entree modifier avec succès !");
         setTimeout(() => {
-          navigate(-1)
+          navigate("/entreedevices")
         }, 2000);
       } else {
         toast.error("Erreur lors de modification du bond entree. Veuillez réessayer.");

@@ -12,9 +12,9 @@ model User {
   password   String
   email      String    @unique
   isClient   Boolean   @default(false)
-  Client     Client?   @relation(fields : [clientId], references: [id])
+  Client     Client?   @relation(fields: [clientId], references: [id])
   clientId   Int?
-  Employee   Employee? @relation(fields : [employeeId], references: [id])
+  Employee   Employee? @relation(fields: [employeeId], references: [id])
   employeeId Int?
   isActive   Boolean   @default(true)
 }
@@ -36,17 +36,18 @@ model Client {
 }
 
 model Employee {
-  id         Int     @id @default(autoincrement())
-  first_name String
-  last_name  String
-  adresse    String
-  numero     String
-  photo      String  @db.LongText
-  email      String  @unique
-  role       Role    @default(technicien)
-  isArchived Boolean @default(false)
-  user       User[]
-  etape      Etape[]
+  id              Int               @id @default(autoincrement())
+  first_name      String
+  last_name       String
+  adresse         String
+  numero          String
+  photo           String            @db.LongText
+  email           String            @unique
+  role            Role              @default(technicien)
+  isArchived      Boolean           @default(false)
+  user            User[]
+  etape           Etape[]
+  orderreparation OrderReparation[]
 }
 
 model Reclamation {
@@ -90,6 +91,8 @@ model OrderReparation {
   etape          Etape[]
   order          Order[]
   fiches         FicheIntervention[]
+  Employee       Employee?           @relation(fields: [employeeId], references: [id])
+  employeeId     Int?
 }
 
 model FicheIntervention {
@@ -125,8 +128,7 @@ model Etape {
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-
+  id                Int              @id @default(autoincrement())
   currency          String? // Devise utilisée ('$' dans votre exemple)
   currentDate       DateTime? // Date actuelle
   invoiceNumber     Int? // Numéro de facture

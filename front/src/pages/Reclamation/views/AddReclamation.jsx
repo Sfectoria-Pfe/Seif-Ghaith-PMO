@@ -41,8 +41,13 @@ function AddReclamation() {
   }
 
   async function handelSubmit(e) {
-    e.preventDefault();
-    const im = new FormData();
+if (data.clientId==""||data.description==""||data.image==null||data.titel=="") {
+  alert("saisir les donnee  ")
+} else {
+  
+  
+  e.preventDefault();
+  const im = new FormData();
     im.append("file", file);
     console.log(file);
     const response = await axios.post("http://localhost:4000/upload", im);
@@ -63,7 +68,8 @@ function AddReclamation() {
       toast.error("Erreur lors de l'ajout du reclamation. Veuillez réessayer.");
     })
   }
-
+  }
+  
   return (
     <div>
       <div>

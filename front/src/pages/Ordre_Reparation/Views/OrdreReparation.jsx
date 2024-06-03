@@ -20,6 +20,7 @@ import OrderReparationDetails from "./OrdeReparationDetails";
 
 function OrdreReparation() {
   const dispatch = useDispatch();
+  const myInfo = useSelector((state) => state.auth.me);
   const store = useSelector((state) => state.orderreparation.orderreparations);
   console.log(store, "fssssrom storee");
 
@@ -34,86 +35,118 @@ function OrdreReparation() {
     setShow(true);
     setId(store[id - 1]);
   };
-  const rows = store.map((row) => {
-    let xd = "";
-    if (row.etape && row.etape.length > 0) {
-      xd = row.etape[0].title;
-    } else {
-        xd = "sorry  undefined";  
-    }
 
-    return {
-      id: row?.id,
-      title: row?.title,
-      titleetape: xd,
-      description: row?.description,
-      entreeDeviceId: row?.entreeDeviceId
-        ? row?.EntreeDevice.title
-        : "pas defini",
-      status: row.status,
-      nomclient: row.Client?.first_name + "  " + row.Client?.last_name,
-    };
+  console.log(myInfo, "me");
+  const rows = store.filter((row) => {
+    if (row.employeeId === myInfo.Employee.id) {
+      let xd = "";
+      if (row.etape && row.etape.length > 0) {
+        xd = row.etape[0].title;
+      } else {
+        xd = "sorry  undefined";
+      }
+
+      return {
+        id: row?.id,
+        title: row?.title,
+        titleetape: xd,
+        description: row?.description,
+        entreeDeviceId: row?.entreeDeviceId
+          ? row?.EntreeDevice.title
+          : "pas defini",
+        status: row.status,
+        nomclient: row.Client.first_name + " " + row.Client.last_name,
+      };
+    }
   });
+
+  console.log(
+    rows,
+    "djjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
+  );
   const navigate = useNavigate();
-  const myInfo = useSelector((state) => state.auth.me);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 30 },
     {
+      headerAlign: "center",
+      align: "center",
+      field: "id",
+      headerName: "ID",
+      width: 30,
+    },
+    {
+      headerAlign: "center",
+      align: "center",
       field: "title",
-      headerName: "title",
+      headerName: "titre",
       width: 200,
     },
 
     {
+      headerAlign: "center",
+      align: "center",
       field: "titleetape",
       headerName: "etape",
       width: 200,
     },
 
-    { field: "description", headerName: "description", width: 200 },
     {
-      field: "entreeDeviceId",
-      headerName: "Titre de band d'entree",
+      headerAlign: "center",
+      align: "center",
+      field: "description",
+      headerName: "description",
       width: 200,
     },
+    // {
+    //  headerAlign: "center" ,align:"center", field: "entreeDeviceId",
+    //   headerName: "Titre de band d'entree",
+    //   width: 200,
+    // },
     {
+      headerAlign: "center",
+      align: "center",
       field: "status",
       headerName: "status",
       width: 90,
     },
     {
+      headerAlign: "center",
+      align: "center",
       field: "nomclient",
       headerName: "nomclient",
       width: 250,
     },
     {
+      headerAlign: "center",
+      align: "center",
       field: "ajout",
       headerName: "Ajouter une etape",
       width: 250,
-      
+
       renderCell: (params) => {
         return (
           <>
-          {(myInfo.Employee.role === "admin" ||
-          myInfo.Employee.role==="receptionist" ||
-          myInfo.Employee.role==="manager" ||
-          myInfo.Employee.role==="technicien") && 
-          <div className="h-50 w-75 d-flex justify-content-around align-items-center">
-          <Button
-          onClick={() => {
-            navigate(`addetape/${params.row.id}`);
-          }}
-          >
-          Ajouter une etape
-          </Button>
-          </div>
-        }
-        </>
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "receptionist" ||
+              myInfo.Employee.role === "manager" ||
+              myInfo.Employee.role === "technicien") && (
+              <div className="h-50 w-75 d-flex justify-content-around align-items-center">
+                <Button
+                  onClick={() => {
+                    navigate(`addetape/${params.row.id}`);
+                  }}
+                >
+                  Ajouter une etape
+                </Button>
+              </div>
+            )}
+          </>
         );
       },
     },
     {
+      headerAlign: "center",
+      align: "center",
       field: "action",
       headerName: "Action",
       width: 200,
@@ -132,7 +165,7 @@ function OrdreReparation() {
             />
             <EditIcon
               onClick={() => {
-               navigate(`editorder/${params.row.id}`)
+                navigate(`editorder/${params.row.id}`);
               }}
             />
           </div>
@@ -149,11 +182,16 @@ function OrdreReparation() {
               Liste des Orders de reparation
             </Typography>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Link to={"addorderreparation"}>
-              <Button> Ajouter Oreder reparation </Button>
-            </Link>
-          </div>
+          {(myInfo.Employee.role === "admin" ||
+            myInfo.Employee.role === "manager") && (
+            <>
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                <Link to={"addorderreparation"}>
+                  <Button> Ajouter Oreder reparation </Button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
@@ -173,6 +211,23 @@ function OrdreReparation() {
             columns={columns}
             rows={rows}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
           />
         </div>
       </CardBody>

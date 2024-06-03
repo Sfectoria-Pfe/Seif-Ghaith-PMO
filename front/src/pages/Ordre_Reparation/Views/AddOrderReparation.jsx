@@ -21,16 +21,21 @@ import { getentree_devices } from "../../../store/entree_device";
 import Button from "@mui/joy/Button";
 import AddEtape from "../../../components/AddEtape";
 import { addorderreparation } from "../../../store/order_reparation";
+import { Text } from "@react-pdf/renderer";
+import { getemployees } from "../../../store/empolyee";
 
 function AddOrderReparation() {
   const filter = createFilterOptions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const Store = useSelector((state) => state.client.clients);
+  const Storecli = useSelector((state) => state.client.clients);
   const StoreBande = useSelector((state) => state.entree_device.entree_devices);
   const [show, setShow] = useState(false);
   const [check, setOpenCheck] = useState(false);
-
+  const empStore = useSelector((state) => state.employee.employees);
+  useEffect(() => {
+    dispatch(getemployees());
+  }, [dispatch]);
   useEffect(() => {
     dispatch(getclients());
     dispatch(getentree_devices());
@@ -56,11 +61,8 @@ function AddOrderReparation() {
   function handelSubmit(e) {
     e.preventDefault();
     dispatch(addorderreparation(data)).then((res) => {
-      // console.log(res,"cesttttttt  tttttttttttttttttttttttttttttttttttt")
-      setIdrep(res.payload.id);
-      setShow(true)
+      navigate(-1);
     });
-    // navigate(-1);
   }
 
   // const handlesubmit = async ()=>{
@@ -81,26 +83,18 @@ function AddOrderReparation() {
       <div className="d-flex justify-content-around">
         <form onSubmit={handelSubmit} className=" col-5">
           <div className="pb-3">
-            <p className="mb-2">Title</p>
-            <TextField
-              fullWidth={true}
-              label="Title"
-              name="title"
-              onChange={handlechange}
-              value={data.title}
-              required
-            />
-          </div>
-          <div className="pb-3">
             <p className="mb-2">bande d'entree :</p>
             <Autocomplete
               onChange={(event, value, option) => {
-                console.log(value);
-                console.log(option, "asdsd");
-
                 if (!(value === null)) {
                   setData((prev) => {
-                    return { ...prev, entreeDeviceId: value.id };
+                    return {
+                      ...prev,
+                      entreeDeviceId: value.id,
+                      clientId: value.clientId,
+                      description: value.description,
+                      title: value.title,
+                    };
                   });
                 }
               }}
@@ -160,6 +154,25 @@ function AddOrderReparation() {
             />
           </div>
           <div className="pb-3">
+            <p className="mb-2">Title</p>
+            <TextField
+              fullWidth={true}
+              label="Title"
+              name="title"
+              onChange={handlechange}
+              value={data.title}
+              required
+            />
+          </div>
+          <div className="pb-3">
+            <p className="mb-2">Client :</p>
+            <TextField
+            disabled
+              fullWidth={true}
+              value={Storecli[data.clientId - 1]?.first_name}
+            />
+          </div>
+          <div className="pb-3">
             <p className="mb-2">Description</p>
             <TextField
               fullWidth={true}
@@ -204,67 +217,67 @@ function AddOrderReparation() {
             />
           </div>
           <div className="pb-3">
-            <p className="mb-2">Client :</p>
-            <Autocomplete
-              fullWidth
-              onChange={(event, value, option) => {
-                if (!(value === null)) {
-                  setData((prev) => {
-                    return { ...prev, clientId: value.id };
-                  });
-                }
-              }}
-              options={Store}
-              getOptionLabel={(option) => {
-                return option.first_name + " " + option.last_name;
-              }}
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-                const { inputValue } = params;
-                // Suggest the creation of a new value
-                const isExisting = options.some(
-                  (option) => inputValue === option.first_name
-                );
-                if (inputValue !== "" && !isExisting) {
-                  filtered.push({
-                    inputValue,
-                    first_name: `Add new client`,
-                    last_name: " ",
-                  });
-                }
-                return filtered;
-              }}
-              freeSolo
-              renderOption={(props, option) =>
-                option.first_name !== "Add new client" ? (
-                  <Box
-                    component="li"
-                    sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                    {...props}
-                  >
-                    {option.first_name + " " + option.last_name}
-                  </Box>
-                ) : (
-                  <Link to="/clients/addclient">Add new client</Link>
-                )
-              }
-              renderInput={(params) => {
-                return (
-                  <TextField
-                    {...params}
-                    label="Nom de Client "
-                    inputProps={{
-                      ...params.inputProps,
-                      // autoComplete: "new-password", // disable autocomplete and autofill
-                    }}
-                  />
-                );
-              }}
-            />
-          </div>
+        <p className="mb-2">Employee :</p>
+        <Autocomplete
+          fullWidth
+          onChange={(event, value, option) => {
+            if (!(value === null)) {
+              setData((prev) => {
+                return { ...prev, employeeId: value.id };
+              });
+            }
+          }}
+          options={empStore}
+          getOptionLabel={(option) => {
+            return option.first_name + " " + option.last_name;
+          }}
+          selectOnFocus
+          clearOnBlur
+          handleHomeEndKeys
+          filterOptions={(options, params) => {
+            const filtered = filter(options, params);
+            const { inputValue } = params;
+            // Suggest the creation of a new value
+            const isExisting = options.some(
+              (option) => inputValue === option.first_name
+            );
+            if (inputValue !== "" && !isExisting) {
+              filtered.push({
+                inputValue,
+                first_name: `Add new emp`,
+                last_name: " ",
+              });
+            }
+            return filtered;
+          }}
+          freeSolo
+          renderOption={(props, option) =>
+            option.first_name !== "Add new emp" ? (
+              <Box
+                component="li"
+                sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                {...props}
+              >
+                {option.first_name + " " + option.last_name}
+              </Box>
+            ) : (
+              <Link to="/employes/addemployee">Add new employee</Link>
+            )
+          }
+          renderInput={(params) => {
+            return (
+              <TextField
+                {...params}
+                label="Nom de employe "
+                inputProps={{
+                  ...params.inputProps,
+                  // autoComplete: "new-password", // disable autocomplete and autofill
+                }}
+              />
+            );
+          }}
+        />
+      </div>
           <div>
             <Checkbox
               onChange={() => {
@@ -280,12 +293,12 @@ function AddOrderReparation() {
             <Button type="submit"> Confirmer l'ajout </Button>
           </div>
         </form>
-        <div className="col-5 pl-5 pt-7">
+        {/* <div className="col-5 pl-5 pt-7">
           <div className="d-flex align-items-center flex-column pb-7">
  
           </div>
           <div>{show ? <AddEtape idrep={idrep} /> : " "}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -17,13 +17,10 @@ import {
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ClientsDetails from "./ClientsDetails";
-
-
-
 
 export default function Clients() {
   const [show, setShow] = useState(false);
@@ -38,15 +35,15 @@ export default function Clients() {
     return {
       id: row.id,
       photo: row.photo,
-      first_name: row.first_name,
-      last_name: row.last_name,
-      adresse:row?.adresse,
+      first_name: row?.first_name+"   "+row?.last_name,
+      // last_name: row.last_name,
+      adresse: row?.adresse,
       email: row?.email,
-      numero:row?.numero
+      numero: row?.numero,
     };
   });
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handledelete = (data) => {
     dispatch(deleteclient(data));
@@ -63,24 +60,54 @@ export default function Clients() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 30, filterable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 30,
+      headerAlign: "center",align:"center",
+      filterable: false,
+    },
     {
       field: "photo",
       headerName: "",
       width: 30,
+      headerAlign: "center",align:"center",
+
       renderCell: (params) => {
         return <Avatar alt="Remy Sharp" src={params.row.photo} />;
       },
     },
-    { field: "first_name", headerName: "First name", width: 150 },
-    { field: "last_name", headerName: "last_name", width: 150 },
-    { field: "adresse", headerName: "adresse", width: 150 },
-
-    { field: "email", headerName: "Email", width: 200 },
-    { field: "numero", headerName: "numero", width: 200 },    {
+    {
+      field: "first_name",
+      headerName: "Nom et prenom",
+      width: 150,
+      headerAlign: "center",align:"center",
+      align:"center"
+    },
+    // {
+    //   field: "last_name",
+    //   headerName: "last_name",
+    //   width: 150,
+    //   headerAlign: "center",align:"center",
+    // },
+    {
+      field: "adresse",
+      headerName: "adresse",
+      width: 150,
+      headerAlign: "center",align:"center",
+    },
+    { field: "email", headerName: "Email", width: 200, headerAlign: "center" ,align:"center",},
+    {
+      field: "numero",
+      headerName: "numero", 
+      width: 200,
+      headerAlign: "center",align:"center",
+    },
+    {
       field: "action",
       headerName: "Action",
       width: 200,
+      headerAlign: "center",align:"center",
       renderCell: (params) => {
         return (
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
@@ -135,11 +162,29 @@ export default function Clients() {
         </div>
       </CardHeader>
       <CardBody>
-        <div style={{ height: 500, width: "100%" }}>
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid
+           pageSizeOptions={[5, 10]}
+           disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  page: 0,
+                  pageSize: 4,
+                },
+              },
+            }}
             columns={columns}
             rows={Rows}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
           />
         </div>
       </CardBody>
