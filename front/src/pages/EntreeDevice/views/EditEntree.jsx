@@ -12,7 +12,7 @@ function EditEntree({ route }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log(store, "this is reclamation");
-
+  
   useEffect(() => {
     dispatch(getentree_device(+id));
   }, []);

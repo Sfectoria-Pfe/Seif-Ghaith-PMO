@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
-import Singup from "../pages/Singup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "../pages/Dashboard";
 import Clients from "../pages/Users/clients/views/Clients";
@@ -41,7 +40,10 @@ import AddOrder from "../pages/order/views/AddOrder";
 import AddOrderReparation from "../pages/Ordre_Reparation/Views/AddOrderReparation";
 import FicheInterventionPage from "../pages/Les Fiche d'intervention/FicheInterventionPage";
 import AddFicheIentervention from "../pages/Les Fiche d'intervention/views/AddFicheIntervention";
+import AddEtape from "../components/AddEtape";
+import EditOrderReparation from "../pages/Ordre_Reparation/Views/EditOrderReparation";
 import EditFiche from "../pages/Les Fiche d'intervention/views/EditFiche";
+import PasswordChange from "../pages/Profile/components/PasswordChange";
 function Router() {
   const user = useSelector((state) => state.auth.me);
   const dispatch = useDispatch();
@@ -66,10 +68,14 @@ function Router() {
             <Route index element={<Dashboard />} />
             <Route
               path="/fiches_intervention"
-              element={<FicheInterventionPage />}>
+              element={<FicheInterventionPage />}
+            >
               <Route index element={<FicheIentervention />} />
-              <Route path="addfiche_intervention" element={<AddFicheIentervention/>}/>
-              <Route path="editfiche/:id" element={<EditFiche/>}/>
+              <Route
+                path="addfiche_intervention"
+                element={<AddFicheIentervention />}
+              />
+              <Route path="editfiche/:id" element={<EditFiche />} />
             </Route>
             <Route path="/reclamations" element={<ReclamationPage />}>
               <Route index element={<Reclamations />} />
@@ -100,6 +106,9 @@ function Router() {
                 path="addorderreparation"
                 element={<AddOrderReparation />}
               />
+              <Route path="editorder/:id" element={<EditOrderReparation />} />
+
+              <Route path="addetape/:id" element={<AddEtape />} />
             </Route>
 
             <Route path="/inbox" element={<Inbox />} />
@@ -113,6 +122,7 @@ function Router() {
               <Route index element={<Profile />} />
               <Route path="editprofile" element={<EditProfile />} />
             </Route>
+              <Route path="/change" element={<PasswordChange />} />
 
             <Route path="/orders" element={<OrderPage />}>
               <Route index element={<Order />} />
@@ -122,7 +132,6 @@ function Router() {
         ) : (
           <Route path="/" element={<Auth />}>
             <Route index element={<Login />} />
-            <Route path="/register" element={<Singup />} />
           </Route>
         )}
       </Routes>

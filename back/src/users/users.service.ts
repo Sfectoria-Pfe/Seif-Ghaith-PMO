@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+ 
   async create(createUserDto: CreateUserDto) {
     const { password, ...rest } = createUserDto;
     const salt = await bcrypt.genSalt();
@@ -25,10 +26,13 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async  update(id: number, updateUserDto: UpdateUserDto) {
+    // const { password, ...rest } = updateUserDto;
+    // const salt = await bcrypt.genSalt();
+    // const Hpass = await bcrypt.hashSync(password, salt);
     return this.prisma.user.update({
       where: { id },
-      data: updateUserDto,
+      data:updateUserDto,
     });
   }
 

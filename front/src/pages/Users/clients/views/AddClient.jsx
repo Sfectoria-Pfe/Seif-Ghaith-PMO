@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addclient } from '../../../../store/client';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@material-tailwind/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,13 +11,15 @@ import { ToastContainer, toast } from 'react-toastify';
 function AddClient() {
     const [file,setFile]=useState({})
   const dispatch = useDispatch();
-
+const navigate=useNavigate()
   const formik = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
       email: "",
       photo: null,
+      adresse:"",
+      numero:"",
     },
     onSubmit: async (values) => {
       console.log(values.photo)
@@ -83,7 +85,24 @@ function AddClient() {
         required
         />
 
-     
+<p className="mb-0 mt-3">adresse</p>
+      <Input
+        label="adresse"
+        name="adresse"
+        onChange={formik.handleChange}
+        value={formik.values.adresse}
+        required
+      />
+      <p className="mb-0 mt-3">numero</p>
+      <Input
+        label="numero"
+        name="numero"
+        onChange={formik.handleChange}
+        value={formik.values.numero}
+        required
+      />
+
+
       <p className="mb-0 mt-3">Inserer une image</p>
       <input
         type="file"

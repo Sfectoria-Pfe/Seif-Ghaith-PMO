@@ -20,7 +20,7 @@ export const uploadSlice = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-
+               
       builder.addCase(addupload.fulfilled, (state, action) => {
         state.uploads = action.payload;
       });

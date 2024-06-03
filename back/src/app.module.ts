@@ -16,7 +16,21 @@ import { OrderreparationsModule } from './orderreparations/orderreparations.modu
 import { FicheinterventionDetailsModule } from './ficheintervention-details/ficheintervention-details.module';
 
 @Module({
-  imports: [PrismaModule, ClientsModule,  ReclamationsModule, UsersModule, EmployeesModule, EntreeDevicesModule, EtapesModule, OrdersModule, OrderLinesModule, FicheInterventionsModule, AuthModule, OrderreparationsModule, FicheinterventionDetailsModule],
+  imports: [
+    PrismaModule,
+    ClientsModule,
+    ReclamationsModule,
+    UsersModule,
+    EmployeesModule,
+    EntreeDevicesModule,
+    EtapesModule,
+    OrdersModule,
+    OrderLinesModule,
+    FicheInterventionsModule,
+    AuthModule,
+    OrderreparationsModule,
+    FicheinterventionDetailsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

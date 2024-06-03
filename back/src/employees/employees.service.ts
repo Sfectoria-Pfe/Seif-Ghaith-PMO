@@ -11,7 +11,7 @@ export class EmployeesService {
   }
 
   findAll() {
-    return this.prisma.employee.findMany();
+    return this.prisma.employee.findMany({include:{user:{select:{email:true}}}});
   }
 
   findOne(id: number) {

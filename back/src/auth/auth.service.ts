@@ -15,7 +15,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { email: Dto.email },
       include: { Employee:true, Client: true },
-    });
+    }); 
     if (!user) {
       throw new HttpException('invalid email', HttpStatus.BAD_REQUEST);
     }
@@ -47,3 +47,4 @@ export class AuthService {
     return `This action removes a #${id} auth`;
   }
 }
+

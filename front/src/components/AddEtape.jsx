@@ -12,13 +12,23 @@ import {
 import React, { useEffect, useState } from "react";
 import Textarea from "@mui/joy/Textarea";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getemployees } from "../store/empolyee";
 import { useDispatch, useSelector } from "react-redux";
 import { addetape } from "../store/etape";
 import Button from "@mui/joy/Button";
 
 function AddEtape({ idrep }) {
+  const { id } = useParams();
+  console.log(id,"id siiiiiiiiiiiiiiiiiiipleeeeeeeeeeeeeeeee")
+  console.log(idrep,"fooooooooooooooooookkkkk")
+var idfinal
+  if (id==undefined||'') {
+    idfinal=+idrep
+  } else {
+    idfinal=+id
+  }
+  console.log(idfinal,"zokkkkkk")
   const [data, setData] = useState({
     title: "",
     rapport: "",
@@ -27,7 +37,7 @@ function AddEtape({ idrep }) {
     type: "",
     date: null,
     employeeId: null,
-    orderReparationId: idrep,
+    orderReparationId: +idfinal,
   });
   function handlechange(e) {
     console.log(e, "eeeeeeeeeee");

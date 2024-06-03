@@ -47,7 +47,7 @@ export class AppController {
     let data = {
       description: dto.description,
       alt: dto.alt,
-      extension: file.filename.split('.')[1],
+      extension: file?.filename.split('.')[1],
       type: file.mimetype,
       path: 'http://localhost:4000/' + 'upload/' + file.filename,
     };

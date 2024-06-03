@@ -8,6 +8,8 @@ import {
   Delete,
   Request,
   UseGuards,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -28,13 +30,14 @@ export class AuthController {
   singup(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.singup(createAuthDto);
   }
+  // @Get('verif')
+  // verifier(@Request() req: any) {
 
-  
+  //   return req.user;
+  // }
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  myInfo(@Request() req: any) {
-    console.log(req.user,"req.user");
-    
+  myInfo(@Request() req: any) {    
     return req.user;
   }
 
