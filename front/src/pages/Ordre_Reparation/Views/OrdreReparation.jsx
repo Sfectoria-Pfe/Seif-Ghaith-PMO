@@ -58,37 +58,37 @@ function OrdreReparation() {
   const myInfo = useSelector((state) => state.auth.me);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 30 },
+    {headerAlign: "center" ,align:"center", field: "id", headerName: "ID", width: 30 },
     {
-      field: "title",
+     headerAlign: "center" ,align:"center", field: "title",
       headerName: "title",
       width: 200,
     },
 
     {
-      field: "titleetape",
+     headerAlign: "center" ,align:"center", field: "titleetape",
       headerName: "etape",
       width: 200,
     },
 
-    { field: "description", headerName: "description", width: 200 },
+    {headerAlign: "center" ,align:"center", field: "description", headerName: "description", width: 200 },
     {
-      field: "entreeDeviceId",
+     headerAlign: "center" ,align:"center", field: "entreeDeviceId",
       headerName: "Titre de band d'entree",
       width: 200,
     },
     {
-      field: "status",
+     headerAlign: "center" ,align:"center", field: "status",
       headerName: "status",
       width: 90,
     },
     {
-      field: "nomclient",
+     headerAlign: "center" ,align:"center", field: "nomclient",
       headerName: "nomclient",
       width: 250,
     },
     {
-      field: "ajout",
+     headerAlign: "center" ,align:"center", field: "ajout",
       headerName: "Ajouter une etape",
       width: 250,
       
@@ -114,7 +114,7 @@ function OrdreReparation() {
       },
     },
     {
-      field: "action",
+     headerAlign: "center" ,align:"center", field: "action",
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
@@ -173,6 +173,24 @@ function OrdreReparation() {
             columns={columns}
             rows={rows}
             slots={{ toolbar: GridToolbar }}
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            disableRowSelectionOnClick
+             initialState={{
+               pagination: {
+                 paginationModel: {
+                   page: 0,
+                   pageSize: 4,
+                 },
+               },
+             }}
           />
         </div>
       </CardBody>

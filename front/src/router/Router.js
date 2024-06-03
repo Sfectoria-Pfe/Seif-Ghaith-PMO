@@ -14,7 +14,7 @@ import EmployeePage from "../pages/Users/employees/EmployeePage";
 import AddEmployee from "../pages/Users/employees/views/AddEmployee";
 import ClientsPage from "../pages/Users/clients/ClientsPage";
 import AddClient from "../pages/Users/clients/views/AddClient";
-import Inbox from "../pages/inbox/Inbox";
+// import Inbox from "../pages/inbox/Inbox";
 import Employees from "../pages/Users/employees/views/Employees";
 import Reclamations from "../pages/Reclamation/views/Reclamations";
 import AddReclamation from "../pages/Reclamation/views/AddReclamation";
@@ -111,7 +111,7 @@ function Router() {
               <Route path="addetape/:id" element={<AddEtape />} />
             </Route>
 
-            <Route path="/inbox" element={<Inbox />} />
+            {/* <Route path="/inbox" element={<Inbox />} /> */}
             <Route path="/entreedevices" element={<EntreePage />}>
               <Route index element={<EntreeDevicee />} />
               <Route path="addband" element={<AddEntree />} />

@@ -126,7 +126,6 @@ model Etape {
 
 model Order {
   id Int @id @default(autoincrement())
-
   currency          String? // Devise utilisée ('$' dans votre exemple)
   currentDate       DateTime? // Date actuelle
   invoiceNumber     Int? // Numéro de facture

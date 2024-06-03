@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Textarea } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { getclients } from "../../../../store/client";
 import axios from "axios";
-import { Box } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import { getemployees } from "../../../../store/empolyee";
 import { addUser } from "../../../../store/user";
 
 function AddUser() {
   const filter = createFilterOptions();
 
-  const [file, setFile] = useState(null);
+  const [check, setOpenCheck] = useState(false);
   const navigate = useNavigate();
   const storeEmployees = useSelector((state) => state.employee.employees);
   const storeClients = useSelector((state) => state.client.clients);
@@ -22,13 +22,12 @@ function AddUser() {
   useEffect(() => {
     dispatch(getclients());
     dispatch(getemployees());
-
   }, [dispatch]);
 
   const [data, setData] = useState({
     password: "12345",
     email: "",
-    isClient: false,
+    isClient: check,
     isActive: true,
     clientId: null,
     employeeId: null,
@@ -41,9 +40,18 @@ function AddUser() {
   }
 
   async function handelSubmit(e) {
-    e.preventDefault();
-   dispatch(addUser(data))
-    navigate(-1);
+    if (data.email == "") {
+      alert("remplir les champ");
+      e.preventDefault();
+    } else if (data.clientId === null && data.employeeId === null) {
+      alert("remplir les champ");
+
+      e.preventDefault();
+    } else {
+      e.preventDefault();
+      dispatch(addUser(data));
+      navigate(-1);
+    }
   }
 
   return (
@@ -60,138 +68,158 @@ function AddUser() {
           <div className="d-flex align-items-center justify-content-center pb-4">
             <h2>Ajouter un Utilisateur </h2>
           </div>
-
           <p className="mb-0 mt-3">email</p>
           <Input
             label="email"
+            type="email"
             name="email"
             onChange={handle}
             required
           />
-          <p className="mb-0 mt-3">client :</p>
-          <Autocomplete
-            fullWidth
-            onChange={(event, value, option) => {
-              if (!(value === null)) {
-                setData((prev) => {
-                  return { ...prev, clientId: value.id };
-                });
-              }
-            }}
-            options={storeClients.filter((elem,i)=>(elem?.user.length===0)
-
-            )}
-            getOptionLabel={(option) => {
-              return option.first_name + " " + option.last_name;
-            }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-              const { inputValue } = params;
-              // Suggest the creation of a new value
-              const isExisting = options.some(
-                (option) => inputValue === option.first_name
-              );
-              if (inputValue !== "" && !isExisting) {
-                filtered.push({
-                  inputValue,
-                  first_name: `Add new client`,
-                  last_name: " ",
-                });
-              }
-              return filtered;
-            }}
-            freeSolo
-            renderOption={(props, option) =>
-              option.first_name !== "Add new client" ? (
-                <Box
-                  component="li"
-                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                >
-                  {option.first_name + " " + option.last_name}
-                </Box>
+          <div>
+            <div className="pb-7">
+              {check ? (
+                <>
+                  <p className="mb-0 mt-3">client :</p>
+                  <Autocomplete
+                    fullWidth
+                    onChange={(event, value, option) => {
+                      if (!(value === null)) {
+                        setData((prev) => {
+                          return { ...prev, clientId: value.id };
+                        });
+                      }
+                    }}
+                    options={storeClients.filter(
+                      (elem, i) => elem?.user.length === 0
+                    )}
+                    getOptionLabel={(option) => {
+                      return option.first_name + " " + option.last_name;
+                    }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    filterOptions={(options, params) => {
+                      const filtered = filter(options, params);
+                      const { inputValue } = params;
+                      // Suggest the creation of a new value
+                      const isExisting = options.some(
+                        (option) => inputValue === option.first_name
+                      );
+                      if (inputValue !== "" && !isExisting) {
+                        filtered.push({
+                          inputValue,
+                          first_name: `Add new client`,
+                          last_name: " ",
+                        });
+                      }
+                      return filtered;
+                    }}
+                    freeSolo
+                    renderOption={(props, option) =>
+                      option.first_name !== "Add new client" ? (
+                        <Box
+                          component="li"
+                          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                          {...props}
+                        >
+                          {option.first_name + " " + option.last_name}
+                        </Box>
+                      ) : (
+                        <Link to="/clients/addclient">Add new client</Link>
+                      )
+                    }
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          label="Nom de Client "
+                          inputProps={{
+                            ...params.inputProps,
+                            // autoComplete: "new-password", // disable autocomplete and autofill
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </>
               ) : (
-                <Link to="/clients/addclient">Add new client</Link>
-              )
-            }
-            renderInput={(params) => {
-              return (
-                <TextField
-                  {...params}
-                  label="Nom de Client "
-                  inputProps={{
-                    ...params.inputProps,
-                    // autoComplete: "new-password", // disable autocomplete and autofill
-                  }}
-                />
-              );
+                <>
+                  <p className="mb-0 mt-3">employee :</p>
+                  <Autocomplete
+                    fullWidth
+                    onChange={(event, value, option) => {
+                      if (!(value === null)) {
+                        setData((prev) => {
+                          return { ...prev, employeeId: value.id };
+                        });
+                      }
+                    }}
+                    options={storeEmployees.filter(
+                      (elem, i) => elem?.user.length === 0
+                    )}
+                    getOptionLabel={(option) => {
+                      return option.first_name + " " + option.last_name;
+                    }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    filterOptions={(options, params) => {
+                      const filtered = filter(options, params);
+                      const { inputValue } = params;
+                      // Suggest the creation of a new value
+                      const isExisting = options.some(
+                        (option) => inputValue === option.first_name
+                      );
+                      if (inputValue !== "" && !isExisting) {
+                        filtered.push({
+                          inputValue,
+                          first_name: `Add new emp`,
+                          last_name: " ",
+                        });
+                      }
+                      return filtered;
+                    }}
+                    freeSolo
+                    renderOption={(props, option) =>
+                      option.first_name !== "Add new emp" ? (
+                        <Box
+                          component="li"
+                          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                          {...props}
+                        >
+                          {option.first_name + " " + option.last_name}
+                        </Box>
+                      ) : (
+                        <Link to="/employes/addemployee">Add new employee</Link>
+                      )
+                    }
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          label="Nom de employe "
+                          inputProps={{
+                            ...params.inputProps,
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </div>
+          </div>
+          <br />
+          <Checkbox
+            onChange={() => {
+              setOpenCheck(!check);
+              setData((prev) => {
+                return { ...prev, isClient: !check };
+              });
             }}
           />
-                  <Autocomplete
-          fullWidth
-          onChange={(event, value, option) => {
-            if (!(value === null)) {
-              setData((prev) => {
-                return { ...prev, employeeId: value.id };
-              });
-            }
-          }}
-          options={storeEmployees.filter((elem,i)=>(elem?.user.length===0)
-
-          )}
-          getOptionLabel={(option) => {
-            return option.first_name + " " + option.last_name;
-          }}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          filterOptions={(options, params) => {
-            const filtered = filter(options, params);
-            const { inputValue } = params;
-            // Suggest the creation of a new value
-            const isExisting = options.some(
-              (option) => inputValue === option.first_name
-            );
-            if (inputValue !== "" && !isExisting) {
-              filtered.push({
-                inputValue,
-                first_name: `Add new emp`,
-                last_name: " ",
-              });
-            }
-            return filtered;
-          }}
-          freeSolo
-          renderOption={(props, option) =>
-            option.first_name !== "Add new emp" ? (
-              <Box
-                component="li"
-                sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                {...props}
-              >
-                {option.first_name + " " + option.last_name}
-              </Box>
-            ) : (
-              <Link to="/employes/addemployee">Add new employee</Link>
-            )
-          }
-          renderInput={(params) => {
-            return (
-              <TextField
-                {...params}
-                label="Nom de employe "
-                inputProps={{
-                  ...params.inputProps,
-                  // autoComplete: "new-password", // disable autocomplete and autofill
-                }}
-              />
-            );
-          }}
-        />
-          <br />
+          client ?
           <div className="d-flex align-items-center  justify-content-center">
             <Button color="black" type="submit" onClick={handelSubmit}>
               Submit
