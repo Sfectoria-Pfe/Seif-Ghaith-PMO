@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import InvoiceItem from "./InvoiceItem";
-import InvoiceModal from "./InvoiceModal";
+// import InvoiceItem from "./InvoiceItem";
+// import InvoiceModal from "./InvoiceModal";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,7 +21,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { addorder } from "../../../store/order";
+import { addorder, getorder, updateorder } from "../../../store/order";
 
 function EditOrder() {
   const clients = useSelector((state) => state.client.clients);
@@ -188,6 +188,43 @@ function EditOrder() {
 
   const closeModal = (event) => {
     setIsOpen(false);
+  };
+
+  const store = useSelector((state) => state.order);
+  const { id } = useParams();
+  console.log(id,"5555555555555555555555555555555555555555555")
+  
+  useEffect(() => {
+    dispatch(getorder(+id));
+  }, []);
+  console.log(store, "this is order");
+  // const [data, setData] = useState();
+  // useEffect(() => {
+  //   if (store) setData(store);
+  // }, []);
+  function handle(e) {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+    console.log(data);
+  }
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    dispatch(updateorder({id:+id,body: data}))
+    .then((res) => {
+      if (!res.error) {
+        toast.success("devis modifier avec succès !");
+        setTimeout(() => {
+          navigate(-1)
+        }, 2000);
+      } else {
+        toast.error("Erreur lors de modification du devis. Veuillez réessayer.");
+      }
+    })
+    .catch(() => {
+      toast.error("Erreur lors de modification du devis. Veuillez réessayer.");
+    })
+    navigate(-1);
   };
 
   return (
@@ -361,13 +398,13 @@ function EditOrder() {
               </Col>
             </Row>
             {/* Invoice items */}
-            <InvoiceItem
+            {/* <InvoiceItem
               onItemizedItemEdit={onItemizedItemEdit}
               onRowAdd={handleAddEvent}
               onRowDel={handleRowDel}
               currency={currency}
               items={items}
-            />
+            /> */}
             {/* Total section */}
             <Row className="mt-4 justify-content-end">
               <Col lg={6}>
@@ -426,7 +463,7 @@ function EditOrder() {
             <Button variant="primary" type="submit" className="d-block w-100">
               Review Invoice
             </Button>
-            <InvoiceModal
+            {/* <InvoiceModal
               showModal={isOpen}
               closeModal={closeModal}
               info={{
@@ -444,7 +481,7 @@ function EditOrder() {
               discountAmount={discountAmount}
               total={total}
               handleAddDevis={handleAddDevis}
-            />
+            /> */}
             {/* <Form.Group className="mb-3">
               <Form.Label className="fw-bold">Currency:</Form.Label>
               <Form.Select

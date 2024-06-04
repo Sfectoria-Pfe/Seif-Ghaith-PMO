@@ -15,7 +15,7 @@ function EntreeDeviceDetails({ entree_device, onClose }) {
         <p>Title: {entree_device?.title}</p>
         <p>Description: {entree_device?.description}</p>
         <p>Created At: {entree_device?.createdAt}</p>
-        <p>Statues: {entree_device?.statues}</p>
+        
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>Close</Button>
