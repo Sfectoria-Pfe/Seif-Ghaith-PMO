@@ -28,7 +28,7 @@ var idfinal
   } else {
     idfinal=+id
   }
-  console.log(idfinal,"zokkkkkk")
+  console.log(idfinal,"3333")
   const [data, setData] = useState({
     title: "",
     rapport: "",

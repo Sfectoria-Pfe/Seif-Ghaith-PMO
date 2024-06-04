@@ -43,6 +43,7 @@ import AddFicheIentervention from "../pages/Les Fiche d'intervention/views/AddFi
 import AddEtape from "../components/AddEtape";
 import EditOrderReparation from "../pages/Ordre_Reparation/Views/EditOrderReparation";
 import EditFiche from "../pages/Les Fiche d'intervention/views/EditFiche";
+import EditOrder from "../pages/order/views/EditOrder";
 import PasswordChange from "../pages/Profile/components/PasswordChange";
 function Router() {
   const user = useSelector((state) => state.auth.me);
@@ -127,6 +128,7 @@ function Router() {
             <Route path="/orders" element={<OrderPage />}>
               <Route index element={<Order />} />
               <Route path="addorder" element={<AddOrder />} />
+              <Route path="editorder/:id" element={<EditOrder />} />
             </Route>
           </Route>
         ) : (
