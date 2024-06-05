@@ -61,6 +61,7 @@ function Fiche_intervention() {
     clientID: row.OrderReparation?.clientId,
   }));
 
+  const myInfo = useSelector((state) => state.auth.me);
   const columns = [
     {
       headerAlign: "center",
@@ -119,8 +120,13 @@ function Fiche_intervention() {
         return (
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
             <VisibilityIcon onClick={() => handleShow(params.row.id)} />
-            <DeleteIcon onClick={() => handledelete(params.row.id)} />
 
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
+            <DeleteIcon onClick={() => handledelete(params.row.id)} />
+              </>
+              )}
             <EditIcon onClick={() => handleEdit(params.row.id)} />
           </div>
         );

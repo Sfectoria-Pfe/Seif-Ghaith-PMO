@@ -41,7 +41,7 @@ function OrdreReparation() {
     if (row?.employeeId === myInfo.Employee.id) {
       return row;
     }
-    if (myInfo.Employee.role === "admin") {
+    if (myInfo.Employee.role === "admin"||myInfo.Employee.role === "manager") {
       return row;
     }
   });

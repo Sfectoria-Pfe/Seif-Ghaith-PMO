@@ -50,6 +50,8 @@ export default function Reclamations() {
   const handleDeleteField = (reclamationId) => {
     dispatch(deletereclamation(reclamationId));
   };
+  const myInfo = useSelector((state) => state.auth.me);
+
   const columns = [
     {
       headerAlign: "center",
@@ -102,7 +104,12 @@ export default function Reclamations() {
         console.log(params.row, "this is the params");
         return (
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
+
             <VisibilityIcon onClick={() => handleOpenModal(params.row)} />
+
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
             <DeleteIcon onClick={() => handleDeleteField(params.row.id)} />
             <Link
               to={`editreclamation/${params.row.id}`}
@@ -110,6 +117,8 @@ export default function Reclamations() {
             >
               <EditIcon />
             </Link>
+            </>)}
+
           </div>
         );
       },
