@@ -219,41 +219,44 @@ export default function MiniDrawer() {
               </ListItemButton>
             </Link>
           </ListItem>
-          {(myInfo.Employee.role === "admin" || 
-                myInfo.Employee.role === "receptionist"||myInfo.Employee.role === "manager") && 
-                  <>
-          <ListItemButton
-            onClick={() => {
-              handleClickopenn();
-              handleDrawerOpen();
-            }}  >
-            <ListItemIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                color="#000000"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-users-group"
+          {(myInfo.Employee.role === "admin" ||
+            myInfo.Employee.role === "receptionist" ||
+            myInfo.Employee.role === "manager") && (
+            <>
+              <ListItemButton
+                onClick={() => {
+                  handleClickopenn();
+                  handleDrawerOpen();
+                }}
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-              </svg>
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-            {openn ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-</>}
+                <ListItemIcon>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    color="#000000"
+                    stroke="currentColor"
+                    stroke-width="1.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-users-group"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                    <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                    <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                    <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                    <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                    <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                  </svg>
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+                {openn ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </>
+          )}
           <Collapse in={openn} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {myInfo.Employee.role === "admin" && (
@@ -271,303 +274,305 @@ export default function MiniDrawer() {
                   </Link>
                 </>
               )}
-              {(myInfo.Employee.role === "admin" || 
-                myInfo.Employee.role === "receptionist") && 
-                  <>
-                    <Link
-                      to={"/clients"}
-                      className="text-decoration-none text-reset"
-                    >
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Les Clients" />
-                      </ListItemButton>
-                    </Link>
-                  </>
-                }
               {(myInfo.Employee.role === "admin" ||
-                myInfo.Employee.role==="receptionist" ||
-                myInfo.Employee.role==="manager") && 
-                  <>
-                    <Link
-                      to={"/employees"}
-                      className="text-decoration-none text-reset"
-                    >
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Les employés" />
-                      </ListItemButton>
-                    </Link>
-                  </>
-                }
+                myInfo.Employee.role === "receptionist") && (
+                <>
+                  <Link
+                    to={"/clients"}
+                    className="text-decoration-none text-reset"
+                  >
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Les Clients" />
+                    </ListItemButton>
+                  </Link>
+                </>
+              )}
+              {(myInfo.Employee.role === "admin" ||
+                myInfo.Employee.role === "receptionist" ||
+                myInfo.Employee.role === "manager") && (
+                <>
+                  <Link
+                    to={"/employees"}
+                    className="text-decoration-none text-reset"
+                  >
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Les employés" />
+                    </ListItemButton>
+                  </Link>
+                </>
+              )}
             </List>
           </Collapse>
           {(myInfo.Employee.role === "admin" ||
-            myInfo.Employee.role==="receptionist" ||
-            myInfo.Employee.role==="manager" ||
-            myInfo.Employee.role==="technicien") && 
-              <>
-                <Link //entreee device
-                  to={"/entreedevices"}
-                  className="text-decoration-none text-reset"
-                >
-                  <ListItem disablePadding sx={{ display: "block" }}>
-                    <ListItemButton
+            myInfo.Employee.role === "receptionist" ||
+            myInfo.Employee.role === "manager") && (
+            <>
+              <Link // reclamationnn
+                to={"/reclamations"}
+                className="text-decoration-none text-reset"
+              >
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
                       }}
                     >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        color="#000000"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-user-exclamation"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.25"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="icon icon-tabler icons-tabler-outline icon-tabler-ticket"
-                          color="#000000"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M15 5l0 2" />
-                          <path d="M15 11l0 2" />
-                          <path d="M15 17l0 2" />
-                          <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
-                        </svg>
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={"Les Bons d'entrée"}
-                        sx={{ opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              </>
-            }
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4c.348 0 .686 .045 1.008 .128" />
+                        <path d="M19 16v3" />
+                        <path d="M19 22v.01" />
+                      </svg>{" "}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Les Reclamations"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </>
+          )}
+
           {(myInfo.Employee.role === "admin" ||
-            myInfo.Employee.role==="receptionist" ||
-            myInfo.Employee.role==="manager" ) && 
-              <>
-                <Link // reclamationnn
-                  to={"/reclamations"}
-                  className="text-decoration-none text-reset"
-                >
-                  <ListItem disablePadding sx={{ display: "block" }}>
-                    <ListItemButton
+            myInfo.Employee.role === "receptionist" ||
+            myInfo.Employee.role === "manager" ||
+            myInfo.Employee.role === "technicien") && (
+            <>
+              <Link //entreee device
+                to={"/entreedevices"}
+                className="text-decoration-none text-reset"
+              >
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
                       }}
                     >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-ticket"
+                        color="#000000"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.25"
-                          stroke-linecap="round"
-                          color="#000000"
-                          stroke-linejoin="round"
-                          class="icon icon-tabler icons-tabler-outline icon-tabler-user-exclamation"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                          <path d="M6 21v-2a4 4 0 0 1 4 -4h4c.348 0 .686 .045 1.008 .128" />
-                          <path d="M19 16v3" />
-                          <path d="M19 22v.01" />
-                        </svg>{" "}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={"Les Reclamations"}
-                        sx={{ opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              </>
-            }
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M15 5l0 2" />
+                        <path d="M15 11l0 2" />
+                        <path d="M15 17l0 2" />
+                        <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
+                      </svg>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Les Bons d'entrée"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </>
+          )}
 
-{(myInfo.Employee.role === "admin" ||
-            myInfo.Employee.role==="receptionist" ||
-            myInfo.Employee.role==="manager") && 
-              <>
-                <Link // fiche interventionnn
-                  to={"/fiches_intervention"}
-                  className="text-decoration-none text-reset"
-                >
-                  <ListItem disablePadding sx={{ display: "block" }}>
-                    <ListItemButton
+
+
+          {(myInfo.Employee.role === "admin" ||
+            myInfo.Employee.role === "manager" ||
+            myInfo.Employee.role === "technicien") && (
+            <>
+              <Link //order reparation
+                to={"/orderReparation"}
+                className="text-decoration-none text-reset"
+              >
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
                       }}
                     >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        color="black"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          color="black"
-                          stroke="currentColor"
-                          stroke-width="1.25"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="icon icon-tabler icons-tabler-outline icon-tabler-article"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                          <path d="M7 8h10" />
-                          <path d="M7 12h10" />
-                          <path d="M7 16h10" />
-                        </svg>
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={"Les Fiche d'interventions"}
-                        sx={{ opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              </>
-            }
-
-{(myInfo.Employee.role === "admin" ||
-            
-            myInfo.Employee.role==="manager" ||
-            myInfo.Employee.role==="technicien") && 
-              <>
-          <Link  //order reparation
-            to={"/orderReparation"}
-            className="text-decoration-none text-reset"
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
+                        <path d="M10 16h6" />
+                        <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                        <path d="M4 8h3" />
+                        <path d="M4 12h3" />
+                        <path d="M4 16h3" />
+                      </svg>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Order de Reparation"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </>
+          )}
+                    {(myInfo.Employee.role === "admin" ||
+            myInfo.Employee.role === "receptionist" ||
+            myInfo.Employee.role === "manager") && (
+            <>
+              <Link // fiche interventionnn
+                to={"/fiches_intervention"}
+                className="text-decoration-none text-reset"
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    color="black"
-                    stroke-width="1.25"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
-                    <path d="M10 16h6" />
-                    <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                    <path d="M4 8h3" />
-                    <path d="M4 12h3" />
-                    <path d="M4 16h3" />
-                  </svg>
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Order de Reparation"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-</>
-}
-{(myInfo.Employee.role === "admin" ||
-            myInfo.Employee.role==="receptionist" ||
-            myInfo.Employee.role==="manager") && 
-              <>
-          <Link to={"/orders"} className="text-decoration-none text-reset"> 
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.25"
-                    color="black"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-dollar"
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        color="black"
+                        stroke="currentColor"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-article"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                        <path d="M7 8h10" />
+                        <path d="M7 12h10" />
+                        <path d="M7 16h10" />
+                      </svg>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Les Fiche d'interventions"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </>
+          )}
+          {(myInfo.Employee.role === "admin" ||
+            myInfo.Employee.role === "receptionist" ||
+            myInfo.Employee.role === "manager") && (
+            <>
+              <Link to={"/orders"} className="text-decoration-none text-reset">
+                <ListItem disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                    <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
-                    <path d="M12 17v1m0 -8v1" />
-                  </svg>
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Les Devis"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          </>}
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.25"
+                        color="black"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-dollar"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                        <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                        <path d="M12 17v1m0 -8v1" />
+                      </svg>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Les Devis"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </>
+          )}
         </List>
 
         <Divider />

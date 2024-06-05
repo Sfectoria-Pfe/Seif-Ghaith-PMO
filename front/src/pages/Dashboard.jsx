@@ -64,7 +64,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Total Bons d'entée
+                    Total les reparations
                   </Typography>
 
                   <div>
@@ -73,7 +73,7 @@ function Dashboard() {
                 </div>
 
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>{Store.length}</p>
+                  <p style={{ fontSize: 30 }}>{storeorder.length}</p>
                 </div>
               </CardContent>
             </Card>
@@ -87,14 +87,14 @@ function Dashboard() {
                     sx={{ fontSize: 20, fontWeight: "bold" }}
                     color="text.dark"
                     gutterBottom
-                  > Bons d'entée valider </Typography>
+                  > les reparations valider </Typography>
  
                   <div>
                     <img src={valide} style={{ width: 40, height: 40 }} />
                   </div>
                 </div>
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>{inProgress }</p>
+                  <p style={{ fontSize: 30 }}>{completed }</p>
                 </div>
               </CardContent>
             </Card>
@@ -108,7 +108,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bons d'entée en cours
+                    les reparations en cours
                   </Typography>
 
                   <div>
@@ -130,7 +130,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bons d'entée en attende
+                    les reparations en attende
                   </Typography>
 
                   <div>

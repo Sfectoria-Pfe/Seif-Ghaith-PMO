@@ -133,15 +133,15 @@ function Fiche_intervention() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des fiche_interventions
+              Liste des fiche d'interventions
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              Voir des informations sur tous les fiche_interventions.
+              Voir des informations sur tous les fiches d'interventions.
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addfiche_intervention"}>
-              <Button> Ajouter un fiche_intervention </Button>
+              <Button> Ajouter une fiche d'intervention </Button>
             </Link>
           </div>
         </div>

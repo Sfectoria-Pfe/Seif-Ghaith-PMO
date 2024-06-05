@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class EmployeesService {
   constructor(private prisma: PrismaService) {}
   create(createEmployeeDto: CreateEmployeeDto) {
-    return this.prisma.employee.create({data:createEmployeeDto})
+    return this.prisma.employee.create({data:createEmployeeDto}) 
   }
 
   findAll() {

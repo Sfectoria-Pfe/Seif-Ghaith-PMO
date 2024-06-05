@@ -91,7 +91,9 @@ export default function Entree_devicee() {
             <Typography variant="h5" color="blue-gray">
               Liste des Bons Entrées
             </Typography>
-            
+            <Typography color="gray" className="mt-1 font-normal">
+              Voir des informations sur les bons d'entree.
+            </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           {(myInfo.Employee.role === "admin" ||
@@ -136,7 +138,7 @@ export default function Entree_devicee() {
               pagination: {
                 paginationModel: {
                   page: 0,
-                  pageSize: 5,
+                  pageSize: 10,
                 },
               },
             }}

@@ -38,32 +38,33 @@ function OrdreReparation() {
 
   console.log(myInfo, "me");
   const rows = store.filter((row) => {
-    if (row.employeeId === myInfo.Employee.id) {
-      let xd = "";
-      if (row.etape && row.etape.length > 0) {
-        xd = row.etape[0].title;
-      } else {
-        xd = "sorry  undefined";
-      }
-
-      return {
-        id: row?.id,
-        title: row?.title,
-        titleetape: xd,
-        description: row?.description,
-        entreeDeviceId: row?.entreeDeviceId
-          ? row?.EntreeDevice.title
-          : "pas defini",
-        status: row.status,
-        nomclient: row.Client.first_name + " " + row.Client.last_name,
-      };
+    if (row?.employeeId === myInfo.Employee.id) {
+      return row;
+    }
+    if (myInfo.Employee.role === "admin") {
+      return row;
     }
   });
 
-  console.log(
-    rows,
-    "djjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
-  );
+  const frow = rows.map((row) => {
+    let xd = "";
+    if (row.etape && row.etape.length > 0) {
+      xd = row.etape[0].title;
+    } else {
+      xd = "aucune etape n'été pas effectuée";
+    }
+    return {
+      id: row?.id,
+      title: row?.title,
+      titleetape: xd,
+      description: row?.description,
+      entreeDeviceId: row?.entreeDeviceId
+        ? row?.EntreeDevice?.title
+        : "pas defini",
+      status: row.status,
+      nomclient: row?.Client?.first_name + " " + row?.Client?.last_name,
+    };
+  });
   const navigate = useNavigate();
 
   const columns = [
@@ -87,7 +88,7 @@ function OrdreReparation() {
       align: "center",
       field: "titleetape",
       headerName: "etape",
-      width: 200,
+      width: 300,
     },
 
     {
@@ -95,7 +96,7 @@ function OrdreReparation() {
       align: "center",
       field: "description",
       headerName: "description",
-      width: 200,
+      width: 350,
     },
     // {
     //  headerAlign: "center" ,align:"center", field: "entreeDeviceId",
@@ -109,19 +110,18 @@ function OrdreReparation() {
       headerName: "status",
       width: 90,
     },
+    // {
+    //   headerAlign: "center",
+    //   align: "center",
+    //   field: "nomclient",
+    //   headerName: "nomclient",
+    //   width: 250,
+    // },
     {
       headerAlign: "center",
-      align: "center",
-      field: "nomclient",
-      headerName: "nomclient",
-      width: 250,
-    },
-    {
-      headerAlign: "center",
-      align: "center",
       field: "ajout",
       headerName: "Ajouter une etape",
-      width: 250,
+      width: 170,
 
       renderCell: (params) => {
         return (
@@ -130,13 +130,15 @@ function OrdreReparation() {
               myInfo.Employee.role === "receptionist" ||
               myInfo.Employee.role === "manager" ||
               myInfo.Employee.role === "technicien") && (
-              <div className="h-50 w-75 d-flex justify-content-around align-items-center">
+              <div className="h-50 w-25 d-flex justify-content-around align-items-center">
                 <Button
+                  variant="text" size="sm" className="rounded-full"
                   onClick={() => {
                     navigate(`addetape/${params.row.id}`);
                   }}
                 >
-                  Ajouter une etape
+                  Ajouter
+                  etape
                 </Button>
               </div>
             )}
@@ -158,11 +160,16 @@ function OrdreReparation() {
                 handleShow(params.row.id);
               }}
             />
-            <DeleteIcon
-              onClick={() => {
-                // handledelete(params.id);
-              }}
-            />
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
+                <DeleteIcon
+                  onClick={() => {
+                    // handledelete(params.id);
+                  }}
+                />
+              </>
+            )}
             <EditIcon
               onClick={() => {
                 navigate(`editorder/${params.row.id}`);
@@ -181,13 +188,16 @@ function OrdreReparation() {
             <Typography variant="h5" color="blue-gray">
               Liste des Orders de reparation
             </Typography>
+            <Typography color="gray" className="mt-1 font-normal">
+              Voir les informations sur les order de reparation.
+            </Typography>
           </div>
           {(myInfo.Employee.role === "admin" ||
             myInfo.Employee.role === "manager") && (
             <>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                 <Link to={"addorderreparation"}>
-                  <Button> Ajouter Oreder reparation </Button>
+                  <Button> Ajouter Order reparation </Button>
                 </Link>
               </div>
             </>
@@ -209,7 +219,7 @@ function OrdreReparation() {
         <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             columns={columns}
-            rows={rows}
+            rows={frow}
             slots={{ toolbar: GridToolbar }}
             sx={{
               boxShadow: 2,

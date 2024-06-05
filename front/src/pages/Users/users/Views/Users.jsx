@@ -139,10 +139,11 @@ export default function Users() {
       align: "center",
       field: "action",
       headerName: "action",
-      width: 90,
+      width: 100,
       renderCell: (params) => {
         return (
-          <span
+          <Button variant="outlined"
+          size="sm"
             onClick={() => {
               // console.log(params.id)
               handli(params.row.id, !params.row.isactive);
@@ -150,7 +151,7 @@ export default function Users() {
           >
             {" "}
             action{" "}
-          </span>
+          </Button>
         );
       },
     },
@@ -206,7 +207,7 @@ export default function Users() {
               pagination: {
                 paginationModel: {
                   page: 0,
-                  pageSize: 5,
+                  pageSize: 10,
                 },
               },
             }}

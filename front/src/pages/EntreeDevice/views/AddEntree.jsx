@@ -47,30 +47,23 @@ function AddEntree() {
     if (data.clientId==""||data.title==""||data.description=="") {
       alert("saisir les donnee")
     } else {
-      
-      // e.preventDefault();
-      // const im = new FormData();
-      // im.append("file", file);
-      // console.log(file);
-      // const response = await axios.post("http://localhost:4000/upload", im);
-      // const productWithCover = { ...data, image: response.data.path };
-  
+      e.preventDefault();
       dispatch(addentree_device(data))
         .then((res) => {
           if (!res.error) {
-            toast.success("bond entree a été ajouté avec succès !");
+            toast.success("bon entree a été ajouté avec succès !");
             setTimeout(() => {
               navigate(-1);
             }, 2000);
           } else {
             toast.error(
-              "Erreur lors de l'ajout du bond entree. Veuillez réessayer."
+              "Erreur lors de l'ajout du bon entree. Veuillez réessayer."
             );
           }
         })
         .catch(() => {
           toast.error(
-            "Erreur lors de l'ajout du bond entree. Veuillez réessayer."
+            "Erreur lors de l'ajout du bon d'entree. Veuillez réessayer."
           );
         });
     }

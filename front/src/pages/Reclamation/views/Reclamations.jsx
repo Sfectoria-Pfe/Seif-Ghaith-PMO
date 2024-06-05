@@ -124,6 +124,9 @@ export default function Reclamations() {
             <Typography variant="h5" color="blue-gray">
               Liste des Reclamations
             </Typography>
+            <Typography color="gray" className="mt-1 font-normal">
+              Voir les informations sur tous les reclamation.
+            </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addreclamation"}>
