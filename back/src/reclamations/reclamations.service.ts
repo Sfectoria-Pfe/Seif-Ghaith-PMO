@@ -16,7 +16,7 @@ export class ReclamationsService {
   }
 
   findOne(id: number) {
-    return  this.prisma.reclamation.findUnique({ where: { id } });
+    return  this.prisma.reclamation.findUnique({ where: { id },include:{Client:true,Entrees:true} });
   }
 
   update(id: number, updateReclamationDto: UpdateReclamationDto) {

@@ -38,6 +38,7 @@ export default function Employees() {
   const handledelete = (data) => {
     dispatch(deleteemployee(data));
   };
+  const myInfo = useSelector((state) => state.auth.me);
 
   const handleEdit = (data) => {
     setEmployeeData(data.id);
@@ -125,18 +126,23 @@ export default function Employees() {
                 handleShow(params);
               }}
             />
-            <DeleteIcon
-              onClick={() => {
-                // console.log(params.id)
-                handledelete(params.id);
-              }}
-            />
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
+                <DeleteIcon
+                  onClick={() => {
+                    // console.log(params.id)
+                    handledelete(params.id);
+                  }}
+                />
             <EditIcon
               onClick={() => {
                 // console.log(params.id)
                 handleEdit(params);
               }}
             />
+              </>
+            )}
           </div>
         );
       },
@@ -156,9 +162,13 @@ export default function Employees() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
             <Link to={"addEmployee"}>
               <Button> Ajouter un Employee </Button>
             </Link>
+            </>)}
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">

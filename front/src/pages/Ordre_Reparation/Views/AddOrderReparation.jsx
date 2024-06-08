@@ -99,7 +99,9 @@ function AddOrderReparation() {
                 }
               }}
               fullWidth
-              options={StoreBande}
+              options={StoreBande.filter(
+                (elem, i) => elem?.Orders.length === 0
+              )}
               // autoHighlight
               getOptionLabel={(option) => {
                 return option.title;

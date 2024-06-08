@@ -61,6 +61,7 @@ function Fiche_intervention() {
     clientID: row.OrderReparation?.clientId,
   }));
 
+  const myInfo = useSelector((state) => state.auth.me);
   const columns = [
     {
       headerAlign: "center",
@@ -119,8 +120,13 @@ function Fiche_intervention() {
         return (
           <div className="h-100 w-100 d-flex justify-content-around align-items-center">
             <VisibilityIcon onClick={() => handleShow(params.row.id)} />
-            <DeleteIcon onClick={() => handledelete(params.row.id)} />
 
+            {(myInfo.Employee.role === "admin" ||
+              myInfo.Employee.role === "manager") && (
+              <>
+            <DeleteIcon onClick={() => handledelete(params.row.id)} />
+              </>
+              )}
             <EditIcon onClick={() => handleEdit(params.row.id)} />
           </div>
         );
@@ -133,15 +139,15 @@ function Fiche_intervention() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des fiche_interventions
+              Liste des fiche d'interventions
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              Voir des informations sur tous les fiche_interventions.
+              Voir des informations sur tous les fiches d'interventions.
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Link to={"addfiche_intervention"}>
-              <Button> Ajouter un fiche_intervention </Button>
+              <Button> Ajouter une fiche d'intervention </Button>
             </Link>
           </div>
         </div>

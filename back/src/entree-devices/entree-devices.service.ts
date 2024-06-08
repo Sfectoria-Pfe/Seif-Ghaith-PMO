@@ -11,11 +11,11 @@ export class EntreeDevicesService {
   }
 
   findAll() {
-    return this.prisma.entreeDevice.findMany({include:{Client:true}});
+    return this.prisma.entreeDevice.findMany({include:{Client:true,Orders:true}});
   }
 
   findOne(id: number) {
-    return this.prisma.entreeDevice.findUnique({ where: { id },include:{Client:true} });
+    return this.prisma.entreeDevice.findUnique({ where: { id },include:{Client:true,Orders:true} });
   }
 
   update(id: number, updateEntreeDeviceDto: UpdateEntreeDeviceDto) {

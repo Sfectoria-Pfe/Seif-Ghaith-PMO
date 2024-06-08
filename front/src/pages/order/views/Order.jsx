@@ -119,7 +119,10 @@ export default function Order() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Liste des Orders
+              Liste des Devis
+            </Typography>
+            <Typography color="gray" className="mt-1 font-normal">
+              Voir les Devis.
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">

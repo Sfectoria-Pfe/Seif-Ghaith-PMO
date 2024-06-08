@@ -15,30 +15,41 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangeCalendar } from "@mui/x-date-pickers-pro/DateRangeCalendar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getentree_devices } from "../store/entree_device";
+import { getorderreparations } from "../store/order_reparation";
 
 function Dashboard() {
-  const [cover, setCover] = React.useState(null);
-  const handelFileChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setCover(e.target.files[0]);
-      console.log(e.target.files);
-    }
-  };
-  const handelFile = async (e) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", cover);
+  const Store = useSelector((state) => state.entree_device.entree_devices);
+  const storeorder = useSelector((state) => state.orderreparation.orderreparations);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getentree_devices());
+    dispatch(getorderreparations());
 
-      const response = await axios.post(
-        "http://localhost:4000/upload",
-        formData
-      );
-      console.log(response);
-    } catch (erorr) {
-      console.log(erorr);
-    }
-  };
+  }, []);
 
+  var completed=0
+  const tot = storeorder.forEach((row) => {
+    if (row.status==="completed") {
+      completed+=1
+    }
+  });
+
+  var onhold=0
+  const jsp = storeorder.forEach((row) => {
+    if (row.status==="onhold") {
+      onhold+=1
+    }
+  });
+
+  var inProgress=0
+  const a = storeorder.forEach((row) => {
+    if (row.status==="inProgress") {
+      inProgress+=1
+    }
+  });
   return (
     <div>
       <div>
@@ -53,15 +64,16 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Total Bons d'entée
+                    Total les reparations
                   </Typography>
 
                   <div>
                     <img src={bondImg} style={{ width: 40, height: 40 }} />
                   </div>
                 </div>
+
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>50</p>
+                  <p style={{ fontSize: 30 }}>{storeorder.length}</p>
                 </div>
               </CardContent>
             </Card>
@@ -75,16 +87,14 @@ function Dashboard() {
                     sx={{ fontSize: 20, fontWeight: "bold" }}
                     color="text.dark"
                     gutterBottom
-                  >
-                    Bons d'entée valider
-                  </Typography>
-
+                  > les reparations valider </Typography>
+ 
                   <div>
                     <img src={valide} style={{ width: 40, height: 40 }} />
                   </div>
                 </div>
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>10</p>
+                  <p style={{ fontSize: 30 }}>{completed }</p>
                 </div>
               </CardContent>
             </Card>
@@ -98,7 +108,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bons d'entée en cours
+                    les reparations en cours
                   </Typography>
 
                   <div>
@@ -106,7 +116,7 @@ function Dashboard() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>20</p>
+                  <p style={{ fontSize: 30 }}>{inProgress}</p>
                 </div>
               </CardContent>
             </Card>
@@ -120,7 +130,7 @@ function Dashboard() {
                     color="text.dark"
                     gutterBottom
                   >
-                    Bons d'entée a rejeter
+                    les reparations en attende
                   </Typography>
 
                   <div>
@@ -128,7 +138,7 @@ function Dashboard() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <p style={{ fontSize: 30 }}>4</p>
+                  <p style={{ fontSize: 30 }}>{onhold}</p>
                 </div>
               </CardContent>
             </Card>

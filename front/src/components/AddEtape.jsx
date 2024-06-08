@@ -205,7 +205,7 @@ var idfinal
           }}
         />
       </div>
-      <Button type="submit">ajouter le premier etape</Button>
+      <Button type="submit">ajouter etape</Button>
     </form>
   );
 }

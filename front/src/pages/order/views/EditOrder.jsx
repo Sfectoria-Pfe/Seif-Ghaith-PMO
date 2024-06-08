@@ -198,10 +198,10 @@ function EditOrder() {
     dispatch(getorder(+id));
   }, []);
   console.log(store, "this is order");
-  // const [data, setData] = useState();
-  // useEffect(() => {
-  //   if (store) setData(store);
-  // }, []);
+  const [data, setData] = useState();
+  useEffect(() => {
+    if (store) setData(store);
+  }, []);
   function handle(e) {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
